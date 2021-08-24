@@ -1,0 +1,32 @@
+{
+    "TYPE": "Type-I",
+    "UFO": "2HDM_CPC_%s_NLO_cba_UFO-alignment",
+    "DECAY": [],
+    "SQRTS": 14,
+    "SIGNAL_COMPONENT": {
+        "TRI": {
+            "PROC": ["g g > hh > l- l+ t t~ QCD=2 [noborn=QCD] TS^2==2"],
+            "NAME": "gg_ztt_%s_tri"
+        },
+        "BOX": {
+            "PROC": ["g g > hh > l- l+ t t~ QCD =2 $$ a t t~ hl ha [noborn=QCD] QCD^2=4 TZ^2==2"],
+            "NAME": "gg_ztt_%s_box"
+        },
+        "INTER": {
+            "PROC": ["g g > hh > l- l+ t t~ QCD=2 $$ a t t~ hl [noborn=QCD] TS^2==1 TZ^2==1"],
+            "NAME": "gg_ztt_%s_inter"
+        }
+    },
+    "SIGNAL_TOTAL": {
+        "TOTAL": {
+            "PROC": ["g g > hh > l- l+ t t~ QCD=2 $$ a t t~ hl [noborn=QCD] QCD^2=4"],
+            "NAME": "gg_ztt_%s_total"
+        }
+    },
+    "BACKGROUND": {
+        "TOTAL": {
+            "PROC": ["p p > z t t~ $$ hh ha, z > l- l+"],
+            "NAME": "gg_ztt_bkg"
+        }
+    }
+}
