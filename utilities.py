@@ -63,18 +63,21 @@ def CALCULATE_CS(process, WORKDIR, PARAMS, YUKTYPE = None, SQRTS = 14):
     copyfile(csfile,csfile2)
     return float(res)
 
-def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, MADSPINCARD, YUKTYPE = None, SQRTS = 14):
+def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, MADSPINCARD, DELPHESCARD, YUKTYPE = None, SQRTS = 14):
     name=process['NAME']
     if YUKTYPE:
         name=process['NAME']%(YUKTYPE)
     PROCDIR=join(WORKDIR,name)
     CARDDIR=join(PROCDIR,'Cards')
     tmpfile=join(PROCDIR,'events_command.in')
+    evefile=join(PROCDIR,'events_output.txt')
     timetag=time.strftime("%Y%m%d_%H%M%S",time.localtime(time.time()))
-    runname='run_xec_%s'%(timetag)
+    runname='run_eve_%s'%(timetag)
     EVEDIR=join(PROCDIR,'Events/%s'%(runname))
     tmpfile2=join(EVEDIR,'events_command.in')
+    evefile2=join(EVEDIR,'events_output.txt')
     copyfile(MADSPINCARD,join(CARDDIR,'madspin_card.dat'))
+    copyfile(DELPHESCARD,join(CARDDIR,'delphes_card.dat'))
     EBEAM=SQRTS/2*1000
     with open(tmpfile,'w') as OUTEVE:
         OUTEVE.write('generate_events %s\n'%runname)
@@ -86,3 +89,8 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, MADSPINCARD, YUKTYPE = No
         for param in PARAMS.keys():
             OUTEVE.write('set %s %f\n'%(param,PARAMS[param]))
         OUTEVE.write('0\n')
+    subprocess.call('%s/bin/madevent %s > %s'%(PROCDIR,tmpfile,evefile),shell=True)
+    # copyfile(tmpfile,tmpfile2)
+    # copyfile(evefile,evefile2)
+    # rootdest=join(DATADIR,'delphes_%s_%s.root'%(name,timetag))
+    # copyfile()
