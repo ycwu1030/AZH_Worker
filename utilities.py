@@ -62,3 +62,27 @@ def CALCULATE_CS(process, WORKDIR, PARAMS, YUKTYPE = None, SQRTS = 14):
     copyfile(tmpfile,tmpfile2)
     copyfile(csfile,csfile2)
     return float(res)
+
+def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, MADSPINCARD, YUKTYPE = None, SQRTS = 14):
+    name=process['NAME']
+    if YUKTYPE:
+        name=process['NAME']%(YUKTYPE)
+    PROCDIR=join(WORKDIR,name)
+    CARDDIR=join(PROCDIR,'Cards')
+    tmpfile=join(PROCDIR,'events_command.in')
+    timetag=time.strftime("%Y%m%d_%H%M%S",time.localtime(time.time()))
+    runname='run_xec_%s'%(timetag)
+    EVEDIR=join(PROCDIR,'Events/%s'%(runname))
+    tmpfile2=join(EVEDIR,'events_command.in')
+    copyfile(MADSPINCARD,join(CARDDIR,'madspin_card.dat'))
+    EBEAM=SQRTS/2*1000
+    with open(tmpfile,'w') as OUTEVE:
+        OUTEVE.write('generate_events %s\n'%runname)
+        OUTEVE.write('0\n')
+        OUTEVE.write('set ebeam1 %f\n'%(EBEAM))
+        OUTEVE.write('set ebeam2 %f\n'%(EBEAM))
+        OUTEVE.write('set nevents 50000\n')
+        OUTEVE.write('set no_parton_cut\n')
+        for param in PARAMS.keys():
+            OUTEVE.write('set %s %f\n'%(param,PARAMS[param]))
+        OUTEVE.write('0\n')

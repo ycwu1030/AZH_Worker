@@ -45,6 +45,9 @@ BKG_PROCS = INFO['BACKGROUND']
 WORKDIR = '%s/%s'%(CURDIR,'WORKDIR')
 if not os.path.exists(WORKDIR):
     os.makedirs(WORKDIR)
+DATADIR = '%s/%s'%(CURDIR,'DATADIR')
+if not os.path.exists(DATADIR):
+    os.makedirs(DATADIR)
 
 if FLAG_GEN:
     for pid in SIG_COMPONENTS.keys():
