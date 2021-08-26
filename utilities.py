@@ -47,6 +47,14 @@ def CALCULATE_CS(process, WORKDIR, PARAMS, YUKTYPE = None, SQRTS = 14):
         remove('%s/Cards/madspin_card.dat'%PROCDIR)
     except OSError:
         pass
+    try:
+        remove('%s/Cards/delphes_card.dat'%PROCDIR)
+    except OSError:
+        pass
+    try:
+        remove('%s/Cards/pythia8_card.dat'%PROCDIR)
+    except OSError:
+        pass
     with open(tmpfile, 'w') as OUTXEC:
         OUTXEC.write('generate_events %s\n'%runname)
         OUTXEC.write('0\n')
@@ -63,7 +71,7 @@ def CALCULATE_CS(process, WORKDIR, PARAMS, YUKTYPE = None, SQRTS = 14):
     copyfile(csfile,csfile2)
     return float(res)
 
-def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, MADSPINCARD, DELPHESCARD, YUKTYPE = None, SQRTS = 14):
+def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQRTS = 14):
     name=process['NAME']
     if YUKTYPE:
         name=process['NAME']%(YUKTYPE)
@@ -76,8 +84,9 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, MADSPINCARD, DELPHESCARD,
     EVEDIR=join(PROCDIR,'Events/%s'%(runname))
     tmpfile2=join(EVEDIR,'events_command.in')
     evefile2=join(EVEDIR,'events_output.txt')
-    copyfile(MADSPINCARD,join(CARDDIR,'madspin_card.dat'))
-    copyfile(DELPHESCARD,join(CARDDIR,'delphes_card.dat'))
+    copyfile(CARDS['MADSPIN'],join(CARDDIR,'madspin_card.dat'))
+    copyfile(CARDS['DELPHES'],join(CARDDIR,'delphes_card.dat'))
+    copyfile(CARDS['PYTHIA8'],join(CARDDIR,'pythia8_card.dat'))
     EBEAM=SQRTS/2*1000
     with open(tmpfile,'w') as OUTEVE:
         OUTEVE.write('generate_events %s\n'%runname)
