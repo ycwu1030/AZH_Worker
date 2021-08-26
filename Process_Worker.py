@@ -68,9 +68,11 @@ if FLAG_XEC: # Calculate Cross Section, keep the value for future reference
 
 if FLAG_DEL:
     CARDS={}
-    CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_semilep.dat')
     CARDS['DELPHES']=join(CURDIR,'tmp_cards/delphes_card.dat')
     CARDS['PYTHIA8']=join(CURDIR,'tmp_cards/pythia8_card.dat')
     for i in range(NRUNS):
         for pid in BKG_PROCS.keys():
-            GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'TAG':'bkg','PARAM':{}},CARDS)
+            CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_semilep.dat')
+            GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'TAG':'bkg_3l','PARAM':{}},CARDS)
+            CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_dilepton.dat')
+            GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'TAG':'bkg_4l','PARAM':{}},CARDS)
