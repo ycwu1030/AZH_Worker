@@ -18,7 +18,7 @@ cd MG5_aMC_v3_1_1
 
 cat << EOF > SETUP_PACKAGE.in
 install Delphes
-install Pythia8
+install pythia8
 install ExRootAnalysis
 generate g g > t t~ [QCD]
 output TEDWORK/gg_tt_NLO_test
