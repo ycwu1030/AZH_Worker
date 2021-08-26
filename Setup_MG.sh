@@ -6,6 +6,8 @@
 ##SBATCH --mail-user=ywu@okstate.edu
 ##SBATCH --mail-type=end
 
+source /opt/cern-root/6.22.06/prebuilt/bin/thisroot.sh
+echo "source /opt/cern-root/6.22.06/prebuilt/bin/thisroot.sh" >> $HOME/.bashrc
 MG5URL="https://launchpad.net/mg5amcnlo/3.0/3.1.x/+download/MG5_aMC_v3.1.1.tar.gz"
 
 curdir=$(pwd)
