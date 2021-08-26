@@ -6,7 +6,7 @@ import time
 from shutil import copyfile
 
 CURDIR = getcwd()
-MG5DIR = '/Users/ycwu/Workingspace/MC-Generator/MG5_aMC_v3_1_1'
+MG5DIR = join(CURDIR,'MG5DIR/MG5_aMC_v3_1_1')
 
 def GENERATE_PROC(process, WORKDIR, UFO, YUKTYPE = None):
     for tag in ['', '_Z']:
