@@ -1,4 +1,6 @@
 WORKDIR/
 DATADIR/
+MG5DIR/
+slurm*.out
 *.pyc
 py.py

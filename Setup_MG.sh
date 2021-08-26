@@ -3,8 +3,8 @@
 #SBATCH -t 4:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
-#SBATCH --mail-user=ywu@okstate.edu
-#SBATCH --mail-type=end
+##SBATCH --mail-user=ywu@okstate.edu
+##SBATCH --mail-type=end
 
 MG5URL="https://launchpad.net/mg5amcnlo/3.0/3.1.x/+download/MG5_aMC_v3.1.1.tar.gz"
 
@@ -27,3 +27,5 @@ exit
 EOF
 
 python2 ./bin/mg5_aMC SETUP_PACKAGE.in
+
+cp -r $curdir/models/2HDM_CPC_Type-I_NLO_cba_UFO models/

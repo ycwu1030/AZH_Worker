@@ -79,8 +79,9 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
     CARDDIR=join(PROCDIR,'Cards')
     tmpfile=join(PROCDIR,'events_command.in')
     evefile=join(PROCDIR,'events_output.txt')
+    paramtag=PARAMS['TAG']
     timetag=time.strftime("%Y%m%d_%H%M%S",time.localtime(time.time()))
-    runname='run_eve_%s'%(timetag)
+    runname='run_eve_%s_%s'%(paramtag,timetag)
     EVEDIR=join(PROCDIR,'Events/%s_decayed_1'%(runname))
     tmpfile2=join(EVEDIR,'events_command.in')
     evefile2=join(EVEDIR,'events_output.txt')
@@ -88,6 +89,7 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
     copyfile(CARDS['DELPHES'],join(CARDDIR,'delphes_card.dat'))
     copyfile(CARDS['PYTHIA8'],join(CARDDIR,'pythia8_card.dat'))
     EBEAM=SQRTS/2*1000
+    MODELPARAMS=PARAMS['PARAM']
     with open(tmpfile,'w') as OUTEVE:
         OUTEVE.write('generate_events %s\n'%runname)
         OUTEVE.write('0\n')
@@ -95,8 +97,8 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
         OUTEVE.write('set ebeam2 %f\n'%(EBEAM))
         OUTEVE.write('set nevents 50000\n')
         OUTEVE.write('set no_parton_cut\n')
-        for param in PARAMS.keys():
-            OUTEVE.write('set %s %f\n'%(param,PARAMS[param]))
+        for param in MODELPARAMS.keys():
+            OUTEVE.write('set %s %f\n'%(param,MODELPARAMS[param]))
         OUTEVE.write('0\n')
     subprocess.call('python %s/bin/madevent %s > %s'%(PROCDIR,tmpfile,evefile),shell=True)
     copyfile(tmpfile,tmpfile2)
