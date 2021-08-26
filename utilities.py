@@ -25,7 +25,7 @@ def GENERATE_PROC(process, WORKDIR, UFO, YUKTYPE = None):
                     OUTGEN.write('add process %s\n'%(proc[i]))
             OUTGEN.write('output %s -f\n'%(PROCDIR))
         subprocess.call('rm -rf %s'%PROCDIR,shell=True)
-        subprocess.call('%s/bin/mg5_aMC %s'%(MG5DIR,tmpfile),shell=True)
+        subprocess.call('python %s/bin/mg5_aMC %s'%(MG5DIR,tmpfile),shell=True)
         remove(tmpfile)
         remove(join(CURDIR,'py.py'))
 
@@ -65,7 +65,7 @@ def CALCULATE_CS(process, WORKDIR, PARAMS, YUKTYPE = None, SQRTS = 14):
         for param in PARAMS.keys():
             OUTXEC.write('set %s %f\n'%(param,PARAMS[param]))
         OUTXEC.write('0\n')
-    subprocess.call('%s/bin/madevent %s > %s'%(PROCDIR,tmpfile,csfile),shell=True)
+    subprocess.call('python %s/bin/madevent %s > %s'%(PROCDIR,tmpfile,csfile),shell=True)
     res=subprocess.check_output('awk \'$1=="Cross-section" {print $3}\' %s'%(csfile),shell=True)
     copyfile(tmpfile,tmpfile2)
     copyfile(csfile,csfile2)
@@ -81,7 +81,7 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
     evefile=join(PROCDIR,'events_output.txt')
     timetag=time.strftime("%Y%m%d_%H%M%S",time.localtime(time.time()))
     runname='run_eve_%s'%(timetag)
-    EVEDIR=join(PROCDIR,'Events/%s'%(runname))
+    EVEDIR=join(PROCDIR,'Events/%s_decayed_1'%(runname))
     tmpfile2=join(EVEDIR,'events_command.in')
     evefile2=join(EVEDIR,'events_output.txt')
     copyfile(CARDS['MADSPIN'],join(CARDDIR,'madspin_card.dat'))
@@ -98,8 +98,10 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
         for param in PARAMS.keys():
             OUTEVE.write('set %s %f\n'%(param,PARAMS[param]))
         OUTEVE.write('0\n')
-    subprocess.call('%s/bin/madevent %s > %s'%(PROCDIR,tmpfile,evefile),shell=True)
-    # copyfile(tmpfile,tmpfile2)
-    # copyfile(evefile,evefile2)
-    # rootdest=join(DATADIR,'delphes_%s_%s.root'%(name,timetag))
-    # copyfile()
+    subprocess.call('python %s/bin/madevent %s > %s'%(PROCDIR,tmpfile,evefile),shell=True)
+    copyfile(tmpfile,tmpfile2)
+    copyfile(evefile,evefile2)
+    rootorig=join(EVEDIR,'tag_1_delphes_events.root')
+    rootdest=join(DATADIR,'delphes_%s_%s.root'%(name,timetag))
+    copyfile(rootorig,rootdest)
+    return rootdest

@@ -6,12 +6,11 @@ import stat
 import sys
 import shutil
 import subprocess
-import numpy as np
 import time
 import math
-import pickle
 import argparse
-import simplejson
+# import simplejson
+import json
 import multiprocessing
 from utilities import GENERATE_PROC, CALCULATE_CS
 
@@ -31,7 +30,8 @@ FLAG_XEC = args.FLAG_XEC
 FLAG_DEL = args.FLAG_DEL
 
 with open(INFOFILE,'r') as f:
-    INFO = simplejson.load(f)
+    # INFO = simplejson.load(f)
+    INFO = json.loads(f.read())
 
 YUKTYPE = INFO['TYPE']
 UFO = INFO['UFO']%(YUKTYPE)
