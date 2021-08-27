@@ -104,6 +104,6 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
     copyfile(tmpfile,tmpfile2)
     copyfile(evefile,evefile2)
     rootorig=join(EVEDIR,'tag_1_delphes_events.root')
-    rootdest=join(DATADIR,'delphes_%s_%s.root'%(name,timetag))
+    rootdest=join(DATADIR,'delphes_%s_%s_%s.root'%(name,paramtag,timetag))
     copyfile(rootorig,rootdest)
     return rootdest

@@ -73,6 +73,6 @@ if FLAG_DEL:
     for i in range(NRUNS):
         for pid in BKG_PROCS.keys():
             CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_semilep.dat')
-            GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'TAG':'bkg_3l','PARAM':{}},CARDS)
+            GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'TAG':'3l','PARAM':{}},CARDS)
             CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_dilepton.dat')
-            GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'TAG':'bkg_4l','PARAM':{}},CARDS)
+            GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'TAG':'4l','PARAM':{}},CARDS)
