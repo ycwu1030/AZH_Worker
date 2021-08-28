@@ -45,10 +45,10 @@ def CALCULATE_CS(process, WORKDIR, DATADIR, PARAMS, YUKTYPE = None, SQRTS = 14):
         os.makedirs(LOGDIR)
     timetag=time.strftime("%Y%m%d_%H%M%S",time.localtime(time.time()))
     runname='run_eve_%s_%s'%(paramid,timetag)
-    tmpfile=join(PROCDIR,'xec_command_%s.in'%(timetag))
-    csfile=join(PROCDIR,'xec_output_%s.txt'%(timetag))
-    tmpfile2=join(LOGDIR,'xec_command.in')
-    csfile2=join(LOGDIR,'xec_output.txt')
+    tmpfile=join(PROCDIR,'xec_command_%s_%s.in'%(name,paramid))
+    csfile=join(PROCDIR,'xec_output_%s_%s.txt'%(name,paramid))
+    tmpfile2=join(LOGDIR,'xec_command_%s_%s.in'%(name,paramid))
+    csfile2=join(LOGDIR,'xec_output_%s_%s.txt'%(name,paramid))
     EBEAM=SQRTS/2*1000
     MODELPARAMS=PARAMS['PARAM']
     # remove madspin to avoid decay tops
@@ -78,6 +78,7 @@ def CALCULATE_CS(process, WORKDIR, DATADIR, PARAMS, YUKTYPE = None, SQRTS = 14):
     res=subprocess.check_output('awk \'$1=="Cross-section" {print $3}\' %s'%(csfile),shell=True)
     copyfile(tmpfile,tmpfile2)
     copyfile(csfile,csfile2)
+    subprocess.call('rm -rf %s'%(PROCDIR),shell=True)
     return float(res)
 
 def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQRTS = 14):
@@ -98,11 +99,11 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
     timetag=time.strftime("%Y%m%d_%H%M%S",time.localtime(time.time()))
     runname='run_eve_%s_%s_%s'%(paramid,chanid,timetag)
     CARDDIR=join(PROCDIR,'Cards')
-    tmpfile=join(PROCDIR,'events_command_%s_%s.in'%(chanid,timetag))
-    evefile=join(PROCDIR,'events_output_%s_%s.txt'%(chanid,timetag))
+    tmpfile=join(PROCDIR,'events_command_%s_%s_%s_%s.in'%(name,paramid,chanid,timetag))
+    evefile=join(PROCDIR,'events_output_%s_%s_%s_%s.txt'%(name,paramid,chanid,timetag))
     EVEDIR=join(PROCDIR,'Events/%s_decayed_1'%(runname))
-    tmpfile2=join(LOGDIR,'events_command_%s_%s.in'%(chanid,timetag))
-    evefile2=join(LOGDIR,'events_output_%s_%s.txt'%(chanid,timetag))
+    tmpfile2=join(LOGDIR,'events_command_%s_%s_%s_%s.in'%(name,paramid,chanid,timetag))
+    evefile2=join(LOGDIR,'events_output_%s_%s_%s_%s.txt'%(name,paramid,chanid,timetag))
     copyfile(CARDS['MADSPIN'],join(CARDDIR,'madspin_card.dat'))
     copyfile(CARDS['DELPHES'],join(CARDDIR,'delphes_card.dat'))
     copyfile(CARDS['PYTHIA8'],join(CARDDIR,'pythia8_card.dat'))
@@ -124,4 +125,5 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
     rootorig=join(EVEDIR,'tag_1_delphes_events.root')
     rootdest=join(DATAPROCDIR,'delphes_%s_%s_%s_%s.root'%(name,paramid,chanid,timetag))
     copyfile(rootorig,rootdest)
+    subprocess.call('rm -rf %s'%(PROCDIR),shell=True)
     return 'delphes_%s_%s_%s_%s.root'%(name,paramid,chanid,timetag)
