@@ -92,7 +92,7 @@ if FLAG_DEL:
                 # Calculate the Cross section without decay:
                 CS = {}
                 for procid in SIG_COMPONENTS.keys():
-                    CS[procid] = 0.0 #CALCULATE_CS(SIG_COMPONENTS[procid],WORKDIR,DATADIR,PARAM,YUKTYPE)
+                    CS[procid] = CALCULATE_CS(SIG_COMPONENTS[procid],WORKDIR,DATADIR,PARAM,YUKTYPE)
                 PARAM['CS'] = CS
             if 'ROOT' not in PARAM.keys():
                 PARAM['ROOT'] = {'3l':{}, '4l': {}}
@@ -106,7 +106,7 @@ if FLAG_DEL:
                 ROOTLISTCUR = PARAM['ROOT'][chan]
                 for ntimes in range(NRUNS):
                     for procid in SIG_COMPONENTS.keys():
-                        tmp = 'test_%d'%(ntimes) #GENERATE_EVENTS(SIG_COMPONENTS[procid],WORKDIR,DATADIR,USEDPARAM,CARDS,YUKTYPE)
+                        tmp = GENERATE_EVENTS(SIG_COMPONENTS[procid],WORKDIR,DATADIR,USEDPARAM,CARDS,YUKTYPE)
                         if procid not in ROOTLISTCUR.keys():
                             ROOTLISTCUR[procid]=[tmp]
                         else:
