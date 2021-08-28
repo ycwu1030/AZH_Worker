@@ -6,4 +6,5 @@
 ##SBATCH --mail-user=ywu@okstate.edu
 ##SBATCH --mail-type=end
 
-python Process_Worker.py -i Processes/AZH.json -d -n 20
+paramfile=$1
+python Process_Worker.py -i Processes/AZH.json -d -s -n 2 -p $paramfile
