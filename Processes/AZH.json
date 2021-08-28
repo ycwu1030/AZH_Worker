@@ -11,23 +11,23 @@
             "NAME_Z": "gg_ztt_%s_tri_z"
         },
         "BOX": {
-            "PROC": ["g g > hh > l- l+ t t~ QCD =2 $$ a t t~ hl ha [noborn=QCD] QCD^2=4 TZ^2==2"],
+            "PROC": ["g g > hh > l- l+ t t~ QCD=2 [noborn=QCD] QCD^2=4 TZ^2==2 $$ a t t~ hl ha"],
             "NAME": "gg_ztt_%s_box",
-            "PROC_Z": ["g g > hh > z t t~ QCD =2 $$ a t t~ hl ha [noborn=QCD] QCD^2=4 TZ^2==2"],
+            "PROC_Z": ["g g > hh > z t t~ QCD=2 [noborn=QCD] QCD^2=4 TZ^2==2 $$ a t t~ hl ha"],
             "NAME_Z": "gg_ztt_%s_box_z"
         },
         "INTER": {
-            "PROC": ["g g > hh > l- l+ t t~ QCD=2 $$ a t t~ hl [noborn=QCD] TS^2==1 TZ^2==1"],
+            "PROC": ["g g > hh > l- l+ t t~ QCD=2 [noborn=QCD] TS^2==1 TZ^2==1 $$ a t t~ hl"],
             "NAME": "gg_ztt_%s_inter",
-            "PROC_Z": ["g g > hh > z t t~ QCD=2 $$ a t t~ hl [noborn=QCD] TS^2==1 TZ^2==1"],
+            "PROC_Z": ["g g > hh > z t t~ QCD=2 [noborn=QCD] TS^2==1 TZ^2==1 $$ a t t~ hl"],
             "NAME_Z": "gg_ztt_%s_inter_z"
         }
     },
     "SIGNAL_TOTAL": {
         "TOTAL": {
-            "PROC": ["g g > hh > l- l+ t t~ QCD=2 $$ a t t~ hl [noborn=QCD] QCD^2=4"],
+            "PROC": ["g g > hh > l- l+ t t~ QCD=2 [noborn=QCD] QCD^2=4 $$ a t t~ hl"],
             "NAME": "gg_ztt_%s_total",
-            "PROC_Z": ["g g > hh > z t t~ QCD=2 $$ a t t~ hl [noborn=QCD] QCD^2=4"],
+            "PROC_Z": ["g g > hh > z t t~ QCD=2 [noborn=QCD] QCD^2=4 $$ a t t~ hl"],
             "NAME_Z": "gg_ztt_%s_total_z"
         }
     },
