@@ -23,7 +23,7 @@ for i in range(len(rws)):
     params={}
     rw=rws[i]
     rwtag=rwstag[i]
-    for MHA in range(500,550,50): #range(500,1050,50):
+    for MHA in range(500,850,50): #range(500,1050,50):
         for MHH in range(400,MHA-100+50,50):
             WHA=MHA*rw
             WHH=MHH*rw
