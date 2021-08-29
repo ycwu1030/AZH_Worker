@@ -26,6 +26,7 @@ parser.add_argument('-n', dest='NRUNS', default=1, type=int)
 parser.add_argument('-i', dest='infofile',default='Processes/AZH.json')
 parser.add_argument('-p', dest='paramfile', default='PARAM/param_signal.json')
 parser.add_argument('-s', dest='FLAG_SIG', action='store_true')
+parser.add_argument('-sc', dest='FLAG_SIG_COMPONENTS', action='store_true') # Default calculate the total for signal, not components
 
 args = parser.parse_args()
 
@@ -35,6 +36,7 @@ FLAG_XEC = args.FLAG_XEC
 FLAG_DEL = args.FLAG_DEL
 NRUNS = args.NRUNS
 FLAG_SIG = args.FLAG_SIG
+FLAG_SIG_COMPONENTS = args.FLAG_SIG_COMPONENTS
 PARAMFILE = args.paramfile
 
 with open(INFOFILE,'r') as f:
@@ -85,37 +87,40 @@ if FLAG_DEL:
     CARDS={}
     CARDS['DELPHES']=join(CURDIR,'tmp_cards/delphes_card.dat')
     CARDS['PYTHIA8']=join(CURDIR,'tmp_cards/pythia8_card.dat')
-    if FLAG_SIG:
-        for PARAM_KEY in PARAMS.keys():
-            PARAM=PARAMS[PARAM_KEY]
-            if 'CS' not in PARAM.keys():
-                # Calculate the Cross section without decay:
-                CS = {}
-                for procid in SIG_COMPONENTS.keys():
-                    CS[procid] = CALCULATE_CS(SIG_COMPONENTS[procid],WORKDIR,DATADIR,PARAM,YUKTYPE)
-                PARAM['CS'] = CS
-            if 'ROOT' not in PARAM.keys():
-                PARAM['ROOT'] = {'3l':{}, '4l': {}}
-            CHANLIST={'3l': 'tmp_cards/madspin_card_semilep.dat', '4l': 'tmp_cards/madspin_card_dilepton.dat'}
-            for chan in CHANLIST.keys():
-                CARDS['MADSPIN']=join(CURDIR,CHANLIST[chan])
-                USEDPARAM=copy.copy(PARAM)
-                USEDPARAM['CHAN'] = chan
-                if chan not in PARAM['ROOT'].keys():
-                    PARAM['ROOT'][chan] = {}
-                ROOTLISTCUR = PARAM['ROOT'][chan]
-                for ntimes in range(NRUNS):
-                    for procid in SIG_COMPONENTS.keys():
-                        tmp = GENERATE_EVENTS(SIG_COMPONENTS[procid],WORKDIR,DATADIR,USEDPARAM,CARDS,YUKTYPE)
+    for ntimes in range(NRUNS):
+        if FLAG_SIG:
+            if FLAG_SIG_COMPONENTS:
+                SIG_TO_BE_CALCULATED = SIG_COMPONENTS
+            else:
+                SIG_TO_BE_CALCULATED = SIG_TOTAL
+            for PARAM_KEY in PARAMS.keys():
+                PARAM=PARAMS[PARAM_KEY]
+                if 'CS' not in PARAM.keys():
+                    # Calculate the Cross section without decay:
+                    CS = {}
+                    for procid in SIG_TO_BE_CALCULATED.keys():
+                        CS[procid] = CALCULATE_CS(SIG_TO_BE_CALCULATED[procid],WORKDIR,DATADIR,PARAM,YUKTYPE)
+                    PARAM['CS'] = CS
+                if 'ROOT' not in PARAM.keys():
+                    PARAM['ROOT'] = {'3l':{}, '4l': {}}
+                CHANLIST={'3l': 'tmp_cards/madspin_card_semilep.dat', '4l': 'tmp_cards/madspin_card_dilepton.dat'}
+                for chan in CHANLIST.keys():
+                    CARDS['MADSPIN']=join(CURDIR,CHANLIST[chan])
+                    USEDPARAM=copy.copy(PARAM)
+                    USEDPARAM['CHAN'] = chan
+                    if chan not in PARAM['ROOT'].keys():
+                        PARAM['ROOT'][chan] = {}
+                    ROOTLISTCUR = PARAM['ROOT'][chan]
+                    for procid in SIG_TO_BE_CALCULATED.keys():
+                        tmp = GENERATE_EVENTS(SIG_TO_BE_CALCULATED[procid],WORKDIR,DATADIR,USEDPARAM,CARDS,YUKTYPE)
                         if procid not in ROOTLISTCUR.keys():
                             ROOTLISTCUR[procid]=[tmp]
                         else:
                             ROOTLISTCUR[procid].append(tmp)
-            PARAMSRES[PARAM_KEY] = PARAM
-        with open(RESULTFILE,'w') as f:
-            json.dump(PARAMSRES,f,sort_keys=True,indent=4)
-    else:
-        for i in range(NRUNS):
+                PARAMSRES[PARAM_KEY] = PARAM
+            with open(RESULTFILE,'w') as f:
+                json.dump(PARAMSRES,f,sort_keys=True,indent=4)
+        else:
             for pid in BKG_PROCS.keys():
                 CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_semilep.dat')
                 GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'ID': 'bkg', 'CHAN': '3l','PARAM':{}},CARDS)
