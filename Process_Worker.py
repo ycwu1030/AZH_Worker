@@ -96,11 +96,11 @@ if FLAG_DEL:
             for PARAM_KEY in PARAMS.keys():
                 PARAM=PARAMS[PARAM_KEY]
                 if 'CS' not in PARAM.keys():
-                    # Calculate the Cross section without decay:
-                    CS = {}
-                    for procid in SIG_TO_BE_CALCULATED.keys():
+                    PARAM['CS'] = {}
+                CS = PARAM['CS']
+                for procid in SIG_TO_BE_CALCULATED.keys():
+                    if procid not in CS.keys():
                         CS[procid] = CALCULATE_CS(SIG_TO_BE_CALCULATED[procid],WORKDIR,DATADIR,PARAM,YUKTYPE)
-                    PARAM['CS'] = CS
                 if 'ROOT' not in PARAM.keys():
                     PARAM['ROOT'] = {'3l':{}, '4l': {}}
                 CHANLIST={'3l': 'tmp_cards/madspin_card_semilep.dat', '4l': 'tmp_cards/madspin_card_dilepton.dat'}
