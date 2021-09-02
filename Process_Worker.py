@@ -118,8 +118,8 @@ if FLAG_DEL:
                         else:
                             ROOTLISTCUR[procid].append(tmp)
                 PARAMSRES[PARAM_KEY] = PARAM
-            with open(RESULTFILE,'w') as f:
-                json.dump(PARAMSRES,f,sort_keys=True,indent=4)
+                with open(RESULTFILE,'w') as f:
+                    json.dump(PARAMSRES,f,sort_keys=True,indent=4)
         else:
             for pid in BKG_PROCS.keys():
                 CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_semilep.dat')
