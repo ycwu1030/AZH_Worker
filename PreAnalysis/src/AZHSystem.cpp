@@ -5,7 +5,7 @@
 
 #include "TLorentzVector.h"
 
-using namesapce std;
+using namespace std;
 bool FVComparePT(const TLorentzVector& a, const TLorentzVector& b) { return a.Pt() > b.Pt(); }
 
 bool AZHSystem::Setup_Lepton_System(Delphes* f) {
@@ -145,8 +145,8 @@ bool Calculate_Neutrino_Momentum(const TLorentzVector& pl, const double& pvx, co
     if (Del2 < 0) {
         return false;
     }
-    pzp = (-b + sqrt(Del2)) / 2.0 / a;
-    pzm = (-b - sqrt(Del2)) / 2.0 / a;
+    double pzp = (-b + sqrt(Del2)) / 2.0 / a;
+    double pzm = (-b - sqrt(Del2)) / 2.0 / a;
     pnu_p.SetXYZM(pvx, pvy, pzp, 0);
     pnu_m.SetXYZM(pvx, pvy, pzm, 0);
     return true;
@@ -157,8 +157,8 @@ bool AZHSystem::Setup_Neutrino(Delphes* f) {
     TLorentzVector pMET;
     MET = f->MissingET_MET[0];
     pMET.SetPtEtaPhiM(f->MissingET_MET[0], f->MissingET_Eta[0], f->MissingET_Phi[0], 0);
-    double pvx = MET.Px();
-    double pvy = MET.Py();
+    double pvx = pMET.Px();
+    double pvy = pMET.Py();
     // * Now we only consider the hardest Lepton and the first two B-jets
     TLorentzVector pnup;
     TLorentzVector pnum;
@@ -187,6 +187,7 @@ bool AZHSystem::Setup_Neutrino(Delphes* f) {
     px_nu = pnu.Px();
     py_nu = pnu.Py();
     pz_nu = pnu.Pz();
+    return true;
 }
 
 bool AZHSystem::Setup(Delphes* f) {

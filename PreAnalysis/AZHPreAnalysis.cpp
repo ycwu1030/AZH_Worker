@@ -22,6 +22,7 @@ int main(int argc, char const *argv[]) {
              << " <proc_full_name> <proc_abbr_name> <proc_cate_id> <proc_decay_id> <proc_param_name> "
                 "<output_file_name> <proc_cs> <proc_root_files...>"
              << endl;
+        return -1;
     }
 
     char proc_full_name[200];
@@ -42,7 +43,7 @@ int main(int argc, char const *argv[]) {
     } else {
         sprintf(proc_decay_name, "%s", "4l");
     }
-    char proc_para_name[100];
+    char proc_param_name[100];
     sprintf(proc_param_name, "%s", argv[5]);
     char proc_output_name[500];
     sprintf(proc_output_name, "%s", argv[6]);
@@ -59,7 +60,7 @@ int main(int argc, char const *argv[]) {
     double weight = proc_cs_with_decay / (double(NEVENTS));
 
     TFile *fout = new TFile(proc_output_name, "RECREATE");
-    TTree *tout = new TTree("AZHPreAnalysis");
+    TTree *tout = new TTree("AZHPreAnalysis", "Pre-Analysis for AZH System");
 
     // * Process Information
     tout->Branch("Proc_Full_Name", proc_full_name, "Proc_Full_Name/C");
@@ -70,6 +71,7 @@ int main(int argc, char const *argv[]) {
     tout->Branch("Decay_Name", proc_decay_name, "Decay_Name/C");
     tout->Branch("CS_without_Decay", &proc_cs, "CS_without_Decay/D");
     tout->Branch("CS_with_Decay", &proc_cs_with_decay, "CS_with_Decay/D");
+    tout->Branch("Proc_Param_Name", &proc_param_name, "Proc_Param_Name/C");
     tout->Branch("N_EVENTS", &NEVENTS, "N_EVENTS/I");
     tout->Branch("Weight", &weight, "Weight/D");
 

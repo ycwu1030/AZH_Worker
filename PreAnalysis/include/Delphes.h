@@ -15,7 +15,10 @@
 
 // Header file for the classes stored in the TTree if any.
 #include "TClonesArray.h"
+#include "TLorentzVector.h"
 #include "TObject.h"
+#include "TRef.h"
+#include "TRefArray.h"
 
 class Delphes {
 public:
