@@ -94,11 +94,14 @@ bool AZHSystem::Setup_Lepton_System(Delphes* f) {
     NMUON_ISO = LVMUON_P.size() + LVMUON_M.size();
 
     LEP_ISO.clear();
-    auto iter = LEP_ISO.begin();
-    iter = LEP_ISO.insert(iter, LVELE_P.begin(), LVELE_P.end());
-    iter = LEP_ISO.insert(iter, LVELE_M.begin(), LVELE_M.end());
-    iter = LEP_ISO.insert(iter, LVMUON_P.begin(), LVMUON_P.end());
-    iter = LEP_ISO.insert(iter, LVMUON_M.begin(), LVMUON_M.end());
+    vector<TLorentzVector>::iterator iter = LEP_ISO.begin();
+    LEP_ISO.insert(iter, LVELE_P.begin(), LVELE_P.end());
+    iter = LEP_ISO.begin();
+    LEP_ISO.insert(iter, LVELE_M.begin(), LVELE_M.end());
+    iter = LEP_ISO.begin();
+    LEP_ISO.insert(iter, LVMUON_P.begin(), LVMUON_P.end());
+    iter = LEP_ISO.begin();
+    LEP_ISO.insert(iter, LVMUON_M.begin(), LVMUON_M.end());
     if (LEP_ISO.size() < 1) return false;
     sort(LEP_ISO.begin(), LEP_ISO.end(), FVComparePT);
     return true;
