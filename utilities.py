@@ -146,7 +146,7 @@ def AZH_Pre_Analysis(process, DATADIR, PARAMS, YUKTYPE = None, CHAN='3l'):
         os.makedirs(OUTPUTDIR)
     OUTPUTNAME=join(OUTPUTDIR,'AZH_PreAna_%s_total_%s_%s.root'%(name,paramid,CHAN))
     ROOT_FILE_PREFIX='delphes_%s_total_%s_%s'%(name,paramid,CHAN)
-    COMMAND='./PreAnalysis/AZHPreAnalysis.x %s %s $d %d %s %s %f'%(name,name,cate,decay_id,paramid,OUTPUTNAME,CS)
+    COMMAND='./PreAnalysis/AZHPreAnalysis.x %s %s %d %d %s %s %f'%(name,name,cate,decay_id,paramid,OUTPUTNAME,CS)
     INPUT_FILES = [ f for f in listdir(DATAPROCDIR) if ROOT_FILE_PREFIX in f ]
     for f in INPUT_FILES:
         COMMAND += ' %s'%(f)
