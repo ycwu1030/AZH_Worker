@@ -127,3 +127,27 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
     copyfile(rootorig,rootdest)
     subprocess.call('rm -rf %s'%(PROCDIR),shell=True)
     return 'delphes_%s_%s_%s_%s.root'%(name,paramid,chanid,timetag)
+
+def AZH_Pre_Analysis(process, DATADIR, PARAMS, YUKTYPE = None, CHAN='3l'):
+    name=process['NAME']
+    cate=0
+    if YUKTYPE:
+        name=process['NAME']%(YUKTYPE)
+        cate=1
+    if CHAN == '3l':
+        decay_id = 0
+    else:
+        decay_id = 1
+    paramid=PARAMS['ID']
+    DATAPROCDIR=join(DATADIR,paramid)
+    CS=PARAMS['CS']['TOTAL']
+    OUTPUTDIR=join(DATADIR,'PreAna')
+    if not os.path.exists(OUTPUTDIR):
+        os.makedirs(OUTPUTDIR)
+    OUTPUTNAME=join(OUTPUTDIR,'AZH_PreAna_%s_total_%s_%s.root'%(name,paramid,CHAN))
+    ROOT_FILE_PREFIX='delphes_%s_total_%s_%s'%(name,paramid,CHAN)
+    COMMAND='./PreAnalysis/AZHPreAnalysis.x %s %s $d %d %s %s %f'%(name,name,cate,decay_id,paramid,OUTPUTNAME,CS)
+    INPUT_FILES = [ f for f in listdir(DATAPROCDIR) if ROOT_FILE_PREFIX in f ]
+    for f in INPUT_FILES:
+        COMMAND += ' %s'%(f)
+    subprocess.call(COMMAND,shell=True)

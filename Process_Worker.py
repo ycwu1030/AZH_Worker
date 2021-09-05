@@ -14,7 +14,7 @@ import argparse
 # import simplejson
 import json
 import multiprocessing
-from utilities import GENERATE_EVENTS, GENERATE_PROC, CALCULATE_CS
+from utilities import GENERATE_EVENTS, GENERATE_PROC, CALCULATE_CS, AZH_Pre_Analysis
 
 CURDIR = os.getcwd()
 
@@ -22,6 +22,7 @@ parser = argparse.ArgumentParser(prog='THDM_Worker')
 parser.add_argument('-g', dest='FLAG_GEN', action='store_true')
 parser.add_argument('-x', dest='FLAG_XEC', action='store_true')
 parser.add_argument('-d', dest='FLAG_DEL', action='store_true')
+parser.add_argument('-a', dest='FLAG_ANA', action='store_true')
 parser.add_argument('-n', dest='NRUNS', default=1, type=int)
 parser.add_argument('-i', dest='infofile',default='Processes/AZH.json')
 parser.add_argument('-p', dest='paramfile', default='PARAM/param_signal.json')
@@ -34,6 +35,7 @@ INFOFILE = args.infofile
 FLAG_GEN = args.FLAG_GEN
 FLAG_XEC = args.FLAG_XEC
 FLAG_DEL = args.FLAG_DEL
+FLAG_ANA = args.FLAG_ANA
 NRUNS = args.NRUNS
 FLAG_SIG = args.FLAG_SIG
 FLAG_SIG_COMPONENTS = args.FLAG_SIG_COMPONENTS
@@ -124,3 +126,9 @@ if FLAG_DEL:
                 GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'ID': 'bkg', 'CHAN': '3l','PARAM':{}},CARDS)
                 CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_dilepton.dat')
                 GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'ID': 'bkg', 'CHAN':'4l','PARAM':{}},CARDS)
+
+if FLAG_ANA:
+    with open(PARAMFILE,'r') as f:
+        PARAMS = json.load(f)
+    for PARAM_KEY in PARAMS.keys():
+        AZH_Pre_Analysis(SIG_TOTAL['TOTAL'],DATADIR,PARAMS[PARAM_KEY],YUKTYPE)
