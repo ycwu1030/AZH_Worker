@@ -55,7 +55,7 @@ int main(int argc, char const *argv[]) {
     for (int i = 8; i < argc; i++) {
         ch->Add(argv[i]);
     }
-    Delphes *del = new Delphes(ch);
+    Delphes del(ch);
     int NEVENTS = ch->GetEntries();
     double weight = proc_cs_with_decay / (double(NEVENTS));
 
@@ -76,18 +76,21 @@ int main(int argc, char const *argv[]) {
     tout->Branch("Weight", &weight, "Weight/D");
 
     // * AZH System Information
-    AZHSystem *AZH = new AZHSystem();
-    tout->Branch("AZHSystem", &AZH);
+    AZHSystem AZH;
+    AZH.Setup_Branches(tout);
 
     for (int ne = 0; ne < NEVENTS; ne++) {
-        del->GetEntry(ne);
-        AZH->Setup(del);
+        if ((ne + 1) % 1000 == 0) {
+            cout << "Events: " << ne + 1 << "\r";
+            cout.flush();
+        }
+        del.GetEntry(ne);
+        bool good = AZH.Setup(&del);
+        if (!good) continue;
         tout->Fill();
     }
     fout->cd();
     tout->Write();
-
-    delete AZH;
-    delete del;
+    fout->Close();
     return 0;
 }

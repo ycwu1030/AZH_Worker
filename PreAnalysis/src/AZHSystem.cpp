@@ -1,6 +1,7 @@
 #include "AZHSystem.h"
 
 #include <algorithm>
+#include <iostream>
 #include <vector>
 
 #include "TLorentzVector.h"
@@ -43,9 +44,10 @@ bool AZHSystem::Setup_Lepton_System(Delphes* f) {
     int NE_M = LVELE_M.size();
     int NM_P = LVMUON_P.size();
     int NM_M = LVMUON_M.size();
+    // cout << "NEP, NEM, NMP, NMM: " << NE_P << " " << NE_M << " " << NM_P << " " << NM_M << endl;
     NELE_TOTAL = NE_P + NE_M;
     NMUON_TOTAL = NM_P + NM_M;
-    if (NE_P < 1 && NE_M < 1 && NM_P < 1 && NM_M < 1) {
+    if ((NE_P < 1 || NE_M < 1) && (NM_P < 1 || NM_M < 1)) {
         // not possible to provide OSSF lepton pair
         return false;
     }
@@ -67,7 +69,7 @@ bool AZHSystem::Setup_Lepton_System(Delphes* f) {
     int id_M_m = -1;
     for (int i = 0; i < NM_P; i++) {
         for (int j = 0; j < NM_M; j++) {
-            double mtmp = (LVMUON_P[i], LVMUON_M[j]).M();
+            double mtmp = (LVMUON_P[i] + LVMUON_M[j]).M();
             if (fabs(mtmp - 91.1776) < fabs(MLL_M - 91.1776)) {
                 MLL_M = mtmp;
                 id_M_p = i;
@@ -139,11 +141,11 @@ bool Calculate_Neutrino_Momentum(const TLorentzVector& pl, const double& pvx, co
     double ml = pl.M();
     double El = pl.E();
     // The z-component of neutrino momentum satisfies:
-    // (4*plz^2-2*El^2)*pz^2 +
-    // 4*plz*(MW^2-ml^2+2*plx*pvx+2*ply*pvy)*pz+(MW^2-ml^2+2*plx*pvx+2*ply*pvy)^2-2*El^2(pvx^2+pvy^2) = 0;
-    double a = 4 * plz * plz - 2 * El * El;
+    // (4*plz^2-4*El^2)*pz^2 +
+    // 4*plz*(MW^2-ml^2+2*plx*pvx+2*ply*pvy)*pz+(MW^2-ml^2+2*plx*pvx+2*ply*pvy)^2-4*El^2(pvx^2+pvy^2) = 0;
+    double a = 4 * plz * plz - 4 * El * El;
     double b = 4 * plz * (MW * MW - ml * ml + 2 * plx * pvx + 2 * ply * pvy);
-    double c = pow(MW * MW - ml * ml + 2 * plx * pvx + 2 * ply * pvy, 2) - 2 * El * El * (pvx * pvx + pvy * pvy);
+    double c = pow(MW * MW - ml * ml + 2 * plx * pvx + 2 * ply * pvy, 2) - 4 * El * El * (pvx * pvx + pvy * pvy);
     double Del2 = b * b - 4 * a * c;
     if (Del2 < 0) {
         return false;
@@ -168,25 +170,61 @@ bool AZHSystem::Setup_Neutrino(Delphes* f) {
     bool goodnu = Calculate_Neutrino_Momentum(LEP_ISO[0], pvx, pvy, pnup, pnum);
     if (!goodnu) return false;
     double MT_tmp_p = -14000;
+    int id_b_p = -1;
     double MT_tmp_m = -14000;
+    int id_b_m = -1;
     for (int i = 0; i < NBJET; i++) {
         double tmp = (LEP_ISO[0] + pnup + BJETS[i]).M();
         if (fabs(tmp - MT) < fabs(MT_tmp_p - MT)) {
             MT_tmp_p = tmp;
+            id_b_p = i;
         }
         tmp = (LEP_ISO[0] + pnum + BJETS[i]).M();
         if (fabs(tmp - MT) < fabs(MT_tmp_m - MT)) {
             MT_tmp_m = tmp;
+            id_b_m = i;
         }
     }
     TLorentzVector pnu;
+    int id_b_lep;
     if (fabs(MT_tmp_p - MT) < fabs(MT_tmp_m - MT)) {
+        mt_rec_lep = MT_tmp_p;
         pnu = pnup;
+        id_b_lep = id_b_p;
     } else {
+        mt_rec_lep = MT_tmp_m;
         pnu = pnum;
+        id_b_lep = id_b_m;
     }
-    mtt = (pnu + LEP_ISO[0] + BJETS[0] + BJETS[1] + LIGHTJETS[0] + LIGHTJETS[1]).M();
-    mztt = (pnu + LEP_ISO[0] + BJETS[0] + BJETS[1] + LIGHTJETS[0] + LIGHTJETS[1] + LEP_OSSF[0] + LEP_OSSF[1]).M();
+
+    // * The hadronic W:
+    double id_j_1;
+    double id_j_2;
+    mw_had = -14000;
+    for (int i = 0; i < NLIGHTJET; i++) {
+        for (int j = i + 1; j < NLIGHTJET; j++) {
+            double tmp = (LIGHTJETS[i] + LIGHTJETS[j]).M();
+            if (fabs(tmp - 80.385) < fabs(mw_had - 80.385)) {
+                mw_had = tmp;
+                id_j_1 = i;
+                id_j_2 = j;
+            }
+        }
+    }
+    TLorentzVector pWhad = LIGHTJETS[id_j_1] + LIGHTJETS[id_j_2];
+    // * The hadronic top:
+    double id_b_had = -1;
+    mt_rec_had = -14000;
+    for (int i = 0; i < NBJET; i++) {
+        if (i == id_b_lep) continue;
+        double tmp = (BJETS[i] + pWhad).M();
+        if (fabs(tmp - 172.5) < fabs(mt_rec_had - 172.5)) {
+            mt_rec_had = tmp;
+            id_b_had = i;
+        }
+    }
+    mtt = (pnu + LEP_ISO[0] + BJETS[id_b_lep] + BJETS[id_b_had] + pWhad).M();
+    mztt = (pnu + LEP_ISO[0] + BJETS[id_b_lep] + BJETS[id_b_had] + pWhad + LEP_OSSF[0] + LEP_OSSF[1]).M();
     px_nu = pnu.Px();
     py_nu = pnu.Py();
     pz_nu = pnu.Pz();
@@ -203,4 +241,25 @@ bool AZHSystem::Setup(Delphes* f) {
     if (!good) return good;
     HT = f->ScalarHT_HT[0];
     return good;
+}
+
+void AZHSystem::Setup_Branches(TTree* t) {
+    t->Branch("NELE_TOTAL", &NELE_TOTAL, "NELE_TOTAL/I");
+    t->Branch("NMUON_TOTAL", &NMUON_TOTAL, "NMUON_TOTAL/I");
+    t->Branch("NELE_ISO", &NELE_ISO, "NELE_ISO/I");
+    t->Branch("NMUON_ISO", &NMUON_ISO, "NMUON_ISO/I");
+    t->Branch("MOSSF_BEST", &MOSSF_BEST, "MOSSF_BEST/D");
+    t->Branch("NJET_TOTAL", &NJET_TOTAL, "NJET_TOTAL/I");
+    t->Branch("NBJET", &NBJET, "NBJET/I");
+    t->Branch("NLIGHTJET", &NLIGHTJET, "NLIGHTJET/I");
+    t->Branch("Px_nu", &px_nu, "Px_nu/D");
+    t->Branch("Py_nu", &py_nu, "Py_nu/D");
+    t->Branch("Pz_nu", &pz_nu, "Pz_nu/D");
+    t->Branch("mw_had", &mw_had, "mw_had/D");
+    t->Branch("mt_rec_lep", &mt_rec_lep, "mt_rec_lep/D");
+    t->Branch("mt_rec_had", &mt_rec_had, "mt_rec_had/D");
+    t->Branch("mtt", &mtt, "mtt/D");
+    t->Branch("mztt", &mztt, "mztt/D");
+    t->Branch("HT", &HT, "HT/D");
+    t->Branch("MET", &MET, "MET/D");
 }

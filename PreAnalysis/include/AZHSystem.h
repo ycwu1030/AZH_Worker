@@ -12,6 +12,7 @@ public:
     ~AZHSystem(){};
 
     bool Setup(Delphes *f);
+    void Setup_Branches(TTree *t);
 
     int NELE_TOTAL;
     int NMUON_TOTAL;
@@ -25,6 +26,9 @@ public:
     double px_nu;
     double py_nu;
     double pz_nu;
+    double mw_had;
+    double mt_rec_lep;
+    double mt_rec_had;
     double mtt;
     double mztt;
     double HT;
