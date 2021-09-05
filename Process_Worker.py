@@ -68,9 +68,7 @@ if FLAG_GEN:
         GENERATE_PROC(BKG_PROCS[pid],WORKDIR,UFO)
 
 if FLAG_XEC: # Calculate Cross Section, keep the value for future reference
-    res1=CALCULATE_CS(SIG_COMPONENTS['TRI'],WORKDIR, {'MHH':550,'MHA':700,'MHp':700,'tb':1,'WHH':27.5,'WHA':35,'WHp':35},YUKTYPE)
-    res2=CALCULATE_CS(BKG_PROCS['TOTAL'],WORKDIR, {'MHH':550,'MHA':700,'MHp':700,'tb':1,'WHH':27.5,'WHA':35,'WHp':35})
-    print(res1)
+    res2=CALCULATE_CS(BKG_PROCS['TOTAL'],WORKDIR, DATADIR, {'ID': 'bkg','PARAM':{}})
     print(res2)
 
 
