@@ -130,5 +130,9 @@ if FLAG_DEL:
 if FLAG_ANA:
     with open(PARAMFILE,'r') as f:
         PARAMS = json.load(f)
-    for PARAM_KEY in PARAMS.keys():
-        AZH_Pre_Analysis(SIG_TOTAL['TOTAL'],DATADIR,PARAMS[PARAM_KEY],YUKTYPE)
+    if FLAG_SIG:
+        for PARAM_KEY in PARAMS.keys():
+            AZH_Pre_Analysis(SIG_TOTAL['TOTAL'],DATADIR,PARAMS[PARAM_KEY],YUKTYPE)
+    else:
+        for PARAM_KEY in PARAMS.keys():
+            AZH_Pre_Analysis(BKG_PROCS['TOTAL'],DATADIR,PARAMS[PARAM_KEY])
