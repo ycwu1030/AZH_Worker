@@ -72,7 +72,7 @@ $(Target):	$(OBJS) $(MainFile)
 	@echo "--->$@ done"
 
 $(ObjDir)/%.$(ObjSuf):$(SrcDir)/%.$(SrcSuf)
-	@mkdir -rf $(ObjDir)
+	@mkdir -p $(ObjDir)
 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 #-------------------------------------------------------------------------------
