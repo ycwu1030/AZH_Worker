@@ -1,3 +1,6 @@
+#ifndef __AZHSystem__H__
+#define __AZHSystem__H__
+
 #include <vector>
 
 #include "Delphes.h"
@@ -43,3 +46,5 @@ private:
     std::vector<TLorentzVector> BJETS;
     std::vector<TLorentzVector> LIGHTJETS;
 };
+
+#endif  //__AZHSystem__H__
