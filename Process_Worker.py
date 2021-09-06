@@ -14,7 +14,7 @@ import argparse
 # import simplejson
 import json
 import multiprocessing
-from utilities import GENERATE_EVENTS, GENERATE_PROC, CALCULATE_CS, AZH_Pre_Analysis
+from utilities import GENERATE_EVENTS, GENERATE_PROC, CALCULATE_CS, AZH_Plot, AZH_Pre_Analysis
 
 CURDIR = os.getcwd()
 
@@ -23,9 +23,11 @@ parser.add_argument('-g', dest='FLAG_GEN', action='store_true')
 parser.add_argument('-x', dest='FLAG_XEC', action='store_true')
 parser.add_argument('-d', dest='FLAG_DEL', action='store_true')
 parser.add_argument('-a', dest='FLAG_ANA', action='store_true')
+parser.add_argument('-plot', dest='FLAG_PLOT', action='store_true')
 parser.add_argument('-n', dest='NRUNS', default=1, type=int)
 parser.add_argument('-i', dest='infofile',default='Processes/AZH.json')
 parser.add_argument('-p', dest='paramfile', default='PARAM/param_signal.json')
+parser.add_argument('-pb', dest='paramfile_bkg', default='DATADIR/param_bkg.json')
 parser.add_argument('-s', dest='FLAG_SIG', action='store_true')
 parser.add_argument('-sc', dest='FLAG_SIG_COMPONENTS', action='store_true') # Default calculate the total for signal, not components
 
@@ -36,10 +38,12 @@ FLAG_GEN = args.FLAG_GEN
 FLAG_XEC = args.FLAG_XEC
 FLAG_DEL = args.FLAG_DEL
 FLAG_ANA = args.FLAG_ANA
+FLAG_PLOT = args.FLAG_PLOT
 NRUNS = args.NRUNS
 FLAG_SIG = args.FLAG_SIG
 FLAG_SIG_COMPONENTS = args.FLAG_SIG_COMPONENTS
 PARAMFILE = args.paramfile
+PARAMFILE_BKG = args.paramfile_bkg
 
 with open(INFOFILE,'r') as f:
     # INFO = simplejson.load(f)
@@ -136,3 +140,12 @@ if FLAG_ANA:
     else:
         for PARAM_KEY in PARAMS.keys():
             AZH_Pre_Analysis(BKG_PROCS['TOTAL'],DATADIR,PARAMS[PARAM_KEY])
+
+
+if FLAG_PLOT:
+    with open(PARAMFILE,'r') as f:
+        PARAMS = json.load(f)
+    with open(PARAMFILE_BKG,'r') as f:
+        PARAMS_BKG = json.load(f)
+    for PARAM_KEY in PARAMS.keys():
+        AZH_Plot(PARAMS[PARAM_KEY],PARAMS_BKG['bkg'],SIG_TOTAL['TOTAL'],BKG_PROCS['TOTAL'],DATADIR,YUKTYPE)

@@ -171,11 +171,12 @@ void Plot_Pool::Dump_Plots(const char *dirname, const char *bkgname, const char 
     char tmp[500];
     sprintf(tmp, "%s/Plots%s.root", dirname, NORM_TO_ONE ? "_NORM" : "");
     TFile *fPlots = new TFile(tmp, "RECREATE");
-    cout << "NORM to ONE: " << NORM_TO_ONE << endl;
+    // cout << "NORM to ONE: " << NORM_TO_ONE << endl;
     for (int i = 0; i < NVAR; i++) {
-        cout << "For VAR: " << NAME_X[i] << endl;
+        // cout << "For VAR: " << NAME_X[i] << endl;
         if (NORM_TO_ONE) HIST_BKG[i]->Scale(1.0 / NORM_BKG[i]);
         HIST_BKG[i]->GetYaxis()->SetTitle(NORM_TO_ONE ? "Arbitrary Unit" : "#sigma [fb/bin]");
+        HIST_BKG[i]->GetXaxis()->SetTitle(TITLE_X[i].c_str());
         HIST_BKG[i]->SetLineColor(kGray + 2);
         fPlots->cd();
         HIST_BKG[i]->Write();
@@ -184,6 +185,7 @@ void Plot_Pool::Dump_Plots(const char *dirname, const char *bkgname, const char 
 
         if (NORM_TO_ONE) HIST_SIG[i]->Scale(1.0 / NORM_SIG[i]);
         HIST_SIG[i]->GetYaxis()->SetTitle(NORM_TO_ONE ? "Arbitrary Unit" : "#sigma [fb/bin]");
+        HIST_SIG[i]->GetXaxis()->SetTitle(TITLE_X[i].c_str());
         HIST_SIG[i]->SetLineColor(kRed);
         fPlots->cd();
         HIST_SIG[i]->Write();
@@ -193,6 +195,7 @@ void Plot_Pool::Dump_Plots(const char *dirname, const char *bkgname, const char 
         CANVAS[i]->cd();
         STK[i]->Draw("nostack hist");
         STK[i]->GetYaxis()->SetTitle(NORM_TO_ONE ? "Arbitrary Unit" : "#sigma [fb/bin]");
+        STK[i]->GetXaxis()->SetTitle(TITLE_X[i].c_str());
         LG[i]->Draw("SAME");
         sprintf(tmp, "%s/C_VAR-%d_%s%s.png", dirname, i + 1, NAME_X[i].c_str(), NORM_TO_ONE ? "_NORM" : "");
         CANVAS[i]->SaveAs(tmp);
