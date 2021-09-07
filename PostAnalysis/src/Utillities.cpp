@@ -47,3 +47,9 @@ void SetPlotStyle() {
     gStyle->SetLabelOffset(0.012, "X");
     gStyle->SetLabelOffset(0.012, "Y");
 }
+
+double NLL(double obs, double exp) {
+    if (exp < 1e-5) return 0;
+    if (obs < 1e-5) return 2 * exp;
+    return 2 * (exp - obs + obs * log(obs / exp));
+}

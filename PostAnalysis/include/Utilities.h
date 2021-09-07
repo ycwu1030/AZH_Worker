@@ -3,4 +3,6 @@
 
 void SetPlotStyle();
 
+double NLL(double obs, double exp);
+
 #endif  //__UTILITIES_H__
