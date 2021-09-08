@@ -160,6 +160,8 @@ if FLAG_NLL:
     outputfile=PARAMFILE.replace('param_signal','nll_result_signal')
     outputfile=outputfile.replace('.json','.txt')
     with open(outputfile, 'w') as f:
+        f.write('MHA MHH tb WR CS MU NLL\n')
+        f.flush()
         for PARAM_KEY in PARAMS.keys():
             PARAM_SIG = PARAMS[PARAM_KEY]
             NLL, MU=AZH_NLL(PARAM_SIG,PARAMS_BKG['bkg'],SIG_TOTAL['TOTAL'],BKG_PROCS['TOTAL'],DATADIR,YUKTYPE)
