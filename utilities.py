@@ -170,3 +170,19 @@ def AZH_Plot(PARAMS_SIG,PARAMS_BKG,PROC_SIG,PROC_BKG,DATADIR,YUKTYPE,CHAN='3l'):
     BKG_FILE=join(PREANADIR,'AZH_PreAna_%s_%s_%s.root'%(BKG_NAME,PARAM_BKG_ID,CHAN))
     COMMAND='./PostAnalysis/AZH_Plot.x %s %s %s'%(OUTPUTDIR,SIG_FILE,BKG_FILE)
     subprocess.call(COMMAND,shell=True)
+
+def AZH_NLL(PARAMS_SIG,PARAMS_BKG,PROC_SIG,PROC_BKG,DATADIR,YUKTYPE,CHAN='3l'):
+    SIG_NAME = PROC_SIG['NAME']%(YUKTYPE)
+    BKG_NAME = PROC_BKG['NAME']
+    PARAM_SIG_ID=PARAMS_SIG['ID']
+    PARAM_BKG_ID=PARAMS_BKG['ID']
+    OUTPUTFILE='NLL_RES_%s.txt'%(PARAM_SIG_ID)
+    PREANADIR=join(DATADIR,'PreAna')
+    SIG_FILE=join(PREANADIR,'AZH_PreAna_%s_%s_%s.root'%(SIG_NAME,PARAM_SIG_ID,CHAN))
+    BKG_FILE=join(PREANADIR,'AZH_PreAna_%s_%s_%s.root'%(BKG_NAME,PARAM_BKG_ID,CHAN))
+    COMMAND='./PostAnalysis/AZH_NLL.x %s %s %s'%(OUTPUTFILE,SIG_FILE,BKG_FILE)
+    subprocess.call(COMMAND,shell=True)
+    NLL=subprocess.check_output('awk \'$1=="NLL" {print $2}\' %s'%(OUTPUTFILE),shell=True)
+    MU=subprocess.check_output('awk \'$1=="MU" {print $2}\' %s'%(OUTPUTFILE),shell=True)
+    remove(OUTPUTFILE)
+    return NLL, MU

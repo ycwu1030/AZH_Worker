@@ -15,7 +15,8 @@ public:
                    const double Y_HIGH = 1000);
     ~NLL_Calculator();
 
-    double GetNLL(const double lumi = 3000);
+    double Get_NLL(const double lumi = 3000, const double mu_S = 1);
+    double Get_mu_at_95CL(const double lumi = 3000);
 };
 
 #endif  //__NLL_CALCULATOR_H__

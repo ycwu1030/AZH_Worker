@@ -14,7 +14,7 @@ import argparse
 # import simplejson
 import json
 import multiprocessing
-from utilities import GENERATE_EVENTS, GENERATE_PROC, CALCULATE_CS, AZH_Plot, AZH_Pre_Analysis
+from utilities import AZH_NLL, GENERATE_EVENTS, GENERATE_PROC, CALCULATE_CS, AZH_Plot, AZH_Pre_Analysis
 
 CURDIR = os.getcwd()
 
@@ -24,6 +24,7 @@ parser.add_argument('-x', dest='FLAG_XEC', action='store_true')
 parser.add_argument('-d', dest='FLAG_DEL', action='store_true')
 parser.add_argument('-a', dest='FLAG_ANA', action='store_true')
 parser.add_argument('-plot', dest='FLAG_PLOT', action='store_true')
+parser.add_argument('-nll',dest='FLAG_NLL',action='store_true')
 parser.add_argument('-n', dest='NRUNS', default=1, type=int)
 parser.add_argument('-i', dest='infofile',default='Processes/AZH.json')
 parser.add_argument('-p', dest='paramfile', default='PARAM/param_signal.json')
@@ -39,6 +40,7 @@ FLAG_XEC = args.FLAG_XEC
 FLAG_DEL = args.FLAG_DEL
 FLAG_ANA = args.FLAG_ANA
 FLAG_PLOT = args.FLAG_PLOT
+FLAG_NLL = args.FLAG_NLL
 NRUNS = args.NRUNS
 FLAG_SIG = args.FLAG_SIG
 FLAG_SIG_COMPONENTS = args.FLAG_SIG_COMPONENTS
@@ -149,3 +151,18 @@ if FLAG_PLOT:
         PARAMS_BKG = json.load(f)
     for PARAM_KEY in PARAMS.keys():
         AZH_Plot(PARAMS[PARAM_KEY],PARAMS_BKG['bkg'],SIG_TOTAL['TOTAL'],BKG_PROCS['TOTAL'],DATADIR,YUKTYPE)
+
+if FLAG_NLL:
+    with open(PARAMFILE,'r') as f:
+        PARAMS = json.load(f)
+    with open(PARAMFILE_BKG,'r') as f:
+        PARAMS_BKG = json.load(f)
+    outputfile=PARAMFILE.replace('param_signal','nll_result_signal')
+    outputfile=outputfile.replace('.json','.txt')
+    with open(outputfile, 'w') as f:
+        for PARAM_KEY in PARAMS.keys():
+            PARAM_SIG = PARAMS[PARAM_KEY]
+            NLL, MU=AZH_NLL(PARAM_SIG,PARAMS_BKG['bkg'],SIG_TOTAL['TOTAL'],BKG_PROCS['TOTAL'],DATADIR,YUKTYPE)
+            # print(PARAM_SIG['PARAM']['MHA'],PARAM_SIG['PARAM']['MHH'],PARAM_SIG['PARAM']['tb'],PARAM_SIG['AUX']['WidthRatio'],NLL)
+            f.write('%.3f %.3f %.3f %.3f %.6f %.6f %.6f\n'%(PARAM_SIG['PARAM']['MHA'],PARAM_SIG['PARAM']['MHH'],PARAM_SIG['PARAM']['tb'],PARAM_SIG['AUX']['WidthRatio'],PARAM_SIG['CS']['TOTAL'],float(MU),float(NLL)))
+            f.flush()

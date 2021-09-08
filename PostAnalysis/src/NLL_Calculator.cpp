@@ -41,7 +41,7 @@ NLL_Calculator::~NLL_Calculator() {
     delete h_bkg;
 }
 
-double NLL_Calculator::GetNLL(const double lumi) {
+double NLL_Calculator::Get_NLL(const double lumi, const double mu_S) {
     double nll = 0;
     int nbinall;
     double N_SIG;
@@ -49,7 +49,7 @@ double NLL_Calculator::GetNLL(const double lumi) {
     for (int i = 0; i < h_sig->GetNbinsX(); i++) {
         for (int j = 0; j < h_sig->GetNbinsY(); j++) {
             nbinall = h_sig->GetBin(i + 1, j + 1);
-            N_SIG = h_sig->GetBinContent(nbinall) * lumi;
+            N_SIG = h_sig->GetBinContent(nbinall) * lumi * mu_S;
             nbinall = h_bkg->GetBin(i + 1, j + 1);
             N_BKG = h_bkg->GetBinContent(nbinall) * lumi;
             nll += NLL(N_SIG + N_BKG, N_BKG);
@@ -59,4 +59,42 @@ double NLL_Calculator::GetNLL(const double lumi) {
         }
     }
     return nll;
+}
+
+double NLL_Calculator::Get_mu_at_95CL(const double lumi) {
+    static const double NLL_at_95CL = 3.84;
+    double mu_min = -1;
+    double mu_max = -1;
+    double tmp_nll = Get_NLL(lumi, 1.0);
+    double tmp_mu;
+    if (tmp_nll < 3.84) {
+        mu_min = 1.0;
+        tmp_mu = 2.0;
+    } else {
+        mu_max = 1.0;
+        tmp_mu = 0.5;
+    }
+    while (true) {
+        tmp_nll = Get_NLL(lumi, tmp_mu);
+        if (tmp_nll < 3.84) {
+            // if (mu_min < 0 || tmp_nll > mu_min) {
+            mu_min = tmp_mu;
+            // }
+        } else {
+            // if (mu_max < 0 || tmp_nll < mu_max) {
+            mu_max = tmp_mu;
+            // }
+        }
+        if (mu_min < 0) {
+            tmp_mu /= 2;
+        } else if (mu_max < 0) {
+            tmp_mu *= 2;
+        } else {
+            tmp_mu = (mu_min + mu_max) / 2.0;
+        }
+        if (fabs(mu_max - mu_min) < 1e-5) {
+            break;
+        }
+    }
+    return (mu_max + mu_min) / 2.0;
 }

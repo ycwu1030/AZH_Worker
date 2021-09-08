@@ -16,9 +16,11 @@ int main(int argc, char const *argv[]) {
 
     ofstream output(argv[1]);
     NLL_Calculator NLLC(argv[2], argv[3]);
-    double nll = NLLC.GetNLL();
+    double nll = NLLC.Get_NLL();
+    double mu = NLLC.Get_mu_at_95CL();
 
     output << "NLL  " << nll << endl;
+    output << "MU   " << mu << endl;
 
     return 0;
 }
