@@ -8,3 +8,4 @@ py.py
 *.o
 *.x
 *.root
+*.ipynb_checkpoints/
