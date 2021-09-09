@@ -89,6 +89,7 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
     paramid=PARAMS['ID']
     chanid=PARAMS['CHAN']
     PROCDIR=join(WORKDIR,"%s_%s_%s"%(name,paramid,chanid))
+    print('Generating Events for %s process for parameter id %s with %s channel'%(name,paramid,chanid))
     subprocess.call('cp -r %s %s'%(PROCDIR_ORI,PROCDIR),shell=True)
     DATAPROCDIR=join(DATADIR,paramid)
     LOGDIR=join(DATAPROCDIR,'logs')

@@ -1,6 +1,6 @@
 WORKDIR/
-DATADIR/
 MG5DIR/
+DATADIR/*
 slurm*.out
 *.pyc
 py.py
@@ -9,3 +9,5 @@ py.py
 *.x
 *.root
 *.ipynb_checkpoints/
+!DATADIR/*.json
+!DATADIR/*.txt
