@@ -1,0 +1,42 @@
+{
+    "TYPE": "Type-I",
+    "UFO": "2HDM_CPC_%s_NLO_cba_UFO-alignment",
+    "DECAY": [],
+    "SQRTS": 14,
+    "SIGNAL_COMPONENT": {
+        "TRI": {
+            "PROC": ["g g > ha > l- l+ t t~ QCD=2 [noborn=QCD] TS^2==2"],
+            "NAME": "gg_HZA_ztt_%s_tri",
+            "PROC_Z": ["g g > ha > z t t~ QCD=2 [noborn=QCD] TS^2==2"],
+            "NAME_Z": "gg_HZA_ztt_%s_tri_z"
+        },
+        "BOX": {
+            "PROC": ["g g > ha > l- l+ t t~ QCD=2 [noborn=QCD] QCD^2=4 TZ^2==2 $$ a t t~ hl hh"],
+            "NAME": "gg_HZA_ztt_%s_box",
+            "PROC_Z": ["g g > ha > z t t~ QCD=2 [noborn=QCD] QCD^2=4 TZ^2==2 $$ a t t~ hl hh"],
+            "NAME_Z": "gg_HZA_ztt_%s_box_z"
+        },
+        "INTER": {
+            "PROC": ["g g > ha > l- l+ t t~ QCD=2 [noborn=QCD] TS^2==1 TZ^2==1 $$ a t t~ hl"],
+            "NAME": "gg_HZA_ztt_%s_inter",
+            "PROC_Z": ["g g > ha > z t t~ QCD=2 [noborn=QCD] TS^2==1 TZ^2==1 $$ a t t~ hl"],
+            "NAME_Z": "gg_HZA_ztt_%s_inter_z"
+        }
+    },
+    "SIGNAL_TOTAL": {
+        "TOTAL": {
+            "PROC": ["g g > ha > l- l+ t t~ QCD=2 [noborn=QCD] QCD^2=4 $$ a t t~ hl"],
+            "NAME": "gg_HZA_ztt_%s_total",
+            "PROC_Z": ["g g > ha > z t t~ QCD=2 [noborn=QCD] QCD^2=4 $$ a t t~ hl"],
+            "NAME_Z": "gg_HZA_ztt_%s_total_z"
+        }
+    },
+    "BACKGROUND": {
+        "TOTAL": {
+            "PROC": ["p p > z t t~ $$ hh ha, z > l- l+"],
+            "NAME": "gg_ztt_bkg",
+            "PROC_Z": ["p p > z t t~ $$ hh ha"],
+            "NAME_Z": "gg_ztt_bkg_z"
+        }
+    }
+}
