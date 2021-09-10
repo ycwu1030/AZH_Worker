@@ -109,7 +109,7 @@ if FLAG_DEL:
                         CS[procid] = CALCULATE_CS(SIG_TO_BE_CALCULATED[procid],WORKDIR,DATADIR,PARAM,YUKTYPE)
                 if 'ROOT' not in PARAM.keys():
                     PARAM['ROOT'] = {'3l':{}, '4l': {}}
-                CHANLIST={'3l': 'tmp_cards/madspin_card_semilep.dat', '4l': 'tmp_cards/madspin_card_dilepton.dat'}
+                CHANLIST={'3l': 'tmp_cards/madspin_card_semilep.dat'}#, '4l': 'tmp_cards/madspin_card_dilepton.dat'}
                 for chan in CHANLIST.keys():
                     CARDS['MADSPIN']=join(CURDIR,CHANLIST[chan])
                     USEDPARAM=copy.copy(PARAM)
@@ -130,8 +130,8 @@ if FLAG_DEL:
             for pid in BKG_PROCS.keys():
                 CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_semilep.dat')
                 GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'ID': 'bkg', 'CHAN': '3l','PARAM':{}},CARDS)
-                CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_dilepton.dat')
-                GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'ID': 'bkg', 'CHAN':'4l','PARAM':{}},CARDS)
+                # CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_dilepton.dat')
+                # GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'ID': 'bkg', 'CHAN':'4l','PARAM':{}},CARDS)
 
 if FLAG_ANA:
     with open(PARAMFILE,'r') as f:
