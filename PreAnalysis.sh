@@ -6,11 +6,14 @@
 ##SBATCH --mail-user=ywu@okstate.edu
 ##SBATCH --mail-type=end
 
-files=("param_signal_202108290019_0x005.json" "param_signal_202108290019_0x010.json" "param_signal_202108290019_0x025.json" "param_signal_202108290019_0x050.json" "param_signal_202108290019_0x100.json" "param_signal_202108290019_0x250.json")
-for file in ${files[@]}
+# files=("param_signal_202108290019_0x005.json" "param_signal_202108290019_0x010.json" "param_signal_202108290019_0x025.json" "param_signal_202108290019_0x050.json" "param_signal_202108290019_0x100.json" "param_signal_202108290019_0x250.json")
+procfile=$1
+files=$(ls DATADIR/*.json)
+cd PreAnalysis; make clean; make; cd -
+for file in ${files}
   do
-    python Process_Worker.py -i Processes/AZH.json -a -s -p DATADIR/$file&
+    python Process_Worker.py -i $procfile -a -s -p $file&
 done
 
-python Process_Worker.py -i Processes/AZH.json -a -p DATADIR/param_bkg.json&
+# python Process_Worker.py -i $procfile -a -p DATADIR/param_bkg.json&
 wait
