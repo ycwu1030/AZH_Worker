@@ -112,24 +112,24 @@ if FLAG_DEL:
             if 'ROOT' not in PARAM.keys():
                 PARAM['ROOT'] = {'3l':{}, '4l': {}}
             CHANLIST={'3l': 'tmp_cards/madspin_card_semilep.dat'}#, '4l': 'tmp_cards/madspin_card_dilepton.dat'}
-            START=0 if PARAM_KEY in NOT_YET_KEY else len(PARAMSRES[PARAM_KEY]['ROOT']['3l']['TOTAL'])
-            for ntimes in range(START,NRUNS):
-                for chan in CHANLIST.keys():
-                    CARDS['MADSPIN']=join(CURDIR,CHANLIST[chan])
-                    USEDPARAM=copy.copy(PARAM)
-                    USEDPARAM['CHAN'] = chan
-                    if chan not in PARAM['ROOT'].keys():
-                        PARAM['ROOT'][chan] = {}
-                    ROOTLISTCUR = PARAM['ROOT'][chan]
-                    for procid in SIG_TO_BE_CALCULATED.keys():
+            for chan in CHANLIST.keys():
+                CARDS['MADSPIN']=join(CURDIR,CHANLIST[chan])
+                USEDPARAM=copy.copy(PARAM)
+                USEDPARAM['CHAN'] = chan
+                if chan not in PARAM['ROOT'].keys():
+                    PARAM['ROOT'][chan] = {}
+                ROOTLISTCUR = PARAM['ROOT'][chan]
+                for procid in SIG_TO_BE_CALCULATED.keys():
+                    START=0 if PARAM_KEY in NOT_YET_KEY else len(PARAMSRES[PARAM_KEY]['ROOT'][chan][procid])
+                    for ntimes in range(START,NRUNS):
                         tmp = GENERATE_EVENTS(SIG_TO_BE_CALCULATED[procid],WORKDIR,DATADIR,USEDPARAM,CARDS,YUKTYPE)
                         if procid not in ROOTLISTCUR.keys():
                             ROOTLISTCUR[procid]=[tmp]
                         else:
                             ROOTLISTCUR[procid].append(tmp)
-                PARAMSRES[PARAM_KEY] = PARAM
-                with open(RESULTFILE,'w') as f:
-                    json.dump(PARAMSRES,f,sort_keys=True,indent=4)
+                        PARAMSRES[PARAM_KEY] = PARAM
+                        with open(RESULTFILE,'w') as f:
+                            json.dump(PARAMSRES,f,sort_keys=True,indent=4)
     else:
         for pid in BKG_PROCS.keys():
             for ntimes in range(NRUNS):
