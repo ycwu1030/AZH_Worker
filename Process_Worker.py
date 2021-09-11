@@ -93,23 +93,27 @@ if FLAG_DEL:
     CARDS={}
     CARDS['DELPHES']=join(CURDIR,'tmp_cards/delphes_card.dat')
     CARDS['PYTHIA8']=join(CURDIR,'tmp_cards/pythia8_card.dat')
-    for ntimes in range(NRUNS):
-        if FLAG_SIG:
-            if FLAG_SIG_COMPONENTS:
-                SIG_TO_BE_CALCULATED = SIG_COMPONENTS
-            else:
-                SIG_TO_BE_CALCULATED = SIG_TOTAL
-            for PARAM_KEY in PARAMS.keys():
-                PARAM=PARAMS[PARAM_KEY]
-                if 'CS' not in PARAM.keys():
-                    PARAM['CS'] = {}
-                CS = PARAM['CS']
-                for procid in SIG_TO_BE_CALCULATED.keys():
-                    if procid not in CS.keys():
-                        CS[procid] = CALCULATE_CS(SIG_TO_BE_CALCULATED[procid],WORKDIR,DATADIR,PARAM,YUKTYPE)
-                if 'ROOT' not in PARAM.keys():
-                    PARAM['ROOT'] = {'3l':{}, '4l': {}}
-                CHANLIST={'3l': 'tmp_cards/madspin_card_semilep.dat'}#, '4l': 'tmp_cards/madspin_card_dilepton.dat'}
+    NOT_YET_KEY = [k for k in PARAMS.keys() if k not in PARAMSRES.keys()]
+    ALREADY_KEY = [k for k in PARAMS.keys() if k in PARAMSRES.keys()]
+    ALREADY_KEY.sort(key=lambda x: len(PARAMSRES[x]['ROOT']['3l']['TOTAL']))
+    if FLAG_SIG:
+        if FLAG_SIG_COMPONENTS:
+            SIG_TO_BE_CALCULATED = SIG_COMPONENTS
+        else:
+            SIG_TO_BE_CALCULATED = SIG_TOTAL
+        for PARAM_KEY in PARAMS.keys():
+            PARAM=PARAMS[PARAM_KEY]
+            if 'CS' not in PARAM.keys():
+                PARAM['CS'] = {}
+            CS = PARAM['CS']
+            for procid in SIG_TO_BE_CALCULATED.keys():
+                if procid not in CS.keys():
+                    CS[procid] = CALCULATE_CS(SIG_TO_BE_CALCULATED[procid],WORKDIR,DATADIR,PARAM,YUKTYPE)
+            if 'ROOT' not in PARAM.keys():
+                PARAM['ROOT'] = {'3l':{}, '4l': {}}
+            CHANLIST={'3l': 'tmp_cards/madspin_card_semilep.dat'}#, '4l': 'tmp_cards/madspin_card_dilepton.dat'}
+            START=0 if PARAM_KEY in NOT_YET_KEY else len(PARAMSRES[PARAM_KEY]['ROOT']['3l']['TOTAL'])
+            for ntimes in range(START,NRUNS):
                 for chan in CHANLIST.keys():
                     CARDS['MADSPIN']=join(CURDIR,CHANLIST[chan])
                     USEDPARAM=copy.copy(PARAM)
@@ -126,8 +130,9 @@ if FLAG_DEL:
                 PARAMSRES[PARAM_KEY] = PARAM
                 with open(RESULTFILE,'w') as f:
                     json.dump(PARAMSRES,f,sort_keys=True,indent=4)
-        else:
-            for pid in BKG_PROCS.keys():
+    else:
+        for pid in BKG_PROCS.keys():
+            for ntimes in range(NRUNS):
                 CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_semilep.dat')
                 GENERATE_EVENTS(BKG_PROCS[pid],WORKDIR,DATADIR,{'ID': 'bkg', 'CHAN': '3l','PARAM':{}},CARDS)
                 # CARDS['MADSPIN']=join(CURDIR,'tmp_cards/madspin_card_dilepton.dat')
