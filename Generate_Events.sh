@@ -7,4 +7,4 @@
 ##SBATCH --mail-type=end
 
 paramfile=$1
-python Process_Worker.py -i Processes/AZH.json -d -s -n 2 -p $paramfile
+python Process_Worker.py -i Processes/AZH.json -d -s -n 4 -p $paramfile
