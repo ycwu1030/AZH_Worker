@@ -103,6 +103,8 @@ if FLAG_DEL:
             SIG_TO_BE_CALCULATED = SIG_TOTAL
         for PARAM_KEY in PARAMS.keys():
             PARAM=PARAMS[PARAM_KEY]
+            if PARAM_KEY in ALREADY_KEY:
+                PARAM=PARAMSRES[PARAM_KEY]
             if 'CS' not in PARAM.keys():
                 PARAM['CS'] = {}
             CS = PARAM['CS']
