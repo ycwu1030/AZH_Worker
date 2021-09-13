@@ -71,6 +71,7 @@ def CALCULATE_CS(process, WORKDIR, DATADIR, PARAMS, YUKTYPE = None, SQRTS = 14):
         OUTXEC.write('set ebeam1 %f\n'%(EBEAM))
         OUTXEC.write('set ebeam2 %f\n'%(EBEAM))
         OUTXEC.write('set nevents 50000\n')
+        OUTXEC.write('set iseed %d\n'%(int(time.time())%10000000))
         OUTXEC.write('set no_parton_cut\n')
         for param in MODELPARAMS.keys():
             OUTXEC.write('set %s %f\n'%(param,MODELPARAMS[param]))
@@ -118,6 +119,7 @@ def GENERATE_EVENTS(process, WORKDIR, DATADIR, PARAMS, CARDS, YUKTYPE = None, SQ
         OUTEVE.write('set ebeam1 %f\n'%(EBEAM))
         OUTEVE.write('set ebeam2 %f\n'%(EBEAM))
         OUTEVE.write('set nevents 50000\n')
+        OUTEVE.write('set iseed %d\n'%(int(time.time())%10000000))
         OUTEVE.write('set no_parton_cut\n')
         for param in MODELPARAMS.keys():
             OUTEVE.write('set %s %f\n'%(param,MODELPARAMS[param]))
