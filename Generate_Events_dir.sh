@@ -10,5 +10,6 @@ dir=$1
 jsonfiles=$(ls $dir/*.json)
 for file in $jsonfiles
   do
-    sbatch Generate_Events.sh $file
+    RES=$(sbatch --parsable Generate_Events.sh $file)
+    echo "$file $RES" >> JOBID_TMP.log
 done
