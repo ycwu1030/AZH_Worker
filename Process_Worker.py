@@ -167,11 +167,11 @@ if FLAG_NLL:
     outputfile=PARAMFILE.replace('param_signal','nll_result_signal')
     outputfile=outputfile.replace('.json','.txt')
     with open(outputfile, 'w') as f:
-        f.write('MHA MHH tb WR CS MU NLL\n')
+        f.write('MHA MHH tb WRA WRH CS MU NLL\n')
         f.flush()
         for PARAM_KEY in PARAMS.keys():
             PARAM_SIG = PARAMS[PARAM_KEY]
             NLL, MU=AZH_NLL(PARAM_SIG,PARAMS_BKG['bkg'],SIG_TOTAL['TOTAL'],BKG_PROCS['TOTAL'],DATADIR,YUKTYPE)
             # print(PARAM_SIG['PARAM']['MHA'],PARAM_SIG['PARAM']['MHH'],PARAM_SIG['PARAM']['tb'],PARAM_SIG['AUX']['WidthRatio'],NLL)
-            f.write('%.3f %.3f %.3f %.3f %.6f %.6f %.6f\n'%(PARAM_SIG['PARAM']['MHA'],PARAM_SIG['PARAM']['MHH'],PARAM_SIG['PARAM']['tb'],PARAM_SIG['AUX']['WidthRatio'],PARAM_SIG['CS']['TOTAL'],float(MU),float(NLL)))
+            f.write('%.3f %.3f %.3f %.3f %.3f %.6f %.6f %.6f\n'%(PARAM_SIG['PARAM']['MHA'],PARAM_SIG['PARAM']['MHH'],PARAM_SIG['PARAM']['tb'],PARAM_SIG['AUX']['HA_WidthRatio'],PARAM_SIG['AUX']['HH_WidthRatio'],PARAM_SIG['CS']['TOTAL'],float(MU),float(NLL)))
             f.flush()
