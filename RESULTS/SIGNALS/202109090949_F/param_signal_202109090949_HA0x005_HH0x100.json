@@ -1,0 +1,842 @@
+{
+    "202109090949_HA0x005_HH0x100_0": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.09858
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_0", 
+        "PARAM": {
+            "MHA": 500, 
+            "MHH": 400, 
+            "MHp": 500, 
+            "WHA": 2.5, 
+            "WHH": 40.0, 
+            "WHp": 2.5, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_0_3l_20210916_204606.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_0_3l_20210916_211239.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_0_3l_20210916_213942.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_0_3l_20210916_220323.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_1": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.2152
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_1", 
+        "PARAM": {
+            "MHA": 550, 
+            "MHH": 400, 
+            "MHp": 550, 
+            "WHA": 2.75, 
+            "WHH": 40.0, 
+            "WHp": 2.75, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_1_3l_20210916_185547.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_1_3l_20210916_192035.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_1_3l_20210916_194455.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_1_3l_20210916_200919.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_10": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.52
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_10", 
+        "PARAM": {
+            "MHA": 700, 
+            "MHH": 400, 
+            "MHp": 700, 
+            "WHA": 3.5, 
+            "WHH": 40.0, 
+            "WHp": 3.5, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_10_3l_20210916_073235.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_10_3l_20210916_075441.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_10_3l_20210916_081514.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_10_3l_20210916_083651.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_11": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.5871
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_11", 
+        "PARAM": {
+            "MHA": 700, 
+            "MHH": 450, 
+            "MHp": 700, 
+            "WHA": 3.5, 
+            "WHH": 45.0, 
+            "WHp": 3.5, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_11_3l_20210916_060829.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_11_3l_20210916_062817.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_11_3l_20210916_064758.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_11_3l_20210916_070606.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_12": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.4343
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_12", 
+        "PARAM": {
+            "MHA": 700, 
+            "MHH": 500, 
+            "MHp": 700, 
+            "WHA": 3.5, 
+            "WHH": 50.0, 
+            "WHp": 3.5, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_12_3l_20210916_113417.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_12_3l_20210916_121128.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_12_3l_20210916_123408.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_12_3l_20210916_125755.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_13": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.2268
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_13", 
+        "PARAM": {
+            "MHA": 700, 
+            "MHH": 550, 
+            "MHp": 700, 
+            "WHA": 3.5, 
+            "WHH": 55.0, 
+            "WHp": 3.5, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_13_3l_20210916_090531.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_13_3l_20210916_093223.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_13_3l_20210916_103103.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_13_3l_20210916_105358.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_14": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.09477
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_14", 
+        "PARAM": {
+            "MHA": 700, 
+            "MHH": 600, 
+            "MHp": 700, 
+            "WHA": 3.5, 
+            "WHH": 60.0, 
+            "WHp": 3.5, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_14_3l_20210915_230539.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_14_3l_20210915_235929.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_14_3l_20210916_011014.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_14_3l_20210916_015703.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_15": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.5342
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_15", 
+        "PARAM": {
+            "MHA": 750, 
+            "MHH": 400, 
+            "MHp": 750, 
+            "WHA": 3.75, 
+            "WHH": 40.0, 
+            "WHp": 3.75, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_15_3l_20210915_214018.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_15_3l_20210915_220126.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_15_3l_20210915_222142.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_15_3l_20210915_223953.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_16": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.6596
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_16", 
+        "PARAM": {
+            "MHA": 750, 
+            "MHH": 450, 
+            "MHp": 750, 
+            "WHA": 3.75, 
+            "WHH": 45.0, 
+            "WHp": 3.75, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_16_3l_20210916_042514.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_16_3l_20210916_044636.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_16_3l_20210916_050905.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_16_3l_20210916_053343.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_17": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.5644
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_17", 
+        "PARAM": {
+            "MHA": 750, 
+            "MHH": 500, 
+            "MHp": 750, 
+            "WHA": 3.75, 
+            "WHH": 50.0, 
+            "WHp": 3.75, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_17_3l_20210916_023210.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_17_3l_20210916_025110.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_17_3l_20210916_031135.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_17_3l_20210916_035442.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_18": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.3708
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_18", 
+        "PARAM": {
+            "MHA": 750, 
+            "MHH": 550, 
+            "MHp": 750, 
+            "WHA": 3.75, 
+            "WHH": 55.0, 
+            "WHp": 3.75, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_18_3l_20210915_195505.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_18_3l_20210915_202550.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_18_3l_20210915_204705.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_18_3l_20210915_211028.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_19": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.188
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_19", 
+        "PARAM": {
+            "MHA": 750, 
+            "MHH": 600, 
+            "MHp": 750, 
+            "WHA": 3.75, 
+            "WHH": 60.0, 
+            "WHp": 3.75, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_19_3l_20210915_162025.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_19_3l_20210915_174215.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_19_3l_20210915_181904.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_19_3l_20210915_184538.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_2": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.1116
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_2", 
+        "PARAM": {
+            "MHA": 550, 
+            "MHH": 450, 
+            "MHp": 550, 
+            "WHA": 2.75, 
+            "WHH": 45.0, 
+            "WHp": 2.75, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_2_3l_20210917_002605.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_2_3l_20210917_004908.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_2_3l_20210917_011448.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_2_3l_20210917_020055.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_20": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.08232
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_20", 
+        "PARAM": {
+            "MHA": 750, 
+            "MHH": 650, 
+            "MHp": 750, 
+            "WHA": 3.75, 
+            "WHH": 65.0, 
+            "WHp": 3.75, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_20_3l_20210917_111918.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_20_3l_20210917_115215.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_20_3l_20210917_123128.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_20_3l_20210917_130632.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_21": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.5218
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_21", 
+        "PARAM": {
+            "MHA": 800, 
+            "MHH": 400, 
+            "MHp": 800, 
+            "WHA": 4.0, 
+            "WHH": 40.0, 
+            "WHp": 4.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_21_3l_20210917_144301.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_21_3l_20210917_150353.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_21_3l_20210917_152638.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_21_3l_20210917_154644.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_22": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.6827
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_22", 
+        "PARAM": {
+            "MHA": 800, 
+            "MHH": 450, 
+            "MHp": 800, 
+            "WHA": 4.0, 
+            "WHH": 45.0, 
+            "WHp": 4.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_22_3l_20210917_160954.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_22_3l_20210917_163939.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_22_3l_20210917_170616.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_22_3l_20210917_172756.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_23": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.6414
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_23", 
+        "PARAM": {
+            "MHA": 800, 
+            "MHH": 500, 
+            "MHp": 800, 
+            "WHA": 4.0, 
+            "WHH": 50.0, 
+            "WHp": 4.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_23_3l_20210917_175553.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_23_3l_20210917_181906.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_23_3l_20210917_184744.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_23_3l_20210917_191600.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_24": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.4853
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_24", 
+        "PARAM": {
+            "MHA": 800, 
+            "MHH": 550, 
+            "MHp": 800, 
+            "WHA": 4.0, 
+            "WHH": 55.0, 
+            "WHp": 4.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_24_3l_20210917_195349.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_24_3l_20210917_202659.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_24_3l_20210917_205843.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_24_3l_20210917_213102.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_25": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.301
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_25", 
+        "PARAM": {
+            "MHA": 800, 
+            "MHH": 600, 
+            "MHp": 800, 
+            "WHA": 4.0, 
+            "WHH": 60.0, 
+            "WHp": 4.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_25_3l_20210917_222311.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_25_3l_20210917_225856.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_25_3l_20210917_232835.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_25_3l_20210918_000202.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_26": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.1524
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_26", 
+        "PARAM": {
+            "MHA": 800, 
+            "MHH": 650, 
+            "MHp": 800, 
+            "WHA": 4.0, 
+            "WHH": 65.0, 
+            "WHp": 4.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_26_3l_20210918_004503.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_26_3l_20210918_013038.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_26_3l_20210918_020335.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_26_3l_20210918_024622.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_27": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.07013
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_27", 
+        "PARAM": {
+            "MHA": 800, 
+            "MHH": 700, 
+            "MHp": 800, 
+            "WHA": 4.0, 
+            "WHH": 70.0, 
+            "WHp": 4.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_27_3l_20210918_033119.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_27_3l_20210918_040058.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_27_3l_20210918_044719.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_27_3l_20210918_053423.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_3": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.3613
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_3", 
+        "PARAM": {
+            "MHA": 600, 
+            "MHH": 400, 
+            "MHp": 600, 
+            "WHA": 3.0, 
+            "WHH": 40.0, 
+            "WHp": 3.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_3_3l_20210916_223139.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_3_3l_20210916_225637.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_3_3l_20210916_232202.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_3_3l_20210916_235019.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_4": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.2698
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_4", 
+        "PARAM": {
+            "MHA": 600, 
+            "MHH": 450, 
+            "MHp": 600, 
+            "WHA": 3.0, 
+            "WHH": 45.0, 
+            "WHp": 3.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_4_3l_20210917_051228.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_4_3l_20210917_053841.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_4_3l_20210917_060732.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_4_3l_20210917_064802.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_5": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.1132
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_5", 
+        "PARAM": {
+            "MHA": 600, 
+            "MHH": 500, 
+            "MHp": 600, 
+            "WHA": 3.0, 
+            "WHH": 50.0, 
+            "WHp": 3.0, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_5_3l_20210917_023601.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_5_3l_20210917_030303.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_5_3l_20210917_034813.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_5_3l_20210917_042645.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_6": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.465
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_6", 
+        "PARAM": {
+            "MHA": 650, 
+            "MHH": 400, 
+            "MHp": 650, 
+            "WHA": 3.25, 
+            "WHH": 40.0, 
+            "WHp": 3.25, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_6_3l_20210917_092642.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_6_3l_20210917_095204.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_6_3l_20210917_101747.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_6_3l_20210917_104135.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_7": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.4541
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_7", 
+        "PARAM": {
+            "MHA": 650, 
+            "MHH": 450, 
+            "MHp": 650, 
+            "WHA": 3.25, 
+            "WHH": 45.0, 
+            "WHp": 3.25, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_7_3l_20210917_072149.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_7_3l_20210917_074733.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_7_3l_20210917_081223.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_7_3l_20210917_084308.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_8": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.2614
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_8", 
+        "PARAM": {
+            "MHA": 650, 
+            "MHH": 500, 
+            "MHp": 650, 
+            "WHA": 3.25, 
+            "WHH": 50.0, 
+            "WHp": 3.25, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_8_3l_20210916_163404.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_8_3l_20210916_171052.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_8_3l_20210916_174140.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_8_3l_20210916_180523.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }, 
+    "202109090949_HA0x005_HH0x100_9": {
+        "AUX": {
+            "HA_WidthRatio": 0.005, 
+            "HH_WidthRatio": 0.1
+        }, 
+        "CS": {
+            "TOTAL": 0.1061
+        }, 
+        "ID": "202109090949_HA0x005_HH0x100_9", 
+        "PARAM": {
+            "MHA": 650, 
+            "MHH": 550, 
+            "MHp": 650, 
+            "WHA": 3.25, 
+            "WHH": 55.0, 
+            "WHp": 3.25, 
+            "tb": 1
+        }, 
+        "ROOT": {
+            "3l": {
+                "TOTAL": [
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_9_3l_20210916_133256.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_9_3l_20210916_140234.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_9_3l_20210916_143653.root", 
+                    "delphes_gg_ztt_Type-I_total_202109090949_HA0x005_HH0x100_9_3l_20210916_153311.root"
+                ]
+            }, 
+            "4l": {}
+        }
+    }
+}
