@@ -122,7 +122,12 @@ if FLAG_DEL:
                     PARAM['ROOT'][chan] = {}
                 ROOTLISTCUR = PARAM['ROOT'][chan]
                 for procid in SIG_TO_BE_CALCULATED.keys():
-                    START=0 if PARAM_KEY in NOT_YET_KEY else len(PARAMSRES[PARAM_KEY]['ROOT'][chan][procid])
+                    if procid in NOT_YET_KEY:
+                        START = 0
+                    elif procid not in PARAMSRES[PARAM_KEY]['ROOT'][chan].keys():
+                        START = 0
+                    else:
+                        START = len(PARAMSRES[PARAM_KEY]['ROOT'][chan][procid])
                     for ntimes in range(START,NRUNS):
                         tmp = GENERATE_EVENTS(SIG_TO_BE_CALCULATED[procid],WORKDIR,DATADIR,USEDPARAM,CARDS,YUKTYPE)
                         if procid not in ROOTLISTCUR.keys():
