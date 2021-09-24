@@ -147,8 +147,13 @@ if FLAG_ANA:
     with open(PARAMFILE,'r') as f:
         PARAMS = json.load(f)
     if FLAG_SIG:
+        if FLAG_SIG_COMPONENTS:
+            SIG_TO_BE_CALCULATED = SIG_COMPONENTS
+        else:
+            SIG_TO_BE_CALCULATED = SIG_TOTAL
         for PARAM_KEY in PARAMS.keys():
-            AZH_Pre_Analysis(SIG_TOTAL['TOTAL'],DATADIR,PARAMS[PARAM_KEY],YUKTYPE)
+            for procid in SIG_TO_BE_CALCULATED.keys():
+                AZH_Pre_Analysis(SIG_TO_BE_CALCULATED[procid],DATADIR,PARAMS[PARAM_KEY],YUKTYPE)
     else:
         for PARAM_KEY in PARAMS.keys():
             AZH_Pre_Analysis(BKG_PROCS['TOTAL'],DATADIR,PARAMS[PARAM_KEY])
