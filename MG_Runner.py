@@ -41,6 +41,10 @@ class MG_RUNNER(object):
         if not self.DEBUG:
             subprocess.call('python %s/bin/mg5_aMC %s' %
                             (self.MG5_DIR, tmpfile), shell=True)
+            remove(tmpfile)
+            remove(join(CURDIR, 'py.py'))
+        else:
+            remove(tmpfile)
 
     def Prepare_Cards(self, procdir, CARDS):
         CARDDIR = join(procdir, 'Cards')
