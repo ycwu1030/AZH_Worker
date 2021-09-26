@@ -14,9 +14,10 @@ public:
     AZHSystem(){};
     ~AZHSystem(){};
 
-    bool Setup(Delphes *f);
+    bool Setup(Delphes *f, double weight_averaged = 1);
     void Setup_Branches(TTree *t);
 
+    double Weight;
     int NELE_TOTAL;
     int NMUON_TOTAL;
     int NELE_ISO;

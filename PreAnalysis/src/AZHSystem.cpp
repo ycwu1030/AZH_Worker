@@ -231,7 +231,9 @@ bool AZHSystem::Setup_Neutrino(Delphes* f) {
     return true;
 }
 
-bool AZHSystem::Setup(Delphes* f) {
+bool AZHSystem::Setup(Delphes* f, double weight_averaged) {
+    double weight_in_delphes = f->Event_Weight[0];
+    Weight = weight_in_delphes < 0 ? -fabs(weight_averaged) : fabs(weight_averaged);
     bool good = true;
     good = Setup_Lepton_System(f);
     if (!good) return good;
@@ -244,6 +246,7 @@ bool AZHSystem::Setup(Delphes* f) {
 }
 
 void AZHSystem::Setup_Branches(TTree* t) {
+    t->Branch("Weight", &Weight, "Weight/D");
     t->Branch("NELE_TOTAL", &NELE_TOTAL, "NELE_TOTAL/I");
     t->Branch("NMUON_TOTAL", &NMUON_TOTAL, "NMUON_TOTAL/I");
     t->Branch("NELE_ISO", &NELE_ISO, "NELE_ISO/I");
