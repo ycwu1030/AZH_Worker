@@ -168,7 +168,7 @@ def AZH_Pre_Analysis(process, CATE, DATADIR, PARAMS, YUKTYPE=None, CHAN='3l'):
         decay_id = 1
     paramid = PARAMS['ID']
     DATAPROCDIR = join(DATADIR, paramid)
-    CS = PARAMS['CS']['CATE']
+    CS = PARAMS['CS'][CATE]
     OUTPUTDIR = join(DATADIR, 'PreAna')
     if not os.path.exists(OUTPUTDIR):
         os.makedirs(OUTPUTDIR)
