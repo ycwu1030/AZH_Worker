@@ -157,3 +157,7 @@ class AZH_System(object):
                     PARAM['ROOT'][CHAN][pid].append(root_file_name)
                     self.RESULT_PARAMETERS[param_key] = PARAM
                     self.Dump_Parameters(PARAMFILE)
+
+    def Pre_Analysis(self, PARAMFILE, FLAG_SIG=True, FLAG_SIG_COMPONENT=True, CHAN='3l'):
+
+        self.Read_Parameters(PARAMFILE)

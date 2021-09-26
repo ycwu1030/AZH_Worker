@@ -51,11 +51,11 @@ int main(int argc, char const *argv[]) {
             cout << "Wrong Process Category ID, must be 0 to 4, but " << proc_cate_id << " is provided." << endl;
             return -1;
     }
-    if (proc_cate_id == 0) {
-        sprintf(proc_cate_name, "%s", "bkg");
-    } else {
-        sprintf(proc_cate_name, "%s", "sig");
-    }
+    // if (proc_cate_id == 0) {
+    //     sprintf(proc_cate_name, "%s", "bkg");
+    // } else {
+    //     sprintf(proc_cate_name, "%s", "sig");
+    // }
     int proc_decay_id = atoi(argv[4]);
     char proc_decay_name[10];
     if (proc_decay_id == 0) {
