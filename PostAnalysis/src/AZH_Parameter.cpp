@@ -10,61 +10,44 @@
 
 using namespace std;
 
-AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double WHH_IN, char *tri_file_name,
-                             char *box_file_name, char *inter_file_name)
-    : MHA(MHA_IN), MHH(MHH_IN), WHA(WHA_IN), WHH(WHH_IN) {
-    TFile *f_tri = new TFile(tri_file_name);
-    TFile *f_box = new TFile(box_file_name);
-    TFile *f_inter = new TFile(tri_file_name);
-
-    TTree *t_tri = (TTree *)f_tri->Get("AZHPreAnalysis");
-    TTree *t_box = (TTree *)f_box->Get("AZHPreAnalysis");
-    TTree *t_inter = (TTree *)f_inter->Get("AZHPreAnalysis");
-    AZHPreAnalysis *del_tri = new AZHPreAnalysis(t_tri);
-    AZHPreAnalysis *del_box = new AZHPreAnalysis(t_box);
-    AZHPreAnalysis *del_inter = new AZHPreAnalysis(t_inter);
-
+Distribution_Data::Distribution_Data(char *root_file) {
+    TFile *f = new TFile(root_file);
+    TTree *t = (TTree *)f->Get("AZHPreAnalysis");
+    AZHPreAnalysis *del = new AZHPreAnalysis(t);
     int NBINX = 20;
     int NBINY = 20;
     double X_LOW = 350;
     double X_HIGH = 1000;
     double Y_LOW = 400;
     double Y_HIGH = 1000;
-    TH2F *hist_tri = new TH2F("hist_tri", "", NBINX, X_LOW, X_HIGH, NBINY, Y_LOW, Y_HIGH);
-    TH2F *hist_box = new TH2F("hist_box", "", NBINX, X_LOW, X_HIGH, NBINY, Y_LOW, Y_HIGH);
-    TH2F *hist_inter = new TH2F("hist_inter", "", NBINX, X_LOW, X_HIGH, NBINY, Y_LOW, Y_HIGH);
+    TH2F *hist = new TH2F("hist", "", NBINX, X_LOW, X_HIGH, NBINY, Y_LOW, Y_HIGH);
 
     NBINS = NBINX * NBINY;
-    for (int i = 0; i < t_tri->GetEntries(); i++) {
-        del_tri->GetEntry(i);
-        hist_tri->Fill(del_tri->mtt, del_tri->mztt, del_tri->Weight * 1000);
+    for (int i = 0; i < t->GetEntries(); i++) {
+        del->GetEntry(i);
+        hist->Fill(del->mtt, del->mztt, del->Weight * 1000);
     }
-    for (int i = 0; i < t_box->GetEntries(); i++) {
-        del_box->GetEntry(i);
-        hist_box->Fill(del_box->mtt, del_box->mztt, del_box->Weight * 1000);
-    }
-    for (int i = 0; i < t_inter->GetEntries(); i++) {
-        del_inter->GetEntry(i);
-        hist_inter->Fill(del_inter->mtt, del_inter->mztt, del_inter->Weight * 1000);
-    }
+
     int nbinall;
     for (int i = 0; i < NBINX; i++) {
         for (int j = 0; j < NBINY; j++) {
-            nbinall = hist_tri->GetBin(i + 1, j + 1);
-            HIST_TRI.push_back(hist_tri->GetBinContent(nbinall));  // * lumi * mu_S;
-            nbinall = hist_box->GetBin(i + 1, j + 1);
-            HIST_BOX.push_back(hist_box->GetBinContent(nbinall));  // * lumi * mu_S;
-            nbinall = hist_inter->GetBin(i + 1, j + 1);
-            HIST_INTER.push_back(hist_inter->GetBinContent(nbinall));  // * lumi * mu_S;
+            nbinall = hist->GetBin(i + 1, j + 1);
+            HIST_BINS.push_back(hist->GetBinContent(nbinall));  // * lumi * mu_S;
         }
     }
-    delete hist_tri;
-    delete hist_box;
-    delete hist_inter;
-    delete del_tri;
-    delete del_box;
-    delete del_inter;
+    delete hist;
+    delete del;
 }
+
+AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double WHH_IN, char *tri_file_name,
+                             char *box_file_name, char *inter_file_name)
+    : MHA(MHA_IN),
+      MHH(MHH_IN),
+      WHA(WHA_IN),
+      WHH(WHH_IN),
+      TRI_Data(tri_file_name),
+      BOX_Data(box_file_name),
+      INTER_Data(inter_file_name) {}
 
 AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
     string WR_CHR[7] = {"0x005", "0x005", "0x010", "0x025", "0x050", "0x100", "0x250"};
@@ -93,6 +76,10 @@ AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
         }
     }
     NUM_POINTS = Grid.size();
+
+    char tmp[500];
+    sprintf(tmp, "%s/AZH_PreAna_gg_ztt_bkg_bkg_3l.root", data_dir);
+    BKG = new Distribution_Data(tmp);
 }
 
 void AZH_Grid::Dump_Grid(char const *file_prefix) {
@@ -103,18 +90,22 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
     ofstream box_file(tmp);
     sprintf(tmp, "%s_inter_distribution.txt", file_prefix);
     ofstream inter_file(tmp);
+    sprintf(tmp, "%s_bkg_distribution.txt", file_prefix);
+    ofstream bkg_file(tmp);
 
     tri_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba";
     box_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba";
     inter_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba";
-    for (int i = 0; i < Grid[0].NBINS; i++) {
+    for (int i = 0; i < Grid[0].TRI_Data.NBINS; i++) {
         tri_file << "\tBIN" << i;
         box_file << "\tBIN" << i;
         inter_file << "\tBIN" << i;
+        bkg_file << "\tBIN" << i;
     }
     tri_file << endl;
     box_file << endl;
     inter_file << endl;
+    bkg_file << endl;
     for (int i = 0; i < NUM_POINTS; i++) {
         tri_file << "\t" << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH
                  << "\t1\t0";
@@ -122,13 +113,18 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
                  << "\t1\t0";
         inter_file << "\t" << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH
                    << "\t1\t0";
-        for (int j = 0; j < Grid[i].NBINS; j++) {
-            tri_file << "\t" << Grid[i].HIST_TRI[j];
-            box_file << "\t" << Grid[i].HIST_BOX[j];
-            inter_file << "\t" << Grid[i].HIST_INTER[j];
+        for (int j = 0; j < Grid[i].TRI_Data.NBINS; j++) {
+            tri_file << "\t" << Grid[i].TRI_Data.HIST_BINS[j];
+            box_file << "\t" << Grid[i].BOX_Data.HIST_BINS[j];
+            inter_file << "\t" << Grid[i].INTER_Data.HIST_BINS[j];
         }
         tri_file << endl;
         box_file << endl;
         inter_file << endl;
     }
+
+    for (int i = 0; i < BKG->NBINS; i++) {
+        bkg_file << "\t" << BKG->HIST_BINS[i];
+    }
+    bkg_file << endl;
 }

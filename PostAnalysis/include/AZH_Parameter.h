@@ -1,15 +1,23 @@
 #include <vector>
 
+class Distribution_Data {
+public:
+    std::vector<double> HIST_BINS;
+    int NBINS;
+
+    Distribution_Data(char *root_file);
+    ~Distribution_Data(){};
+};
+
 class AZH_Parameter {
 public:
     double MHA;
     double MHH;
     double WHA;
     double WHH;
-    std::vector<double> HIST_TRI;
-    std::vector<double> HIST_BOX;
-    std::vector<double> HIST_INTER;
-    int NBINS;
+    Distribution_Data TRI_Data;
+    Distribution_Data BOX_Data;
+    Distribution_Data INTER_Data;
 
     AZH_Parameter(double MHA, double MHH, double WHA, double WHH, char *tri_file_name, char *box_file_name,
                   char *inter_file_name);
@@ -20,6 +28,7 @@ class AZH_Grid {
 private:
     int NUM_POINTS;
     std::vector<AZH_Parameter> Grid;
+    Distribution_Data *BKG;
 
 public:
     AZH_Grid(char const *data_dir, char const *param_id);
