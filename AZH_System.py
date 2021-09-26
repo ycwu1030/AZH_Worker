@@ -9,6 +9,7 @@ from MG_Runner import MG_RUNNER
 class AZH_System(object):
     __BASE_DIR__ = dirname(abspath(__file__))
     __MG5_DIR__ = join(__BASE_DIR__, 'MG5DIR/MG5_aMC_v3_1_1')
+    # __MG5_DIR__ = '/Users/ycwu/Workingspace/MC-Generator/MG5_aMC_v3_1_1'
 
     def __init__(self, INFOFILE, DEBUG=False):
         with open(INFOFILE, 'r') as f:
@@ -64,7 +65,7 @@ class AZH_System(object):
 
         # * Run the MadEvent
         cs, filename = self.MG_HANDLER.Run_MadEvent(
-            PROCNAME, self.DATA_DIRT, PARAMS, CARDS)
+            PROCNAME, self.DATA_DIR, PARAMS, CARDS)
         return filename
 
     def Calculate_CS(self, PROCNAME, PARAMS):
@@ -142,7 +143,7 @@ class AZH_System(object):
                     PROCNAME = PROCS_TO_BE_RUN[pid]['NAME_Z']
                     if FLAG_SIG:
                         PROCNAME = PROCNAME % (self.YUKTYPE)
-                    PARAM['CS'][pid], _ = self.Calculate_CS(
+                    PARAM['CS'][pid] = self.Calculate_CS(
                         PROCNAME, USED_PARAM)
                     self.RESULT_PARAMETERS[param_key] = PARAM
                     self.Dump_Parameters(PARAMFILE)
@@ -151,7 +152,7 @@ class AZH_System(object):
                     PROCNAME = PROCS_TO_BE_RUN[pid]['NAME']
                     if FLAG_SIG:
                         PROCNAME = PROCNAME % (self.YUKTYPE)
-                    _, root_file_name = self.Generate_Events(
+                    root_file_name = self.Generate_Events(
                         PROCNAME, USED_PARAM, CHAN)
                     PARAM['ROOT'][CHAN][pid].append(root_file_name)
                     self.RESULT_PARAMETERS[param_key] = PARAM

@@ -37,8 +37,8 @@ class MG_RUNNER(object):
             for i in range(1, nproc):
                 TMP.write('add process %s\n' % (proc[i]))
             TMP.write('output %s -f\n' % (PROCDIR))
-        subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
         if not self.DEBUG:
+            subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
             subprocess.call('python %s/bin/mg5_aMC %s' %
                             (self.MG5_DIR, tmpfile), shell=True)
             remove(tmpfile)
