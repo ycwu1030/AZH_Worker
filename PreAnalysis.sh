@@ -13,7 +13,7 @@ cd PreAnalysis; make clean; make; cd -
 nid=0
 for file in ${files}
   do
-    python Process_Worker.py -i $procfile -a -s -p $file&
+    python Process_Worker.py -i $procfile -a -s -sc -p $file&
     nid=$[$nid+1]
     if [ $nid -eq 32 ]
       then
