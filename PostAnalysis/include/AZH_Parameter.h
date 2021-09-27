@@ -3,6 +3,7 @@
 class Distribution_Data {
 public:
     std::vector<double> HIST_BINS;
+    double CS_WITHOUT_DECAY;
     int NBINS;
 
     Distribution_Data(char *root_file);

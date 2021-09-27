@@ -25,6 +25,7 @@ Distribution_Data::Distribution_Data(char *root_file) {
     NBINS = NBINX * NBINY;
     for (int i = 0; i < t->GetEntries(); i++) {
         del->GetEntry(i);
+        CS_WITHOUT_DECAY = del->CS_without_Decay;
         hist->Fill(del->mtt, del->mztt, del->Weight * 1000);
     }
 
@@ -93,9 +94,10 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
     sprintf(tmp, "%s_bkg_distribution.txt", file_prefix);
     ofstream bkg_file(tmp);
 
-    tri_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba";
-    box_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba";
-    inter_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba";
+    tri_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
+    box_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
+    inter_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
+    bkg_file << "CS";
     for (int i = 0; i < Grid[0].TRI_Data.NBINS; i++) {
         tri_file << "\tBIN" << i;
         box_file << "\tBIN" << i;
@@ -108,11 +110,11 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
     bkg_file << endl;
     for (int i = 0; i < NUM_POINTS; i++) {
         tri_file << "\t" << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH
-                 << "\t1\t0";
+                 << "\t1\t0\t" << Grid[i].TRI_Data.CS_WITHOUT_DECAY;
         box_file << "\t" << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH
-                 << "\t1\t0";
+                 << "\t1\t0\t" << Grid[i].BOX_Data.CS_WITHOUT_DECAY;
         inter_file << "\t" << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH
-                   << "\t1\t0";
+                   << "\t1\t0\t" << Grid[i].INTER_Data.CS_WITHOUT_DECAY;
         for (int j = 0; j < Grid[i].TRI_Data.NBINS; j++) {
             tri_file << "\t" << Grid[i].TRI_Data.HIST_BINS[j];
             box_file << "\t" << Grid[i].BOX_Data.HIST_BINS[j];
@@ -123,6 +125,7 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
         inter_file << endl;
     }
 
+    bkg_file << BKG->CS_WITHOUT_DECAY;
     for (int i = 0; i < BKG->NBINS; i++) {
         bkg_file << "\t" << BKG->HIST_BINS[i];
     }
