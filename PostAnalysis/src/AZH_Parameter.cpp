@@ -7,6 +7,7 @@
 #include "AZHPreAnalysis.h"
 #include "TFile.h"
 #include "TH2F.h"
+#include "Utilities.h"
 
 using namespace std;
 
@@ -105,9 +106,9 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
         inter_file << "\tBIN" << i;
         bkg_file << "\tBIN" << i;
     }
-    tri_file << endl;
-    box_file << endl;
-    inter_file << endl;
+    tri_file << "\tNLL" << endl;
+    box_file << "\tNLL" << endl;
+    inter_file << "\tNLL" << endl;
     bkg_file << endl;
     for (int i = 0; i < NUM_POINTS; i++) {
         tri_file << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH << "\t1\t0\t"
@@ -116,14 +117,18 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
                  << Grid[i].BOX_Data.CS_WITHOUT_DECAY;
         inter_file << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH << "\t1\t0\t"
                    << Grid[i].INTER_Data.CS_WITHOUT_DECAY;
+        double nll_total = 0.0;
         for (int j = 0; j < Grid[i].TRI_Data.NBINS; j++) {
             tri_file << "\t" << Grid[i].TRI_Data.HIST_BINS[j];
             box_file << "\t" << Grid[i].BOX_Data.HIST_BINS[j];
             inter_file << "\t" << Grid[i].INTER_Data.HIST_BINS[j];
+            nll_total += 3000 * NLL(Grid[i].TRI_Data.HIST_BINS[j] + Grid[i].BOX_Data.HIST_BINS[j] +
+                                        Grid[i].INTER_Data.HIST_BINS[j] + BKG->HIST_BINS[j],
+                                    BKG->HIST_BINS[j]);
         }
-        tri_file << endl;
-        box_file << endl;
-        inter_file << endl;
+        tri_file << "\t" << nll_total << endl;
+        box_file << "\t" << nll_total << endl;
+        inter_file << "\t" << nll_total << endl;
     }
 
     bkg_file << BKG->CS_WITHOUT_DECAY;
