@@ -70,6 +70,7 @@ AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
                             WR_CHR[i_wr_a].c_str(), WR_CHR[i_wr_h].c_str(), pid);
                     sprintf(inter_name, "%s/AZH_PreAna_gg_ztt_Type-I_inter_%s_HA%s_HH%s_%d_3l.root", data_dir, param_id,
                             WR_CHR[i_wr_a].c_str(), WR_CHR[i_wr_h].c_str(), pid);
+                    cout << "Construct node for " << MHA << " " << MHH << " " << WHA << " " << WHH << endl;
                     Grid.emplace_back(MHA, MHH, WHA, WHH, tri_name, box_name, inter_name);
                     ++pid;
                 }
@@ -109,12 +110,12 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
     inter_file << endl;
     bkg_file << endl;
     for (int i = 0; i < NUM_POINTS; i++) {
-        tri_file << "\t" << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH
-                 << "\t1\t0\t" << Grid[i].TRI_Data.CS_WITHOUT_DECAY;
-        box_file << "\t" << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH
-                 << "\t1\t0\t" << Grid[i].BOX_Data.CS_WITHOUT_DECAY;
-        inter_file << "\t" << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH
-                   << "\t1\t0\t" << Grid[i].INTER_Data.CS_WITHOUT_DECAY;
+        tri_file << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH << "\t1\t0\t"
+                 << Grid[i].TRI_Data.CS_WITHOUT_DECAY;
+        box_file << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH << "\t1\t0\t"
+                 << Grid[i].BOX_Data.CS_WITHOUT_DECAY;
+        inter_file << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH << "\t1\t0\t"
+                   << Grid[i].INTER_Data.CS_WITHOUT_DECAY;
         for (int j = 0; j < Grid[i].TRI_Data.NBINS; j++) {
             tri_file << "\t" << Grid[i].TRI_Data.HIST_BINS[j];
             box_file << "\t" << Grid[i].BOX_Data.HIST_BINS[j];

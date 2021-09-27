@@ -20,7 +20,7 @@ public:
     Distribution_Data BOX_Data;
     Distribution_Data INTER_Data;
 
-    AZH_Parameter(double MHA, double MHH, double WHA, double WHH, char *tri_file_name, char *box_file_name,
+    AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double WHH_IN, char *tri_file_name, char *box_file_name,
                   char *inter_file_name);
     ~AZH_Parameter(){};
 };
