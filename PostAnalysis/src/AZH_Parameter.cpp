@@ -58,9 +58,11 @@ AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
     for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
         for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
             int pid = 0;
-            for (double MHA = 500; MHA < 850; MHA += 50) {
-                for (double MHH = 400; MHH < MHA - 100 + 50; MHH += 50) {
-                    double WHA = MHA * WR[i_wr_a];
+            for (int i_MHA = 0; i_MHA < 7; i_MHA++) {
+                double MHA = 500 + i_MHA * 50;
+                double WHA = MHA * WR[i_wr_a];
+                for (int i_MHH = 0; i_MHH < i_MHA + 1; i_MHH++) {
+                    double MHH = 400 + i_MHH * 50;
                     double WHH = MHH * WR[i_wr_h];
                     char tri_name[500];
                     char box_name[500];
@@ -72,13 +74,14 @@ AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
                     sprintf(inter_name, "%s/AZH_PreAna_gg_ztt_Type-I_inter_%s_HA%s_HH%s_%d_3l.root", data_dir, param_id,
                             WR_CHR[i_wr_a].c_str(), WR_CHR[i_wr_h].c_str(), pid);
                     cout << "Construct node for " << MHA << " " << MHH << " " << WHA << " " << WHH << endl;
-                    Grid.emplace_back(MHA, MHH, WHA, WHH, tri_name, box_name, inter_name);
+                    Grid[i_wr_a][i_wr_h][i_MHA][i_MHH] =
+                        new AZH_Parameter(MHA, MHH, WHA, WHH, tri_name, box_name, inter_name);
                     ++pid;
                 }
             }
         }
     }
-    NUM_POINTS = Grid.size();
+    // NUM_POINTS = Grid.size();
 
     char tmp[500];
     sprintf(tmp, "%s/AZH_PreAna_gg_ztt_bkg_bkg_3l.root", data_dir);
@@ -100,7 +103,7 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
     box_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
     inter_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
     bkg_file << "CS";
-    for (int i = 0; i < Grid[0].TRI_Data.NBINS; i++) {
+    for (int i = 0; i < (Grid[0][0][0][0]->TRI_Data).NBINS; i++) {
         tri_file << "\tBIN" << i;
         box_file << "\tBIN" << i;
         inter_file << "\tBIN" << i;
@@ -110,25 +113,33 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
     box_file << "\tNLL" << endl;
     inter_file << "\tNLL" << endl;
     bkg_file << endl;
-    for (int i = 0; i < NUM_POINTS; i++) {
-        tri_file << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH << "\t1\t0\t"
-                 << Grid[i].TRI_Data.CS_WITHOUT_DECAY;
-        box_file << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH << "\t1\t0\t"
-                 << Grid[i].BOX_Data.CS_WITHOUT_DECAY;
-        inter_file << Grid[i].MHA << "\t" << Grid[i].MHH << "\t" << Grid[i].WHA << "\t" << Grid[i].WHH << "\t1\t0\t"
-                   << Grid[i].INTER_Data.CS_WITHOUT_DECAY;
-        double nll_total = 0.0;
-        for (int j = 0; j < Grid[i].TRI_Data.NBINS; j++) {
-            tri_file << "\t" << Grid[i].TRI_Data.HIST_BINS[j];
-            box_file << "\t" << Grid[i].BOX_Data.HIST_BINS[j];
-            inter_file << "\t" << Grid[i].INTER_Data.HIST_BINS[j];
-            nll_total += 3000 * NLL(Grid[i].TRI_Data.HIST_BINS[j] + Grid[i].BOX_Data.HIST_BINS[j] +
-                                        Grid[i].INTER_Data.HIST_BINS[j] + BKG->HIST_BINS[j],
-                                    BKG->HIST_BINS[j]);
+    for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
+        for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
+            for (int i_MHA = 0; i_MHA < 7; i_MHA++) {
+                for (int i_MHH = 0; i_MHH < i_MHA + 1; i_MHH++) {
+                    AZH_Parameter *ptr = Grid[i_wr_a][i_wr_h][i_MHA][i_MHH];
+                    tri_file << ptr->MHA << "\t" << ptr->MHH << "\t" << ptr->WHA << "\t" << ptr->WHH << "\t1\t0\t"
+                             << (ptr->TRI_Data).CS_WITHOUT_DECAY;
+                    box_file << ptr->MHA << "\t" << ptr->MHH << "\t" << ptr->WHA << "\t" << ptr->WHH << "\t1\t0\t"
+                             << (ptr->BOX_Data).CS_WITHOUT_DECAY;
+                    inter_file << ptr->MHA << "\t" << ptr->MHH << "\t" << ptr->WHA << "\t" << ptr->WHH << "\t1\t0\t"
+                               << (ptr->INTER_Data).CS_WITHOUT_DECAY;
+                    double nll_total = 0.0;
+                    for (int j = 0; j < (ptr->TRI_Data).NBINS; j++) {
+                        double c_tri = (ptr->TRI_Data).HIST_BINS[j];
+                        double c_box = (ptr->BOX_Data).HIST_BINS[j];
+                        double c_inter = (ptr->INTER_Data).HIST_BINS[j];
+                        tri_file << "\t" << c_tri;
+                        box_file << "\t" << c_box;
+                        inter_file << "\t" << c_inter;
+                        nll_total += 3000 * NLL(c_tri + c_box + c_inter + BKG->HIST_BINS[j], BKG->HIST_BINS[j]);
+                    }
+                    tri_file << "\t" << nll_total << endl;
+                    box_file << "\t" << nll_total << endl;
+                    inter_file << "\t" << nll_total << endl;
+                }
+            }
         }
-        tri_file << "\t" << nll_total << endl;
-        box_file << "\t" << nll_total << endl;
-        inter_file << "\t" << nll_total << endl;
     }
 
     bkg_file << BKG->CS_WITHOUT_DECAY;
@@ -136,4 +147,17 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
         bkg_file << "\t" << BKG->HIST_BINS[i];
     }
     bkg_file << endl;
+}
+
+AZH_Grid::~AZH_Grid() {
+    for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
+        for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
+            for (int i_MHA = 0; i_MHA < 7; i_MHA++) {
+                for (int i_MHH = 0; i_MHH < i_MHA + 1; i_MHH++) {
+                    delete Grid[i_wr_a][i_wr_h][i_MHA][i_MHH];
+                    Grid[i_wr_a][i_wr_h][i_MHA][i_MHH] = nullptr;
+                }
+            }
+        }
+    }
 }

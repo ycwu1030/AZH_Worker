@@ -28,12 +28,13 @@ public:
 class AZH_Grid {
 private:
     int NUM_POINTS;
-    std::vector<AZH_Parameter> Grid;
+    // std::vector<AZH_Parameter> Grid;
+    AZH_Parameter *Grid[7][7][7][7];
     Distribution_Data *BKG;
 
 public:
     AZH_Grid(char const *data_dir, char const *param_id);
-    ~AZH_Grid(){};
+    ~AZH_Grid();
 
     void Dump_Grid(char const *file_prefix);
 };
