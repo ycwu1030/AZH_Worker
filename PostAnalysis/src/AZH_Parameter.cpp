@@ -41,6 +41,8 @@ Distribution_Data::Distribution_Data(char *root_file) {
     delete del;
 }
 
+Distribution_Data::Distribution_Data() : CS_WITHOUT_DECAY(0) {}
+
 AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double WHH_IN, char *tri_file_name,
                              char *box_file_name, char *inter_file_name)
     : MHA(MHA_IN),
@@ -52,8 +54,28 @@ AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double
       INTER_Data(inter_file_name) {}
 
 AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
-    string WR_CHR[7] = {"0x005", "0x005", "0x010", "0x025", "0x050", "0x100", "0x250"};
-    double WR[7] = {0, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25};
+    // string WR_CHR[7] = {"0x005", "0x005", "0x010", "0x025", "0x050", "0x100", "0x250"};
+    // double WR[7] = {0, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25};
+    WR_CHR[0] = "0x005";  // Use 0x005 distribution for 0x000 case, extrapolation
+    WR[0] = 0;
+
+    WR_CHR[1] = "0x005";
+    WR[1] = 0.005;
+
+    WR_CHR[2] = "0x010";
+    WR[2] = 0.01;
+
+    WR_CHR[3] = "0x025";
+    WR[3] = 0.025;
+
+    WR_CHR[4] = "0x050";
+    WR[4] = 0.05;
+
+    WR_CHR[5] = "0x100";
+    WR[5] = 0.1;
+
+    WR_CHR[6] = "0x250";
+    WR[6] = 0.25;
 
     for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
         for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
@@ -160,4 +182,47 @@ AZH_Grid::~AZH_Grid() {
             }
         }
     }
+}
+
+int AZH_Grid::Get_Width_Index(double wr) {
+    if (wr < WR[0] || wr >= WR[6]) {
+        return -1;
+    }
+    int id_low = 0;
+    int id_high = 6;
+    int id_mid;
+    while (id_high - id_low > 1) {
+        id_mid = (id_high + id_low) >> 1;
+        if (wr >= WR[id_mid]) {
+            id_low = id_mid;
+        } else {
+            id_high = id_mid;
+        }
+    }
+    if (wr == WR[0]) {
+        return 0;
+    } else {
+        return id_low;
+    }
+}
+
+void AZH_Grid::Get_Mass_Index(double mha, double mhh, int &id_a, int &id_h) {
+    if (mha < 500 || mha > 800 || mhh < 400 || mhh > 700 || mhh > mha - 100) {
+        id_a = -1;
+        id_h = -1;
+        return;
+    }
+    id_a = static_cast<int>((mha - 499) / 50);
+    id_h = static_cast<int>((mhh - 399) / 50);
+}
+
+Point::Point() : x(0), y(0) {}
+
+Triangle::Triangle(Point x1, Point x2, Point x3) : P1(x1), P2(x2), P3(x3) {}
+
+void Triangle::Get_Barycentric_Coordinate(const Point &P, double &l1, double &l2, double &l3) {
+    double Area_2 = P1.x * (P2.y - P3.y) + P2.x * (P3.y - P1.y) + P3.x * (P1.y - P2.y);
+    l1 = ((P2.y - P3.y) * (P.x - P3.x) + (P3.x - P2.x) * (P.y - P3.y)) / Area_2;
+    l2 = ((P3.y - P1.y) * (P.x - P3.x) + (P1.x - P3.x) * (P.y - P3.y)) / Area_2;
+    l3 = 1.0 - l1 - l2;
 }
