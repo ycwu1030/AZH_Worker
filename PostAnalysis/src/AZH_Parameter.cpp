@@ -322,7 +322,7 @@ struct __INDEX__ {
     int id_MHH;
     int id_WRA;
     int id_WRH;
-}
+};
 
 bool AZH_Grid::Get_Signal_Distribution(double mha, double mhh, double wha, double whh, double tb, double alpha,
                                        Distribution_Data &dd) {
@@ -352,8 +352,10 @@ bool AZH_Grid::Get_Signal_Distribution(double mha, double mhh, double wha, doubl
     __INDEX__ vertices[3][3];
     for (int id_t_width = 0; id_t_width < 3; id_t_width++) {
         for (int id_t_mass = 0; id_t_mass < 3; id_t_mass++) {
-            vertices[id_t_width][id_t_mass] = __INDEX__(t_MASS.P(id_t_mass).id_x, t_MASS.P(id_t_mass).id_y,
-                                                        t_WIDTH.P(id_t_width).id_x, t_WIDTH.P(id_t_width));
+            vertices[id_t_width][id_t_mass].id_MHA = t_MASS.P(id_t_mass).id_x;
+            vertices[id_t_width][id_t_mass].id_MHH = t_MASS.P(id_t_mass).id_y;
+            vertices[id_t_width][id_t_mass].id_WRA = t_WIDTH.P(id_t_width).id_x;
+            vertices[id_t_width][id_t_mass].id_WRH = t_WIDTH.P(id_t_width).id_y;
         }
     }
     dd.HIST_BINS = vector<double>(400);
@@ -398,5 +400,5 @@ void Triangle::Get_Barycentric_Coordinate(const Point &P, double *lams) {
     double Area_2 = P1.x * (P2.y - P3.y) + P2.x * (P3.y - P1.y) + P3.x * (P1.y - P2.y);
     lams[0] = ((P2.y - P3.y) * (P.x - P3.x) + (P3.x - P2.x) * (P.y - P3.y)) / Area_2;
     lams[1] = ((P3.y - P1.y) * (P.x - P3.x) + (P1.x - P3.x) * (P.y - P3.y)) / Area_2;
-    lams[2] = 1.0 - l1 - l2;
+    lams[2] = 1.0 - lams[0] - lams[1];
 }
