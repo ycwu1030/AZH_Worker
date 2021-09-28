@@ -53,7 +53,32 @@ AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double
       BOX_Data(box_file_name),
       INTER_Data(inter_file_name) {}
 
-AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
+AZH_Grid::AZH_Grid()
+    : MHA_MIN(500), MHA_MAX(800), MHA_STEP(50), MHH_MIN(400), MHH_MAX(700), MHH_STEP(50), NEED_TO_DELETE(false) {
+    WR_CHR[0] = "0x005";  // Use 0x005 distribution for 0x000 case, extrapolation
+    WR[0] = 0;
+
+    WR_CHR[1] = "0x005";
+    WR[1] = 0.005;
+
+    WR_CHR[2] = "0x010";
+    WR[2] = 0.01;
+
+    WR_CHR[3] = "0x025";
+    WR[3] = 0.025;
+
+    WR_CHR[4] = "0x050";
+    WR[4] = 0.05;
+
+    WR_CHR[5] = "0x100";
+    WR[5] = 0.1;
+
+    WR_CHR[6] = "0x250";
+    WR[6] = 0.25;
+}
+
+AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id)
+    : MHA_MIN(500), MHA_MAX(800), MHA_STEP(50), MHH_MIN(400), MHH_MAX(700), MHH_STEP(50), NEED_TO_DELETE(false) {
     // string WR_CHR[7] = {"0x005", "0x005", "0x010", "0x025", "0x050", "0x100", "0x250"};
     // double WR[7] = {0, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25};
     WR_CHR[0] = "0x005";  // Use 0x005 distribution for 0x000 case, extrapolation
@@ -77,14 +102,18 @@ AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
     WR_CHR[6] = "0x250";
     WR[6] = 0.25;
 
+    Read_Data(data_dir, param_id);
+}
+
+void AZH_Grid::Read_Data(char const *data_dir, char const *param_id) {
     for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
         for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
             int pid = 0;
             for (int i_MHA = 0; i_MHA < 7; i_MHA++) {
-                double MHA = 500 + i_MHA * 50;
+                double MHA = MHA_MIN + i_MHA * MHA_STEP;
                 double WHA = MHA * WR[i_wr_a];
                 for (int i_MHH = 0; i_MHH < i_MHA + 1; i_MHH++) {
-                    double MHH = 400 + i_MHH * 50;
+                    double MHH = MHH_MIN + i_MHH * MHH_STEP;
                     double WHH = MHH * WR[i_wr_h];
                     char tri_name[500];
                     char box_name[500];
@@ -108,6 +137,7 @@ AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id) {
     char tmp[500];
     sprintf(tmp, "%s/AZH_PreAna_gg_ztt_bkg_bkg_3l.root", data_dir);
     BKG = new Distribution_Data(tmp);
+    NEED_TO_DELETE = true;
 }
 
 void AZH_Grid::Dump_Grid(char const *file_prefix) {
@@ -172,15 +202,18 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
 }
 
 AZH_Grid::~AZH_Grid() {
-    for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
-        for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
-            for (int i_MHA = 0; i_MHA < 7; i_MHA++) {
-                for (int i_MHH = 0; i_MHH < i_MHA + 1; i_MHH++) {
-                    delete Grid[i_wr_a][i_wr_h][i_MHA][i_MHH];
-                    Grid[i_wr_a][i_wr_h][i_MHA][i_MHH] = nullptr;
+    if (NEED_TO_DELETE) {
+        for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
+            for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
+                for (int i_MHA = 0; i_MHA < 7; i_MHA++) {
+                    for (int i_MHH = 0; i_MHH < i_MHA + 1; i_MHH++) {
+                        delete Grid[i_wr_a][i_wr_h][i_MHA][i_MHH];
+                        Grid[i_wr_a][i_wr_h][i_MHA][i_MHH] = nullptr;
+                    }
                 }
             }
         }
+        delete BKG;
     }
 }
 
@@ -207,22 +240,163 @@ int AZH_Grid::Get_Width_Index(double wr) {
 }
 
 void AZH_Grid::Get_Mass_Index(double mha, double mhh, int &id_a, int &id_h) {
-    if (mha < 500 || mha > 800 || mhh < 400 || mhh > 700 || mhh > mha - 100) {
+    if (mha < MHA_MIN || mha >= MHA_MAX || mhh < MHH_MIN || mhh >= MHH_MAX || mhh > mha - 100) {
         id_a = -1;
         id_h = -1;
         return;
     }
-    id_a = static_cast<int>((mha - 499) / 50);
-    id_h = static_cast<int>((mhh - 399) / 50);
+    id_a = static_cast<int>((mha - MHA_MIN + 1) / MHA_STEP);
+    id_h = static_cast<int>((mhh - MHH_MIN + 1) / MHH_STEP);
 }
 
-Point::Point() : x(0), y(0) {}
+bool AZH_Grid::Get_Mass_Triangle(double mha, double mhh, Triangle &t) {
+    int id_mha_low;
+    int id_mhh_low;
+    Get_Mass_Index(mha, mhh, id_mha_low, id_mhh_low);
+    if (id_mha_low < 0 || id_mhh_low < 0) return false;
+    /*
+     *  The naming convention is
+     *  D----C
+     *  |    |
+     *  A----B
+     */
+    Point A = {Get_MHA(id_mha_low), Get_MHH(id_mhh_low), id_mha_low, id_mhh_low};
+    Point C = {Get_MHA(id_mha_low + 1), Get_MHH(id_mhh_low + 1), id_mha_low + 1, id_mhh_low + 1};
+    double slope = (C.y - A.y) / (C.x - A.x);
+    double slope_test = (mhh - A.y) / (mha - A.x);
+    if (slope_test > slope) {
+        t.P1 = A;
+        t.P2 = C;
+        t.P3.x = A.x;
+        t.P3.y = C.y;
+        t.P3.id_x = A.id_x;
+        t.P3.id_y = C.id_y;
+        return true;
+    } else {
+        t.P1 = A;
+        t.P2 = C;
+        t.P3.x = C.x;
+        t.P3.y = A.y;
+        t.P3.id_x = C.id_x;
+        t.P3.id_y = A.id_y;
+        return true;
+    }
+}
+
+bool AZH_Grid::Get_Width_Triangle(double wra, double wrh, Triangle &t) {
+    int id_wra_low = Get_Width_Index(wra);
+    if (id_wra_low < 0) return false;
+    int id_wrh_low = Get_Width_Index(wrh);
+    if (id_wrh_low < 0) return false;
+    /*
+     *  The naming convention is
+     *  D----C
+     *  |    |
+     *  A----B
+     */
+    Point A = {WR[id_wra_low], WR[id_wrh_low], id_wra_low, id_wrh_low};
+    Point C = {WR[id_wra_low + 1], WR[id_wrh_low + 1], id_wra_low + 1, id_wrh_low + 1};
+    double slope = (C.y - A.y) / (C.x - A.x);
+    double slope_test = (wrh - A.y) / (wra - A.x);
+    if (slope_test > slope) {
+        t.P1 = A;
+        t.P2 = C;
+        t.P3.x = A.x;
+        t.P3.y = C.y;
+        t.P3.id_x = A.id_x;
+        t.P3.id_y = C.id_y;
+        return true;
+    } else {
+        t.P1 = A;
+        t.P2 = C;
+        t.P3.x = C.x;
+        t.P3.y = A.y;
+        t.P3.id_x = C.id_x;
+        t.P3.id_y = A.id_y;
+        return true;
+    }
+}
+
+struct __INDEX__ {
+    int id_MHA;
+    int id_MHH;
+    int id_WRA;
+    int id_WRH;
+}
+
+bool AZH_Grid::Get_Signal_Distribution(double mha, double mhh, double wha, double whh, double tb, double alpha,
+                                       Distribution_Data &dd) {
+    double wra = wha / mha;
+    double wrh = whh / mhh;
+    Triangle t_MASS;
+    Triangle t_WIDTH;
+    bool good;
+    good = Get_Mass_Triangle(mha, mhh, t_MASS);
+    if (!good) return false;
+    good = Get_Width_Triangle(wra, wrh, t_WIDTH);
+    if (!good) return false;
+    double lam_m[3];
+    t_MASS.Get_Barycentric_Coordinate({mha, mhh, 0, 0}, lam_m);
+    double lam_w[3];
+    t_WIDTH.Get_Barycentric_Coordinate({wra, wrh, 0, 0}, lam_w);
+
+    double beta = atan(tb);
+    double kV = sin(beta - alpha);
+    double ktA = 1 / tb;
+    double ktH = sin(alpha) / sin(beta);
+
+    double scale_tri = pow(ktA * ktH * kV, 2);
+    double scale_box = pow(ktH, 4);
+    double scale_int = pow(ktH, 3) * ktA * kV;
+
+    __INDEX__ vertices[3][3];
+    for (int id_t_width = 0; id_t_width < 3; id_t_width++) {
+        for (int id_t_mass = 0; id_t_mass < 3; id_t_mass++) {
+            vertices[id_t_width][id_t_mass] = __INDEX__(t_MASS.P(id_t_mass).id_x, t_MASS.P(id_t_mass).id_y,
+                                                        t_WIDTH.P(id_t_width).id_x, t_WIDTH.P(id_t_width));
+        }
+    }
+    dd.HIST_BINS = vector<double>(400);
+    for (int ibin = 0; ibin < 400; ibin++) {
+        dd.HIST_BINS[ibin] = 0;
+        for (int id_t_width = 0; id_t_width < 3; id_t_width++) {
+            for (int id_t_mass = 0; id_t_mass < 3; id_t_mass++) {
+                __INDEX__ vtx = vertices[id_t_width][id_t_mass];
+                AZH_Parameter *ptr = Grid[vtx.id_WRA][vtx.id_WRH][vtx.id_MHA][vtx.id_MHH];
+                dd.HIST_BINS[ibin] +=
+                    scale_tri * lam_w[id_t_width] * lam_m[id_t_mass] * ((ptr->TRI_Data).HIST_BINS[ibin]);
+                dd.HIST_BINS[ibin] +=
+                    scale_box * lam_w[id_t_width] * lam_m[id_t_mass] * ((ptr->BOX_Data).HIST_BINS[ibin]);
+                dd.HIST_BINS[ibin] +=
+                    scale_int * lam_w[id_t_width] * lam_m[id_t_mass] * ((ptr->INTER_Data).HIST_BINS[ibin]);
+            }
+        }
+    }
+    return true;
+}
+
+double AZH_Grid::Calculate_NLL(double mha, double mhh, double wha, double whh, double tb, double alpha) {
+    Distribution_Data signal;
+    bool good = Get_Signal_Distribution(mha, mhh, wha, whh, tb, alpha, signal);
+    if (!good) return 0;
+    double nll = 0;
+    for (int i = 0; i < BKG->NBINS; i++) {
+        nll += NLL(signal.HIST_BINS[i] + BKG->HIST_BINS[i], BKG->HIST_BINS[i]);
+    }
+    return nll;
+}
 
 Triangle::Triangle(Point x1, Point x2, Point x3) : P1(x1), P2(x2), P3(x3) {}
 
-void Triangle::Get_Barycentric_Coordinate(const Point &P, double &l1, double &l2, double &l3) {
+Point &Triangle::P(int i) {
+    if (i == 0) return P1;
+    if (i == 1) return P2;
+    if (i == 2) return P3;
+}
+
+void Triangle::Get_Barycentric_Coordinate(const Point &P, double *lams) {
     double Area_2 = P1.x * (P2.y - P3.y) + P2.x * (P3.y - P1.y) + P3.x * (P1.y - P2.y);
-    l1 = ((P2.y - P3.y) * (P.x - P3.x) + (P3.x - P2.x) * (P.y - P3.y)) / Area_2;
-    l2 = ((P3.y - P1.y) * (P.x - P3.x) + (P1.x - P3.x) * (P.y - P3.y)) / Area_2;
-    l3 = 1.0 - l1 - l2;
+    lams[0] = ((P2.y - P3.y) * (P.x - P3.x) + (P3.x - P2.x) * (P.y - P3.y)) / Area_2;
+    lams[1] = ((P3.y - P1.y) * (P.x - P3.x) + (P1.x - P3.x) * (P.y - P3.y)) / Area_2;
+    lams[2] = 1.0 - l1 - l2;
 }

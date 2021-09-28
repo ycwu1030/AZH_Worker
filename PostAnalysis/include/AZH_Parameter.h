@@ -30,36 +30,48 @@ public:
 struct Point {
     double x;
     double y;
-    Point();
+    int id_x;
+    int id_y;
 };
 
 class Triangle {
-private:
-    Point P1, P2, P3;
-
 public:
     Triangle(){};
     Triangle(Point x1, Point x2, Point x3);
     ~Triangle(){};
 
-    void Get_Barycentric_Coordinate(const Point &P, double &l1, double &l2, double &l3);
+    void Get_Barycentric_Coordinate(const Point &P, double *lams);
+    Point &P(int i);
+    Point P1, P2, P3;
 };
 
 class AZH_Grid {
 private:
     int NUM_POINTS;
+    bool NEED_TO_DELETE;
     // std::vector<AZH_Parameter> Grid;
     AZH_Parameter *Grid[7][7][7][7];
     Distribution_Data *BKG;
     std::string WR_CHR[7];
     double WR[7];
+    double MHA_MIN;
+    double MHA_MAX;
+    double MHA_STEP;
+    double MHH_MIN;
+    double MHH_MAX;
+    double MHH_STEP;
 
 public:
+    AZH_Grid();
     AZH_Grid(char const *data_dir, char const *param_id);
     ~AZH_Grid();
 
+    void Read_Data(char const *data_dir, char const *param_id);
     int Get_Width_Index(double wr);
     void Get_Mass_Index(double mha, double mhh, int &id_a, int &id_h);
+
+    double Get_MHA(int id_a) { return MHA_MIN + id_a * MHA_STEP; }
+    double Get_MHH(int id_h) { return MHH_MIN + id_h * MHH_STEP; }
 
     void Dump_Grid(char const *file_prefix);
 
