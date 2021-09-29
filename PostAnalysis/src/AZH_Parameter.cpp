@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "AZHPreAnalysis.h"
@@ -41,6 +42,19 @@ Distribution_Data::Distribution_Data(char *root_file) {
     delete del;
 }
 
+Distribution_Data::Distribution_Data(stringstream &sstr) {
+    string tok;
+    getline(sstr, tok, '\t');
+    CS_WITHOUT_DECAY = atof(tok.c_str());
+    // cout << CS_WITHOUT_DECAY;
+    while (getline(sstr, tok, '\t')) {
+        HIST_BINS.push_back(atof(tok.c_str()));
+        // cout << " " << atof(tok.c_str());
+    }
+    NBINS = HIST_BINS.size();
+    // cout << " " << NBINS << endl;
+}
+
 Distribution_Data::Distribution_Data() : CS_WITHOUT_DECAY(0) {}
 
 AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double WHH_IN, char *tri_file_name,
@@ -52,6 +66,16 @@ AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double
       TRI_Data(tri_file_name),
       BOX_Data(box_file_name),
       INTER_Data(inter_file_name) {}
+
+AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double WHH_IN, stringstream &tri_line,
+                             stringstream &box_line, stringstream &inter_line)
+    : MHA(MHA_IN),
+      MHH(MHH_IN),
+      WHA(WHA_IN),
+      WHH(WHH_IN),
+      TRI_Data(tri_line),
+      BOX_Data(box_line),
+      INTER_Data(inter_line) {}
 
 AZH_Grid::AZH_Grid()
     : MHA_MIN(500), MHA_MAX(800), MHA_STEP(50), MHH_MIN(400), MHH_MAX(700), MHH_STEP(50), NEED_TO_DELETE(false) {
@@ -105,6 +129,34 @@ AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id)
     Read_Data(data_dir, param_id);
 }
 
+AZH_Grid::AZH_Grid(char const *dist_prefix)
+    : MHA_MIN(500), MHA_MAX(800), MHA_STEP(50), MHH_MIN(400), MHH_MAX(700), MHH_STEP(50), NEED_TO_DELETE(false) {
+    // string WR_CHR[7] = {"0x005", "0x005", "0x010", "0x025", "0x050", "0x100", "0x250"};
+    // double WR[7] = {0, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25};
+    WR_CHR[0] = "0x005";  // Use 0x005 distribution for 0x000 case, extrapolation
+    WR[0] = 0;
+
+    WR_CHR[1] = "0x005";
+    WR[1] = 0.005;
+
+    WR_CHR[2] = "0x010";
+    WR[2] = 0.01;
+
+    WR_CHR[3] = "0x025";
+    WR[3] = 0.025;
+
+    WR_CHR[4] = "0x050";
+    WR[4] = 0.05;
+
+    WR_CHR[5] = "0x100";
+    WR[5] = 0.1;
+
+    WR_CHR[6] = "0x250";
+    WR[6] = 0.25;
+
+    Read_Data(dist_prefix);
+}
+
 void AZH_Grid::Read_Data(char const *data_dir, char const *param_id) {
     for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
         for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
@@ -137,6 +189,62 @@ void AZH_Grid::Read_Data(char const *data_dir, char const *param_id) {
     char tmp[500];
     sprintf(tmp, "%s/AZH_PreAna_gg_ztt_bkg_bkg_3l.root", data_dir);
     BKG = new Distribution_Data(tmp);
+    NEED_TO_DELETE = true;
+}
+
+void AZH_Grid::Read_Data(char const *dist_prefix) {
+    char tmp[500];
+    sprintf(tmp, "%s_tri_distribution.txt", dist_prefix);
+    ifstream tri_file(tmp);
+    sprintf(tmp, "%s_box_distribution.txt", dist_prefix);
+    ifstream box_file(tmp);
+    sprintf(tmp, "%s_inter_distribution.txt", dist_prefix);
+    ifstream inter_file(tmp);
+    sprintf(tmp, "%s_bkg_distribution.txt", dist_prefix);
+    ifstream bkg_file(tmp);
+    string tri, box, inter, bkg;
+    getline(tri_file, tri);
+    getline(box_file, box);
+    getline(inter_file, inter);
+    getline(bkg_file, bkg);
+
+    for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
+        for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
+            for (int i_MHA = 0; i_MHA < 7; i_MHA++) {
+                for (int i_MHH = 0; i_MHH < i_MHA + 1; i_MHH++) {
+                    double MHA = Get_MHA(i_MHA);
+                    double MHH = Get_MHH(i_MHH);
+                    double WHA = MHA * WR[i_wr_a];
+                    double WHH = MHH * WR[i_wr_h];
+                    cout << "Construct node for " << MHA << " " << MHH << " " << WHA << " " << WHH << endl;
+                    getline(tri_file, tri);
+                    getline(box_file, box);
+                    getline(inter_file, inter);
+                    // cout << tri << endl;
+                    // cout << box << endl;
+                    // cout << inter << endl;
+                    stringstream tri_line(tri);
+                    stringstream box_line(box);
+                    stringstream inter_line(inter);
+                    string dump;
+                    for (int i = 0; i < 6; i++) {
+                        // * Remove MHA MHH WHA WHH tb cba entries
+                        getline(tri_line, dump, '\t');
+                        getline(box_line, dump, '\t');
+                        getline(inter_line, dump, '\t');
+                        cout << dump << " ";
+                    }
+                    cout << endl;
+                    Grid[i_wr_a][i_wr_h][i_MHA][i_MHH] =
+                        new AZH_Parameter(MHA, MHH, WHA, WHH, tri_line, box_line, inter_line);
+                }
+            }
+        }
+    }
+
+    getline(bkg_file, bkg);
+    stringstream bkg_line(bkg);
+    BKG = new Distribution_Data(bkg_line);
     NEED_TO_DELETE = true;
 }
 
@@ -245,8 +353,8 @@ void AZH_Grid::Get_Mass_Index(double mha, double mhh, int &id_a, int &id_h) {
         id_h = -1;
         return;
     }
-    id_a = static_cast<int>((mha - MHA_MIN + 1) / MHA_STEP);
-    id_h = static_cast<int>((mhh - MHH_MIN + 1) / MHH_STEP);
+    id_a = static_cast<int>((mha - MHA_MIN + 1e-8) / MHA_STEP);
+    id_h = static_cast<int>((mhh - MHH_MIN + 1e-8) / MHH_STEP);
 }
 
 bool AZH_Grid::Get_Mass_Triangle(double mha, double mhh, Triangle &t) {
@@ -340,6 +448,14 @@ bool AZH_Grid::Get_Signal_Distribution(double mha, double mhh, double wha, doubl
     double lam_w[3];
     t_WIDTH.Get_Barycentric_Coordinate({wra, wrh, 0, 0}, lam_w);
 
+    // cout << mha << "," << mhh << "," << wra << "," << wrh << endl;
+    // for (int i = 0; i < 3; i++) {
+    //     cout << "(" << t_MASS.P(i).x << "," << t_MASS.P(i).y << ")" << endl;
+    // }
+    // for (int i = 0; i < 3; i++) {
+    //     cout << "(" << t_WIDTH.P(i).x << "," << t_WIDTH.P(i).y << ")" << endl;
+    // }
+
     double beta = atan(tb);
     double kV = sin(beta - alpha);
     double ktA = 1 / tb;
@@ -377,7 +493,7 @@ bool AZH_Grid::Get_Signal_Distribution(double mha, double mhh, double wha, doubl
     return true;
 }
 
-double AZH_Grid::Calculate_NLL(double mha, double mhh, double wha, double whh, double tb, double alpha) {
+double AZH_Grid::Calculate_NLL(double mha, double mhh, double wha, double whh, double tb, double alpha, double lumi) {
     Distribution_Data signal;
     bool good = Get_Signal_Distribution(mha, mhh, wha, whh, tb, alpha, signal);
     if (!good) return 0;
@@ -385,7 +501,7 @@ double AZH_Grid::Calculate_NLL(double mha, double mhh, double wha, double whh, d
     for (int i = 0; i < BKG->NBINS; i++) {
         nll += NLL(signal.HIST_BINS[i] + BKG->HIST_BINS[i], BKG->HIST_BINS[i]);
     }
-    return nll;
+    return nll * lumi;
 }
 
 Triangle::Triangle(Point x1, Point x2, Point x3) : P1(x1), P2(x2), P3(x3) {}

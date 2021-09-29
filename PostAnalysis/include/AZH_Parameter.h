@@ -8,6 +8,7 @@ public:
     int NBINS;
 
     Distribution_Data(char *root_file);
+    Distribution_Data(std::stringstream &sstr);
     Distribution_Data();
     ~Distribution_Data(){};
 };
@@ -24,6 +25,8 @@ public:
 
     AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double WHH_IN, char *tri_file_name, char *box_file_name,
                   char *inter_file_name);
+    AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double WHH_IN, std::stringstream &tri_line,
+                  std::stringstream &box_line, std::stringstream &inter_line);
     ~AZH_Parameter(){};
 };
 
@@ -64,9 +67,11 @@ private:
 public:
     AZH_Grid();
     AZH_Grid(char const *data_dir, char const *param_id);
+    AZH_Grid(char const *dist_prefix);
     ~AZH_Grid();
 
     void Read_Data(char const *data_dir, char const *param_id);
+    void Read_Data(char const *dist_prefix);
     int Get_Width_Index(double wr);
     void Get_Mass_Index(double mha, double mhh, int &id_a, int &id_h);
 
@@ -79,5 +84,5 @@ public:
     bool Get_Width_Triangle(double wra, double wrh, Triangle &t);
     bool Get_Signal_Distribution(double mha, double mhh, double wha, double whh, double tb, double alpha,
                                  Distribution_Data &dd);
-    double Calculate_NLL(double mha, double mhh, double wha, double whh, double tb, double alpha);
+    double Calculate_NLL(double mha, double mhh, double wha, double whh, double tb, double alpha, double lumi = 3000);
 };
