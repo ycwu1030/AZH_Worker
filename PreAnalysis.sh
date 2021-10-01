@@ -6,7 +6,6 @@
 ##SBATCH --mail-user=ywu@okstate.edu
 ##SBATCH --mail-type=end
 
-# files=("param_signal_202108290019_0x005.json" "param_signal_202108290019_0x010.json" "param_signal_202108290019_0x025.json" "param_signal_202108290019_0x050.json" "param_signal_202108290019_0x100.json" "param_signal_202108290019_0x250.json")
 procfile=$1
 files=$(ls DATADIR/param_signal_202109*.json)
 cd PreAnalysis; make clean; make; cd -
@@ -17,7 +16,7 @@ for file in ${files}
     nid=$[$nid+1]
     if [ $nid -eq 32 ]
       then
-        sleep 30m
+        sleep 10m
     fi
 done
 
