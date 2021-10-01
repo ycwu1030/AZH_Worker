@@ -52,6 +52,7 @@ class AZH_Grid {
 private:
     int NUM_POINTS;
     bool NEED_TO_DELETE;
+    bool FLIPPED;  // False: A->ZH, True: H->ZA
     // std::vector<AZH_Parameter> Grid;
     AZH_Parameter *Grid[7][7][7][7];
     Distribution_Data *BKG;
@@ -66,8 +67,8 @@ private:
 
 public:
     AZH_Grid();
-    AZH_Grid(char const *data_dir, char const *param_id);
-    AZH_Grid(char const *dist_prefix);
+    AZH_Grid(char const *data_dir, char const *param_id, bool FLIP = false);
+    AZH_Grid(char const *dist_prefix, bool FLIP = false);
     ~AZH_Grid();
 
     void Read_Data(char const *data_dir, char const *param_id);

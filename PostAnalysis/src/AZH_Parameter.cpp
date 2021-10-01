@@ -101,8 +101,15 @@ AZH_Grid::AZH_Grid()
     WR[6] = 0.25;
 }
 
-AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id)
-    : MHA_MIN(500), MHA_MAX(800), MHA_STEP(50), MHH_MIN(400), MHH_MAX(700), MHH_STEP(50), NEED_TO_DELETE(false) {
+AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id, bool FLIP)
+    : MHA_MIN(500),
+      MHA_MAX(800),
+      MHA_STEP(50),
+      MHH_MIN(400),
+      MHH_MAX(700),
+      MHH_STEP(50),
+      NEED_TO_DELETE(false),
+      FLIPPED(FLIP) {
     // string WR_CHR[7] = {"0x005", "0x005", "0x010", "0x025", "0x050", "0x100", "0x250"};
     // double WR[7] = {0, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25};
     WR_CHR[0] = "0x005";  // Use 0x005 distribution for 0x000 case, extrapolation
@@ -129,8 +136,15 @@ AZH_Grid::AZH_Grid(char const *data_dir, char const *param_id)
     Read_Data(data_dir, param_id);
 }
 
-AZH_Grid::AZH_Grid(char const *dist_prefix)
-    : MHA_MIN(500), MHA_MAX(800), MHA_STEP(50), MHH_MIN(400), MHH_MAX(700), MHH_STEP(50), NEED_TO_DELETE(false) {
+AZH_Grid::AZH_Grid(char const *dist_prefix, bool FLIP)
+    : MHA_MIN(500),
+      MHA_MAX(800),
+      MHA_STEP(50),
+      MHH_MIN(400),
+      MHH_MAX(700),
+      MHH_STEP(50),
+      NEED_TO_DELETE(false),
+      FLIPPED(FLIP) {
     // string WR_CHR[7] = {"0x005", "0x005", "0x010", "0x025", "0x050", "0x100", "0x250"};
     // double WR[7] = {0, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25};
     WR_CHR[0] = "0x005";  // Use 0x005 distribution for 0x000 case, extrapolation
@@ -495,7 +509,17 @@ bool AZH_Grid::Get_Signal_Distribution(double mha, double mhh, double wha, doubl
 
 double AZH_Grid::Calculate_NLL(double mha, double mhh, double wha, double whh, double tb, double alpha, double lumi) {
     Distribution_Data signal;
-    bool good = Get_Signal_Distribution(mha, mhh, wha, whh, tb, alpha, signal);
+    double MHA = mha;
+    double MHH = mhh;
+    double WHA = wha;
+    double WHH = whh;
+    if (FLIPPED) {
+        MHA = mhh;
+        MHH = mha;
+        WHA = whh;
+        WHH = wha;
+    }
+    bool good = Get_Signal_Distribution(MHA, MHH, WHA, WHH, tb, alpha, signal);
     if (!good) return 0;
     double nll = 0;
     for (int i = 0; i < BKG->NBINS; i++) {
