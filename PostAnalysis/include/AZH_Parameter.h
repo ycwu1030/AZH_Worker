@@ -66,7 +66,7 @@ private:
     double MHH_STEP;
 
 public:
-    AZH_Grid();
+    AZH_Grid(bool FLIP = false);
     AZH_Grid(char const *data_dir, char const *param_id, bool FLIP = false);
     AZH_Grid(char const *dist_prefix, bool FLIP = false);
     ~AZH_Grid();

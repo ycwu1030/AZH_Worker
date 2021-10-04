@@ -77,8 +77,15 @@ AZH_Parameter::AZH_Parameter(double MHA_IN, double MHH_IN, double WHA_IN, double
       BOX_Data(box_line),
       INTER_Data(inter_line) {}
 
-AZH_Grid::AZH_Grid()
-    : MHA_MIN(500), MHA_MAX(800), MHA_STEP(50), MHH_MIN(400), MHH_MAX(700), MHH_STEP(50), NEED_TO_DELETE(false) {
+AZH_Grid::AZH_Grid(bool FLIP)
+    : MHA_MIN(500),
+      MHA_MAX(800),
+      MHA_STEP(50),
+      MHH_MIN(400),
+      MHH_MAX(700),
+      MHH_STEP(50),
+      NEED_TO_DELETE(false),
+      FLIPPED(FLIP) {
     WR_CHR[0] = "0x005";  // Use 0x005 distribution for 0x000 case, extrapolation
     WR[0] = 0;
 
@@ -172,6 +179,11 @@ AZH_Grid::AZH_Grid(char const *dist_prefix, bool FLIP)
 }
 
 void AZH_Grid::Read_Data(char const *data_dir, char const *param_id) {
+    char file_prefix[100];
+    sprintf(file_prefix, "AZH_PreAna_gg_ztt_Type-I");
+    if (FLIPPED) {
+        sprintf(file_prefix, "AZH_PreAna_gg_HZA_ztt_Type-I");
+    }
     for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
         for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
             int pid = 0;
@@ -184,11 +196,11 @@ void AZH_Grid::Read_Data(char const *data_dir, char const *param_id) {
                     char tri_name[500];
                     char box_name[500];
                     char inter_name[500];
-                    sprintf(tri_name, "%s/AZH_PreAna_gg_ztt_Type-I_tri_%s_HA%s_HH%s_%d_3l.root", data_dir, param_id,
+                    sprintf(tri_name, "%s/%s_tri_%s_HA%s_HH%s_%d_3l.root", data_dir, file_prefix, param_id,
                             WR_CHR[i_wr_a].c_str(), WR_CHR[i_wr_h].c_str(), pid);
-                    sprintf(box_name, "%s/AZH_PreAna_gg_ztt_Type-I_box_%s_HA%s_HH%s_%d_3l.root", data_dir, param_id,
+                    sprintf(box_name, "%s/%s_box_%s_HA%s_HH%s_%d_3l.root", data_dir, file_prefix, param_id,
                             WR_CHR[i_wr_a].c_str(), WR_CHR[i_wr_h].c_str(), pid);
-                    sprintf(inter_name, "%s/AZH_PreAna_gg_ztt_Type-I_inter_%s_HA%s_HH%s_%d_3l.root", data_dir, param_id,
+                    sprintf(inter_name, "%s/%s_inter_%s_HA%s_HH%s_%d_3l.root", data_dir, file_prefix, param_id,
                             WR_CHR[i_wr_a].c_str(), WR_CHR[i_wr_h].c_str(), pid);
                     cout << "Construct node for " << MHA << " " << MHH << " " << WHA << " " << WHH << endl;
                     Grid[i_wr_a][i_wr_h][i_MHA][i_MHH] =
