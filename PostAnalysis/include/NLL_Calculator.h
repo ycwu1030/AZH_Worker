@@ -1,6 +1,7 @@
 #ifndef __NLL_CALCULATOR_H__
 #define __NLL_CALCULATOR_H__
 #include <string>
+#include <vector>
 
 #include "TH2F.h"
 
@@ -14,6 +15,18 @@ public:
                    const double X_HIGH = 1000, const int NBINY = 20, const double Y_LOW = 400,
                    const double Y_HIGH = 1000);
     ~NLL_Calculator();
+
+    double Get_NLL(const double lumi = 3000, const double mu_S = 1);
+    double Get_mu_at_95CL(const double lumi = 3000);
+};
+
+class NLL_Calculator_VEC {
+private:
+    std::vector<double> VSIG;
+    std::vector<double> VBKG;
+
+public:
+    NLL_Calculator_VEC(const std::vector<double> VSIG, const std::vector<double> VBKG);
 
     double Get_NLL(const double lumi = 3000, const double mu_S = 1);
     double Get_mu_at_95CL(const double lumi = 3000);

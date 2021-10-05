@@ -6,6 +6,7 @@
 #include <string>
 
 #include "AZHPreAnalysis.h"
+#include "NLL_Calculator.h"
 #include "TFile.h"
 #include "TH2F.h"
 #include "Utilities.h"
@@ -284,10 +285,15 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
     ofstream inter_file(tmp);
     sprintf(tmp, "%s_bkg_distribution.txt", file_prefix);
     ofstream bkg_file(tmp);
-
-    tri_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
-    box_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
-    inter_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
+    if (FLIPPED) {
+        tri_file << "MHH\tMHA\tWHH\tWHA\ttb\tcba\tCS";
+        box_file << "MHH\tMHA\tWHH\tWHA\ttb\tcba\tCS";
+        inter_file << "MHH\tMHA\tWHH\tWHA\ttb\tcba\tCS";
+    } else {
+        tri_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
+        box_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
+        inter_file << "MHA\tMHH\tWHA\tWHH\ttb\tcba\tCS";
+    }
     bkg_file << "CS";
     for (int i = 0; i < (Grid[0][0][0][0]->TRI_Data).NBINS; i++) {
         tri_file << "\tBIN" << i;
@@ -295,9 +301,9 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
         inter_file << "\tBIN" << i;
         bkg_file << "\tBIN" << i;
     }
-    tri_file << "\tNLL" << endl;
-    box_file << "\tNLL" << endl;
-    inter_file << "\tNLL" << endl;
+    tri_file << "\tNLL\tMU" << endl;
+    box_file << "\tNLL\tMU" << endl;
+    inter_file << "\tNLL\tMU" << endl;
     bkg_file << endl;
     for (int i_wr_a = 0; i_wr_a < 7; i_wr_a++) {
         for (int i_wr_h = 0; i_wr_h < 7; i_wr_h++) {
@@ -310,19 +316,23 @@ void AZH_Grid::Dump_Grid(char const *file_prefix) {
                              << (ptr->BOX_Data).CS_WITHOUT_DECAY;
                     inter_file << ptr->MHA << "\t" << ptr->MHH << "\t" << ptr->WHA << "\t" << ptr->WHH << "\t1\t0\t"
                                << (ptr->INTER_Data).CS_WITHOUT_DECAY;
-                    double nll_total = 0.0;
+                    std::vector<double> total((ptr->TRI_Data).NBINS);
                     for (int j = 0; j < (ptr->TRI_Data).NBINS; j++) {
                         double c_tri = (ptr->TRI_Data).HIST_BINS[j];
                         double c_box = (ptr->BOX_Data).HIST_BINS[j];
                         double c_inter = (ptr->INTER_Data).HIST_BINS[j];
+                        total[j] = c_tri + c_box + c_inter;
                         tri_file << "\t" << c_tri;
                         box_file << "\t" << c_box;
                         inter_file << "\t" << c_inter;
-                        nll_total += 3000 * NLL(c_tri + c_box + c_inter + BKG->HIST_BINS[j], BKG->HIST_BINS[j]);
+                        // nll_total += 3000 * NLL(c_tri + c_box + c_inter + BKG->HIST_BINS[j], BKG->HIST_BINS[j]);
                     }
-                    tri_file << "\t" << nll_total << endl;
-                    box_file << "\t" << nll_total << endl;
-                    inter_file << "\t" << nll_total << endl;
+                    NLL_Calculator_VEC nc(total, BKG->HIST_BINS);
+                    double nll_total = nc.Get_NLL();
+                    double muS = nc.Get_mu_at_95CL();
+                    tri_file << "\t" << nll_total << "\t" << muS << endl;
+                    box_file << "\t" << nll_total << "\t" << muS << endl;
+                    inter_file << "\t" << nll_total << "\t" << muS << endl;
                 }
             }
         }
