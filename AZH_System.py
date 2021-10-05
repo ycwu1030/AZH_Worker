@@ -9,7 +9,6 @@ from MG_Runner import MG_RUNNER
 class AZH_System(object):
     __BASE_DIR__ = dirname(abspath(__file__))
     __MG5_DIR__ = join(__BASE_DIR__, 'MG5DIR/MG5_aMC_v3_1_1')
-    # __MG5_DIR__ = '/Users/ycwu/Workingspace/MC-Generator/MG5_aMC_v3_1_1'
 
     def __init__(self, INFOFILE, DEBUG=False):
         with open(INFOFILE, 'r') as f:

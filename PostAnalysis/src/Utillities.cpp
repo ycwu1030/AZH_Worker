@@ -49,6 +49,7 @@ void SetPlotStyle() {
 }
 
 double NLL(double obs, double exp) {
+    // * This is -2*log(L)
     if (exp < 1e-5) return 0;
     if (obs < 1e-5) return 2 * exp;
     return 2 * (exp - obs + obs * log(obs / exp));
