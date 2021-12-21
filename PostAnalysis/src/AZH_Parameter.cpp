@@ -497,9 +497,9 @@ bool AZH_Grid::Get_Signal_Distribution(double mha, double mhh, double wha, doubl
     double ktA = 1 / tb;
     double ktH = sin(alpha) / sin(beta);
 
-    double scale_tri = pow(ktA * ktH * kV, 2);
-    double scale_box = pow(ktH, 4);
-    double scale_int = pow(ktH, 3) * ktA * kV;
+    double scale_tri = pow(ktA * ktH * kV, 2) / 1.0;
+    double scale_box = pow(ktH, 4) / 1.0;
+    double scale_int = pow(ktH, 3) * ktA * kV / (-1.0);
 
     __INDEX__ vertices[3][3];
     for (int id_t_width = 0; id_t_width < 3; id_t_width++) {
