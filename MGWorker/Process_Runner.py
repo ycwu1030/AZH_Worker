@@ -18,7 +18,7 @@ class Process_Runner(object):
         self.SIG_COMPONENTS = self.INFO['SIGNAL_COMPONENT']
         self.BKG_PROCS = self.INFO['BACKGROUND']
         self.WORK_DIR = join(getcwd(), 'WORKDIR')
-        if not os.path.exists(self.WORKDIR):
+        if not os.path.exists(self.WORK_DIR):
             os.makedirs(self.WORK_DIR)
         self.DATA_DIR = join(getcwd(), 'DATADIR')
         if not os.path.exists(self.DATA_DIR):
