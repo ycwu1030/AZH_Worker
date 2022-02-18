@@ -99,7 +99,7 @@
     "BACKGROUND": {
         "TOTAL": {
             "PRES" : [],
-            "PROC": ["p p > z t t~ $$ hh ha, z > l- l+"],
+            "PROC": ["p p > z t t~ $$ hh ha, z > l- l+ ZFF==99"],
             "NAME": "gg_ztt_bkg",
             "PROC_Z": ["p p > z t t~ $$ hh ha"],
             "NAME_Z": "gg_ztt_bkg_z"
