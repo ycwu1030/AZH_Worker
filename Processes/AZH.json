@@ -55,44 +55,44 @@
         },
         "bb_Z": {
             "PRES" : [],
-            "PROC": ["b b~ > z hh ZZHH^2==2, z > l- l+, hh > t t~"],
+            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZZHH^2==2"],
             "NAME": "bb_ztt_%s_z",
-            "PROC_Z": ["b b~ > z hh ZZHH^2==2, hh > t t~"],
+            "PROC_Z": ["b b~ > hh > z tp tp~ ZZHH^2==2"],
             "NAME_Z": "bb_ztt_%s_z_z"
         },
         "bb_S": {
             "PRES" : [],
-            "PROC": ["b b~ > z hh ZSS^2==2, z > l- l+, hh > t t~"],
+            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS^2==2 TTHH^2==2"],
             "NAME": "bb_ztt_%s_s",
-            "PROC_Z": ["b b~ > z hh ZSS^2==2, hh > t t~"],
+            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS^2==2 TTHH^2==2"],
             "NAME_Z": "bb_ztt_%s_s_z"
         },
         "bb_T": {
             "PRES" : [],
-            "PROC": ["b b~ > z hh ZSS==0 ZZHH==0, z > l- l+, hh > t t~"],
+            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS==0 ZZHH==0"],
             "NAME": "bb_ztt_%s_t",
             "PROC_Z": ["b b~ > z hh ZSS==0 ZZHH==0, hh > t t~"],
             "NAME_Z": "bb_ztt_%s_t_z"
         },
         "bb_ZxS": {
             "PRES" : [],
-            "PROC": ["b b~ > z hh ZSS^2==1 ZZHH^2==1, z > l- l+, hh > t t~"],
+            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS^2==1 ZZHH^2==1 TTHH^2==2"],
             "NAME": "bb_ztt_%s_zxs",
-            "PROC_Z": ["b b~ > z hh ZSS^2==1 ZZHH^2==1, hh > t t~"],
+            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS^2==1 ZZHH^2==1 TTHH^2==2"],
             "NAME_Z": "bb_ztt_%s_zxs_z"
         },
         "bb_ZxT": {
             "PRES" : [],
-            "PROC": ["b b~ > z hh ZSS^2==1 ZZHH==0, z > l- l+, hh > t t~"],
+            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS^2==1 ZZHH==0 TTHH^2==2"],
             "NAME": "bb_ztt_%s_zxt",
-            "PROC_Z": ["b b~ > z hh ZSS^2==1 ZZHH==0, hh > t t~"],
+            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS^2==1 ZZHH==0 TTHH^2==2"],
             "NAME_Z": "bb_ztt_%s_zxt_z"
         },
         "bb_SxT": {
             "PRES" : [],
-            "PROC": ["b b~ > z hh ZSS==0 ZZHH^2==1, z > l- l+, hh > t t~"],
+            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS==0 ZZHH^2==1 TTHH^2==2"],
             "NAME": "bb_ztt_%s_sxt",
-            "PROC_Z": ["b b~ > z hh ZSS==0 ZZHH^2==1, hh > t t~"],
+            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS==0 ZZHH^2==1 TTHH^2==2"],
             "NAME_Z": "bb_ztt_%s_sxt_z"
         }
     },
