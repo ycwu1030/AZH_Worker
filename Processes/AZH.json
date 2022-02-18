@@ -71,7 +71,7 @@
             "PRES" : [],
             "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS==0 ZZHH==0"],
             "NAME": "bb_ztt_%s_t",
-            "PROC_Z": ["b b~ > z hh ZSS==0 ZZHH==0, hh > t t~"],
+            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS==0 ZZHH==0"],
             "NAME_Z": "bb_ztt_%s_t_z"
         },
         "bb_ZxS": {
