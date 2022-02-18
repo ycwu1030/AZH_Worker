@@ -83,16 +83,16 @@
         },
         "bb_ZxT": {
             "PRES" : [],
-            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS^2==1 ZZHH==0 TTHH^2==2"],
+            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS==0 ZZHH^2==1 TTHH^2==2"],
             "NAME": "bb_ztt_%s_zxt",
-            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS^2==1 ZZHH==0 TTHH^2==2"],
+            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS==0 ZZHH^2==1 TTHH^2==2"],
             "NAME_Z": "bb_ztt_%s_zxt_z"
         },
         "bb_SxT": {
             "PRES" : [],
-            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS==0 ZZHH^2==1 TTHH^2==2"],
+            "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS^2==1 ZZHH^2==0 TTHH^2==2"],
             "NAME": "bb_ztt_%s_sxt",
-            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS==0 ZZHH^2==1 TTHH^2==2"],
+            "PROC_Z": ["b b~ > hh > z tp tp~ ZSS^2==1 ZZHH^2==0 TTHH^2==2"],
             "NAME_Z": "bb_ztt_%s_sxt_z"
         }
     },
