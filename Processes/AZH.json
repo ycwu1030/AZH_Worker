@@ -5,78 +5,91 @@
     "SQRTS": 14,
     "SIGNAL_COMPONENT": {
         "ggF_TRI": {
+            "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZSS^2==2 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_tri",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZSS^2==2 TTHH^2==2"],
             "NAME_Z": "gg_ztt_%s_ggF_tri_z"
         },
         "ggF_BOX": {
+            "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZFF^2==2 ZZHH<=0 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_box",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZFF^2==2 ZZHH<=0 TTHH^2==2"],
             "NAME_Z": "gg_ztt_%s_ggF_box_z"
         },
         "ggF_Z": {
+            "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZZHH^2==2 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_z",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZZHH^2==2 TTHH^2==2"],
             "NAME_Z": "gg_ztt_%s_ggF_z_z"
         },
         "ggF_TRIxBOX": {
+            "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZSS^2==1 ZFF^2==1 ZZHH<=0 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_trixbox",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZSS^2==1 ZFF^2==1 ZZHH<=0 TTHH^2==2"],
             "NAME_Z": "gg_ztt_%s_ggF_trixbox_z"
         },
         "ggF_TRIxZ": {
+            "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZSS^2==1 ZZHH^2==1 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_trixz",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZSS^2==1 ZZHH^2==1 TTHH^2==2"],
             "NAME_Z": "gg_ztt_%s_ggF_trixz_z"
         },
         "ggF_BOXxZ": {
+            "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZFF^2==2 ZZHH^2==1 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_boxxz",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZFF^2==2 ZZHH^2==1 TTHH^2==2"],
             "NAME_Z": "gg_ztt_%s_ggF_boxxz_z"
         },
         "qq_DY": {
+            "PRES" : ["define q = u d c s u~ d~ c~ s~"],
             "PROC": ["q q > z hh, z > l- l+, hh > t t~"],
             "NAME": "qq_ztt_%s_DY",
             "PROC_Z": ["q q > z hh, hh > t t~"],
             "NAME_Z": "qq_ztt_%s_DY_z"
         },
         "bb_Z": {
+            "PRES" : [],
             "PROC": ["b b~ > z hh ZZHH^2==2, z > l- l+, hh > t t~"],
             "NAME": "bb_ztt_%s_z",
             "PROC_Z": ["b b~ > z hh ZZHH^2==2, hh > t t~"],
             "NAME_Z": "bb_ztt_%s_z_z"
         },
         "bb_S": {
+            "PRES" : [],
             "PROC": ["b b~ > z hh ZSS^2==2, z > l- l+, hh > t t~"],
             "NAME": "bb_ztt_%s_s",
             "PROC_Z": ["b b~ > z hh ZSS^2==2, hh > t t~"],
             "NAME_Z": "bb_ztt_%s_s_z"
         },
         "bb_T": {
+            "PRES" : [],
             "PROC": ["b b~ > z hh ZSS==0 ZZHH==0, z > l- l+, hh > t t~"],
             "NAME": "bb_ztt_%s_t",
             "PROC_Z": ["b b~ > z hh ZSS==0 ZZHH==0, hh > t t~"],
             "NAME_Z": "bb_ztt_%s_t_z"
         },
         "bb_ZxS": {
+            "PRES" : [],
             "PROC": ["b b~ > z hh ZSS^2==1 ZZHH^2==1, z > l- l+, hh > t t~"],
             "NAME": "bb_ztt_%s_zxs",
             "PROC_Z": ["b b~ > z hh ZSS^2==1 ZZHH^2==1, hh > t t~"],
             "NAME_Z": "bb_ztt_%s_zxs_z"
         },
         "bb_ZxT": {
+            "PRES" : [],
             "PROC": ["b b~ > z hh ZSS^2==1 ZZHH==0, z > l- l+, hh > t t~"],
             "NAME": "bb_ztt_%s_zxt",
             "PROC_Z": ["b b~ > z hh ZSS^2==1 ZZHH==0, hh > t t~"],
             "NAME_Z": "bb_ztt_%s_zxt_z"
         },
         "bb_SxT": {
+            "PRES" : [],
             "PROC": ["b b~ > z hh ZSS==0 ZZHH^2==1, z > l- l+, hh > t t~"],
             "NAME": "bb_ztt_%s_sxt",
             "PROC_Z": ["b b~ > z hh ZSS==0 ZZHH^2==1, hh > t t~"],
@@ -85,6 +98,7 @@
     },
     "BACKGROUND": {
         "TOTAL": {
+            "PRES" : [],
             "PROC": ["p p > z t t~ $$ hh ha, z > l- l+"],
             "NAME": "gg_ztt_bkg",
             "PROC_Z": ["p p > z t t~ $$ hh ha"],

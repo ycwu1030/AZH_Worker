@@ -3,7 +3,7 @@ import os
 import json
 from copy import copy, deepcopy
 from os.path import dirname, abspath, join
-from MG_Runner import MG_RUNNER
+from MGWorker import MG_RUNNER
 
 
 class AZH_System(object):
