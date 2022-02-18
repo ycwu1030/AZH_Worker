@@ -1,4 +1,4 @@
-from MG_Runner import MG_RUNNER as MGR
+from .MG_Runner import MG_RUNNER as MGR
 import json
 import os
 from os import getcwd
