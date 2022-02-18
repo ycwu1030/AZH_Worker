@@ -1,6 +1,6 @@
 import os
-from os import getcwd, remove
-from os.path import join
+from os import getcwd, remove, listdir
+from os.path import join, isdir
 import subprocess
 import time
 from shutil import copyfile
@@ -18,14 +18,16 @@ class MG_RUNNER(object):
         PROC is a map which has at least following keys:
         - NAME: Name for process
         - UFO: The model name
+        - PRES: The command should be run before generating the process
         - PROCS: The processes needed
         '''
         KEYS = PROC.keys()
-        if 'NAME' not in KEYS or 'UFO' not in KEYS or 'PROCS' not in KEYS:
-            print("WARNING: Input for generate process is not correct, we need at least 'NAME', 'UFO' and 'PROCS' keys, but we got", KEYS)
+        if 'NAME' not in KEYS or 'UFO' not in KEYS or 'PROCS' not in KEYS or 'PRES' not in KEYS:
+            print("WARNING: Input for generate process is not correct, we need at least 'NAME', 'UFO', 'PRES' and 'PROCS' keys, but we got", KEYS)
             return
         name = PROC['NAME']
         UFO = PROC['UFO']
+        pre = PROC['PRES']
         proc = PROC['PROCS']
         CURDIR = getcwd()
         tmpfile = join(CURDIR, 'tmp_%s.dat' % (name))
@@ -33,6 +35,8 @@ class MG_RUNNER(object):
         nproc = len(proc)
         with open(tmpfile, 'w') as TMP:
             TMP.write('import model %s\n' % (UFO))
+            for com in pre:
+                TMP.write('%s\n' % (com))
             TMP.write('generate %s\n' % (proc[0]))
             for i in range(1, nproc):
                 TMP.write('add process %s\n' % (proc[i]))
@@ -45,6 +49,26 @@ class MG_RUNNER(object):
             remove(join(CURDIR, 'py.py'))
         else:
             remove(tmpfile)
+
+    def Check_Diagrams(self, PROCNAME, DATADIR):
+        procdir = join(self.WORK_DIR, PROCNAME)
+        subprocdir = join(procdir, 'SubProcesses')
+        channeldir = [d for d in listdir(
+            subprocdir) if isdir(join(subprocdir, d)) and d.startswith('P')]
+        diagdir = join(DATADIR, PROCNAME)
+        if not os.path.exists(diagdir):
+            os.makedirs(diagdir)
+        chanid = 0
+        for chan in channeldir:
+            chandir = join(subprocdir, chan)
+            diagrams = [dia for dia in listdir(chandir) if dia.startswith(
+                'matrix') and dia.endswith('.ps')]
+            diagid = 0
+            for diag in diagrams:
+                copyfile(join(chandir, diag), join(
+                    diagdir, 'diagram_%d_%d.ps' % (chanid, diagid)))
+                diagid += 1
+            chanid += 1
 
     def Prepare_Cards(self, procdir, CARDS):
         CARDDIR = join(procdir, 'Cards')
