@@ -98,10 +98,10 @@
     },
     "BACKGROUND": {
         "TOTAL": {
-            "PRES" : [],
-            "PROC": ["p p > z t t~ $$ hh ha, z > l- l+ ZFF==99"],
+            "PRES" : ["import model sm"],
+            "PROC": ["p p > z t t~, z > l- l+ QED=99 QCD=99"],
             "NAME": "gg_ztt_bkg",
-            "PROC_Z": ["p p > z t t~ $$ hh ha"],
+            "PROC_Z": ["p p > z t t~ QED=99 QCD=99"],
             "NAME_Z": "gg_ztt_bkg_z"
         }
     }
