@@ -43,7 +43,7 @@ class MG_RUNNER(object):
             TMP.write('output %s -f\n' % (PROCDIR))
         if not self.DEBUG:
             subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
-            subprocess.call('%s/bin/mg5_aMC %s' %
+            subprocess.call('python %s/bin/mg5_aMC %s' %
                             (self.MG5_DIR, tmpfile), shell=True)
             remove(tmpfile)
             remove(join(CURDIR, 'py.py'))
