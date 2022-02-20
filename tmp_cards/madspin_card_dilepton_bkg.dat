@@ -1,0 +1,4 @@
+set spinmode none
+decay t > w+ b, w+ > l+ vl
+decay t~ > w- b~, w- > l- vl~
+launch

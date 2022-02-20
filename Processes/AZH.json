@@ -9,100 +9,148 @@
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZSS^2==2 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_tri",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZSS^2==2 TTHH^2==2"],
-            "NAME_Z": "gg_ztt_%s_ggF_tri_z"
+            "NAME_Z": "gg_ztt_%s_ggF_tri_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1},
+                "tb5" : { "cba":0.1, "tb":5},
+                "tb10" : {"cba":0.1, "tb":10}
+            }
         },
         "ggF_BOX": {
             "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZFF^2==2 ZZHH<=0 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_box",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZFF^2==2 ZZHH<=0 TTHH^2==2"],
-            "NAME_Z": "gg_ztt_%s_ggF_box_z"
+            "NAME_Z": "gg_ztt_%s_ggF_box_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1},
+                "tb5" : { "cba":0.1, "tb":5},
+                "tb10" : {"cba":0.1, "tb":10}
+            }
         },
         "ggF_Z": {
             "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZZHH^2==2 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_z",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZZHH^2==2 TTHH^2==2"],
-            "NAME_Z": "gg_ztt_%s_ggF_z_z"
+            "NAME_Z": "gg_ztt_%s_ggF_z_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1}
+            }
         },
         "ggF_TRIxBOX": {
             "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZSS^2==1 ZFF^2==1 ZZHH<=0 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_trixbox",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZSS^2==1 ZFF^2==1 ZZHH<=0 TTHH^2==2"],
-            "NAME_Z": "gg_ztt_%s_ggF_trixbox_z"
+            "NAME_Z": "gg_ztt_%s_ggF_trixbox_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1},
+                "tb5" : { "cba":0.1, "tb":5},
+                "tb10" : {"cba":0.1, "tb":10}
+            }
         },
         "ggF_TRIxZ": {
             "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZSS^2==1 ZZHH^2==1 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_trixz",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZSS^2==1 ZZHH^2==1 TTHH^2==2"],
-            "NAME_Z": "gg_ztt_%s_ggF_trixz_z"
+            "NAME_Z": "gg_ztt_%s_ggF_trixz_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1},
+                "tb5" : { "cba":0.1, "tb":5}
+            }
         },
         "ggF_BOXxZ": {
             "PRES" : [],
             "PROC": ["g g > hh > l- l+ tp tp~ [noborn=QCD] ZFF^2==2 ZZHH^2==1 TTHH^2==2"],
             "NAME": "gg_ztt_%s_ggF_boxxz",
             "PROC_Z": ["g g > hh > z tp tp~ [noborn=QCD] ZFF^2==2 ZZHH^2==1 TTHH^2==2"],
-            "NAME_Z": "gg_ztt_%s_ggF_boxxz_z"
+            "NAME_Z": "gg_ztt_%s_ggF_boxxz_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1},
+                "tb5" : { "cba":0.1, "tb":5}
+            }
         },
         "qq_DY": {
             "PRES" : ["define q = u d c s u~ d~ c~ s~"],
             "PROC": ["q q > z hh, z > l- l+, hh > t t~"],
             "NAME": "qq_ztt_%s_DY",
             "PROC_Z": ["q q > z hh, hh > t t~"],
-            "NAME_Z": "qq_ztt_%s_DY_z"
+            "NAME_Z": "qq_ztt_%s_DY_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1}
+            }
         },
         "bb_Z": {
             "PRES" : [],
             "PROC": ["b b~ > z hh > l- l+ tp tp~ ZZHH^2==2"],
             "NAME": "bb_ztt_%s_z",
             "PROC_Z": ["b b~ > hh > z tp tp~ ZZHH^2==2"],
-            "NAME_Z": "bb_ztt_%s_z_z"
+            "NAME_Z": "bb_ztt_%s_z_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1}
+            }
         },
         "bb_S": {
             "PRES" : [],
             "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS^2==2 TTHH^2==2"],
             "NAME": "bb_ztt_%s_s",
             "PROC_Z": ["b b~ > hh > z tp tp~ ZSS^2==2 TTHH^2==2"],
-            "NAME_Z": "bb_ztt_%s_s_z"
+            "NAME_Z": "bb_ztt_%s_s_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1}
+            }
         },
         "bb_T": {
             "PRES" : [],
             "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS==0 ZZHH==0"],
             "NAME": "bb_ztt_%s_t",
             "PROC_Z": ["b b~ > hh > z tp tp~ ZSS==0 ZZHH==0"],
-            "NAME_Z": "bb_ztt_%s_t_z"
+            "NAME_Z": "bb_ztt_%s_t_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1}
+            }
         },
         "bb_ZxS": {
             "PRES" : [],
             "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS^2==1 ZZHH^2==1 TTHH^2==2"],
             "NAME": "bb_ztt_%s_zxs",
             "PROC_Z": ["b b~ > hh > z tp tp~ ZSS^2==1 ZZHH^2==1 TTHH^2==2"],
-            "NAME_Z": "bb_ztt_%s_zxs_z"
+            "NAME_Z": "bb_ztt_%s_zxs_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1}
+            }
         },
         "bb_ZxT": {
             "PRES" : [],
             "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS==0 ZZHH^2==1 TTHH^2==2"],
             "NAME": "bb_ztt_%s_zxt",
             "PROC_Z": ["b b~ > hh > z tp tp~ ZSS==0 ZZHH^2==1 TTHH^2==2"],
-            "NAME_Z": "bb_ztt_%s_zxt_z"
+            "NAME_Z": "bb_ztt_%s_zxt_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1}
+            }
         },
         "bb_SxT": {
             "PRES" : [],
             "PROC": ["b b~ > z hh > l- l+ tp tp~ ZSS^2==1 ZZHH^2==0 TTHH^2==2"],
             "NAME": "bb_ztt_%s_sxt",
             "PROC_Z": ["b b~ > hh > z tp tp~ ZSS^2==1 ZZHH^2==0 TTHH^2==2"],
-            "NAME_Z": "bb_ztt_%s_sxt_z"
+            "NAME_Z": "bb_ztt_%s_sxt_z",
+            "SPECIAL_PARAM" : {
+                "tb1" : { "cba":0.1, "tb":1}
+            }
         }
     },
     "BACKGROUND": {
-        "TOTAL": {
+        "bkg_total": {
             "PRES" : ["import model sm"],
             "PROC": ["p p > z t t~ QED=99 QCD=99, z > l- l+"],
             "NAME": "gg_ztt_bkg",
             "PROC_Z": ["p p > z t t~ QED=99 QCD=99"],
-            "NAME_Z": "gg_ztt_bkg_z"
+            "NAME_Z": "gg_ztt_bkg_z",
+            "SPECIAL_PARAM" : {}
         }
     }
 }

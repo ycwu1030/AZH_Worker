@@ -37,7 +37,6 @@ for i in range(len(rws)):
                         'MHA':MHA,
                         'MHH':MHH,
                         'MHp':MHA,
-                        'tb':1,
                         'WHA':WHA,
                         'WHH':WHH,
                         'WHp':WHA

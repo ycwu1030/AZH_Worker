@@ -96,13 +96,13 @@ class MG_RUNNER(object):
         PROCNAME: the name of the process, used to identify the folder.
         DATADIR: The place to keep the logs and the events.
         PARAMS: a map store the parameters for this run
-            - ID: parameter id
+            - TAG: parameter tag, used to uniquely identify the parameter
             - CHAN: channel id: 3l or 4l for events generation, or cs for cs calculation
             - PARAM: a map containing other parameters in the model
         CARDS: either None, or a list of the cards. When it is None, it means we only care the cross section, otherwise, we need the events (decayed)
         '''
 
-        paramid = PARAMS['ID']
+        paramid = PARAMS['TAG']
         chanid = PARAMS['CHAN']
         # * Prepare the running folder
         PROCDIR_ORI = join(self.WORK_DIR, PROCNAME)
@@ -144,7 +144,7 @@ class MG_RUNNER(object):
             TMP.write('0\n')
             TMP.write('set ebeam1 %f\n' % (EBEAM))
             TMP.write('set ebeam2 %f\n' % (EBEAM))
-            TMP.write('set nevents 50000\n')
+            TMP.write('set nevents 10000\n')
             TMP.write('set iseed %d\n' % (int(time.time()) % 10000000))
             TMP.write('set no_parton_cut\n')
             for param in MODEL_PARAMS.keys():
