@@ -169,6 +169,7 @@ class MG_RUNNER(object):
                               (PROCNAME)), join(PROC_DATA_DIR, root_file_name))
         else:
             res = 0
-            root_file_name = 'delphes_test.root'
+            root_file_name = 'delphes_%s_%s_%s_%s.root' % (
+                PROCNAME, paramid, chanid, timetag)
         subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
         return float(res), root_file_name

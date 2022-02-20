@@ -66,6 +66,9 @@ class Process_Runner(object):
         return num
 
     def Update_ROOT_File_Name(self, root_name, param_key, special_param_key, chan_id, process_key):
+        if self.DEBUG:
+            print("Update to %s with root=%s for %s, %s, %s, %s" % (
+                self.PARAMFILE, root_name, param_key, special_param_key, chan_id, process_key))
         tmpdata = self.PARAMS[param_key]
         if "ROOT" not in tmpdata.keys():
             tmpdata["ROOT"] = {}
@@ -96,6 +99,9 @@ class Process_Runner(object):
         return cs
 
     def Update_CS(self, cs, param_id, special_param_key, process_key):
+        if self.DEBUG:
+            print("Update to %s with cs=%s for %s, %s, %s" % (
+                self.PARAMFILE, str(cs), param_id, special_param_key, process_key))
         tmpdata = self.PARAMS[param_id]
         if "CS" not in tmpdata.keys():
             tmpdata["CS"] = {}
@@ -183,5 +189,8 @@ class Process_Runner(object):
                     for run_num in range(root_num, ROOT_NEEDED):
                         root_file_name = self.Generate_Event_Single(
                             process_key, PARAM, CARDS, SQRTS)
+                        if self.DEBUG:
+                            print('Generated root file with name: %s' %
+                                  root_file_name)
                         self.Update_ROOT_File_Name(
                             root_file_name, PARAM["ID"], special_param_key, "3l", process_key)
