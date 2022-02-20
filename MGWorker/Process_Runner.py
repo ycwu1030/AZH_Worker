@@ -46,7 +46,7 @@ class Process_Runner(object):
 
     def DUMP_PARAM_TO_JSON(self):
         with open(self.PARAMFILE, 'w') as f:
-            json.dump(self.PARAMS, f, sort_key=True, indent=4)
+            json.dump(self.PARAMS, f, sort_keys=True, indent=4)
 
     def Check_ROOT_File_Number(self, param_key, special_param_key, chan_id, process_key):
         tmpdata = self.PARAMS[param_key]
