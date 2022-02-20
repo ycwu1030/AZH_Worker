@@ -168,7 +168,8 @@ class MG_RUNNER(object):
                 copyfile(join(PROCDIR, 'Events/%s_decayed_1/tag_1_delphes_events.root' %
                               (PROCNAME)), join(PROC_DATA_DIR, root_file_name))
         else:
-            res = 0
+            time.sleep(1)
+            res = 999
             root_file_name = 'delphes_%s_%s_%s_%s.root' % (
                 PROCNAME, paramid, chanid, timetag)
         subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
