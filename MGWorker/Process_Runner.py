@@ -17,6 +17,7 @@ class Process_Runner(object):
         self.UFO = self.INFO['UFO'] % (self.YUKTYPE)
         self.SQRTS = self.INFO['SQRTS']
         self.DECAYS = self.INFO['DECAY']
+        self.SIG_GROUP = self.INFO['SIGNAL_GROUPS']
         self.SIG_COMPONENTS = self.INFO['SIGNAL_COMPONENT']
         self.BKG_PROCS = self.INFO['BACKGROUND']
         self.CARD_DIR = join(getcwd(), 'tmp_cards')
@@ -151,17 +152,20 @@ class Process_Runner(object):
             process_name, self.DATA_DIR, PARAMS, CARDS, SQRTS)
         return root_file_name
 
-    def Generate_Event(self, Signal=True, ROOT_NEEDED=15, SQRTS=14):
+    def Generate_Event(self, Group_key=None, Signal=True, ROOT_NEEDED=15, SQRTS=14):
 
         # We are dealing with signal or background
         process_map = self.SIG_COMPONENTS if Signal else self.BKG_PROCS
+        process_keys = process_map.keys()
+        if Group_key in self.SIG_GROUP.keys() and Signal:
+            process_keys = self.SIG_GROUP[Group_key]
         CARDS = {}
         CARDS['MADSPIN'] = join(self.CARD_DIR, 'madspin_card_semilep.dat') if Signal else join(
             self.CARD_DIR, 'madspin_card_semilep_bkg.dat')
         CARDS['DELPHES'] = join(self.CARD_DIR, 'delphes_card_ATLAS.dat')
         CARDS['PYTHIA8'] = join(self.CARD_DIR, 'pythia8_card.dat')
         for param_key in self.PARAMS.keys():
-            for process_key in process_map.keys():
+            for process_key in process_keys:
                 process_data = process_map[process_key]
                 # First get the special parameters
                 special_params = process_data["SPECIAL_PARAM"]

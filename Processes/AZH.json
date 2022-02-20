@@ -3,6 +3,11 @@
     "UFO": "2HDM_CPC_%s_quarkprime_NLO_cba_UFO",
     "DECAY": [],
     "SQRTS": 14,
+    "SIGNAL_GROUPS": {
+        "LOOP": ["ggF_TRI", "ggF_BOX", "ggF_Z", "ggF_TRIxBOX", "ggF_TRIxZ", "ggF_BOXxZ"],
+        "DY": ["qq_DY"],
+        "bb": ["bb_Z", "bb_S", "bb_T", "bb_ZxS", "bb_ZxT", "bb_SxT"]
+    },
     "SIGNAL_COMPONENT": {
         "ggF_TRI": {
             "PRES" : [],

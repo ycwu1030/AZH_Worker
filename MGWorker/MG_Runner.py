@@ -107,6 +107,7 @@ class MG_RUNNER(object):
         # * Prepare the running folder
         PROCDIR_ORI = join(self.WORK_DIR, PROCNAME)
         PROCDIR = join(self.WORK_DIR, "%s_%s_%s" % (PROCNAME, paramid, chanid))
+        subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
         subprocess.call('cp -r %s %s' % (PROCDIR_ORI, PROCDIR), shell=True)
 
         # * Prepare the auxillary cards
