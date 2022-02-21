@@ -178,7 +178,7 @@ class Process_Runner(object):
                         "_" + special_param_key + "_3l"
                     PARAM["PARAM"].update(special_params[special_param_key])
                     DATADIR = join(
-                        self.DATA_DIR, self.PARAMS[param_key]["TAG"], self.PARAMS[param_key]["ID"], process_key)
+                        self.DATA_DIR, self.PARAMS[param_key]["TAG"], str(self.PARAMS[param_key]["ID"]), process_key)
                     # First check, how many root we have already:
                     root_num = self.Check_ROOT_File_Number(
                         param_key, special_param_key, "3l", process_key)
