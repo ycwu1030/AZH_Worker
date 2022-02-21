@@ -101,6 +101,7 @@ class MG_RUNNER(object):
         CARDS: either None, or a list of the cards. When it is None, it means we only care the cross section, otherwise, we need the events (decayed)
         '''
 
+        goodrun = True
         paramid = PARAMS['TAG']
         # * Prepare the running folder
         PROCDIR_ORI = join(self.WORK_DIR, PROCNAME)
@@ -151,29 +152,37 @@ class MG_RUNNER(object):
             TMP.write('0\n')
 
         # * Run the MadEvent
+        res = 0.0
+        root_file_name = 'N.A.'
         if not self.DEBUG:
-            subprocess.call('python %s/bin/madevent %s > %s' %
-                            (PROCDIR, CMDFILE, LOGFILE), shell=True)
-            if CARDS:
-                # We don't need to check the cross section if we are generating events
-                res = 0.0
-            else:
-                res = subprocess.check_output(
-                    'awk \'$1=="Cross-section" {print $3}\' %s' % (LOGFILE), shell=True)
+            exitcode = subprocess.call('python %s/bin/madevent %s > %s' %
+                                       (PROCDIR, CMDFILE, LOGFILE), shell=True)
 
-            # * Moving the events and logs
-            copyfile(CMDFILE, CMDFILE_KEEP)
-            copyfile(LOGFILE, LOGFILE_KEEP)
-            root_file_name = 'N.A.'
-            if CARDS:
-                root_file_name = 'delphes_%s_%s_%s.root' % (
-                    PROCNAME, paramid, timetag)
-                copyfile(join(PROCDIR, 'Events/%s_decayed_1/tag_1_delphes_events.root' %
-                              (run_name)), join(PROC_DATA_DIR, root_file_name))
+            if exitcode == 0:
+                # The madevent finished w/o error
+                if CARDS:
+                    # We don't need to check the cross section if we are generating events
+                    res = 0.0
+                else:
+                    res = subprocess.check_output(
+                        'awk \'$1=="Cross-section" {print $3}\' %s' % (LOGFILE), shell=True)
+
+                # * Moving the events and logs
+                copyfile(CMDFILE, CMDFILE_KEEP)
+                copyfile(LOGFILE, LOGFILE_KEEP)
+                root_file_name = 'N.A.'
+                if CARDS:
+                    root_file_name = 'delphes_%s_%s_%s.root' % (
+                        PROCNAME, paramid, timetag)
+                    copyfile(join(PROCDIR, 'Events/%s_decayed_1/tag_1_delphes_events.root' %
+                                  (run_name)), join(PROC_DATA_DIR, root_file_name))
+            else:
+                # madevent finished with some error
+                goodrun = False
         else:
             time.sleep(1)
             res = 999
             root_file_name = 'delphes_%s_%s_%s.root' % (
                 PROCNAME, paramid, timetag)
         subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
-        return float(res), root_file_name
+        return goodrun, float(res), root_file_name

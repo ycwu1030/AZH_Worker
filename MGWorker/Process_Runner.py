@@ -142,15 +142,15 @@ class Process_Runner(object):
 
     def Calculate_CS(self, process_key, PARAMS, DATADIR, SQRTS=14):
         process_name = self.Get_Process_Name(process_key, WithDecay=False)
-        cs, _ = self.MG_HANDLER.Run_MadEvent(
+        good, cs, _ = self.MG_HANDLER.Run_MadEvent(
             process_name, DATADIR, PARAMS, SQRTS=SQRTS)
-        return cs
+        return good, cs
 
     def Generate_Event_Single(self, process_key, PARAMS, CARDS, DATADIR, SQRTS=14):
         process_name = self.Get_Process_Name(process_key, WithDecay=True)
-        _, root_file_name = self.MG_HANDLER.Run_MadEvent(
+        good, _, root_file_name = self.MG_HANDLER.Run_MadEvent(
             process_name, DATADIR, PARAMS, CARDS, SQRTS)
-        return root_file_name
+        return good, root_file_name
 
     def Generate_Event(self, Group_key=None, Signal=True, ROOT_NEEDED=15, SQRTS=14):
 
@@ -187,15 +187,17 @@ class Process_Runner(object):
                         param_key, special_param_key, process_key)
                     if cs is None:
                         # We have not calculated the cross section
-                        cs = self.Calculate_CS(
+                        good, cs = self.Calculate_CS(
                             process_key, PARAM, DATADIR, SQRTS)
-                        self.Update_CS(
-                            cs, param_key, special_param_key, process_key)
+                        if good:
+                            self.Update_CS(
+                                cs, param_key, special_param_key, process_key)
                     for run_num in range(root_num, ROOT_NEEDED):
-                        root_file_name = self.Generate_Event_Single(
+                        good, root_file_name = self.Generate_Event_Single(
                             process_key, PARAM, CARDS, DATADIR, SQRTS)
                         if self.DEBUG:
                             print('Generated root file with name: %s' %
                                   root_file_name)
-                        self.Update_ROOT_File_Name(
-                            root_file_name, param_key, special_param_key, "3l", process_key)
+                        if good:
+                            self.Update_ROOT_File_Name(
+                                root_file_name, param_key, special_param_key, "3l", process_key)
