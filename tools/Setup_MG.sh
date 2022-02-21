@@ -30,4 +30,4 @@ EOF
 
 python2 ./bin/mg5_aMC SETUP_PACKAGE.in
 
-cp -r $curdir/models/2HDM_CPC_Type-I_NLO_cba_UFO models/
+cp -r $curdir/models/2HDM_CPC_Type-I_quarkprime_NLO_cba_UFO models/
