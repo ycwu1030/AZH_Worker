@@ -140,10 +140,10 @@ class Process_Runner(object):
                         self.YUKTYPE)
                     self.MG_HANDLER.Check_Diagrams(NAME, self.DATA_DIR)
 
-    def Calculate_CS(self, process_key, PARAMS, SQRTS=14):
+    def Calculate_CS(self, process_key, PARAMS, DATADIR, SQRTS=14):
         process_name = self.Get_Process_Name(process_key, WithDecay=False)
         cs, _ = self.MG_HANDLER.Run_MadEvent(
-            process_name, self.DATA_DIR, PARAMS, SQRTS=SQRTS)
+            process_name, DATADIR, PARAMS, SQRTS=SQRTS)
         return cs
 
     def Generate_Event_Single(self, process_key, PARAMS, CARDS, DATADIR, SQRTS=14):
@@ -178,7 +178,7 @@ class Process_Runner(object):
                         "_" + special_param_key + "_3l"
                     PARAM["PARAM"].update(special_params[special_param_key])
                     DATADIR = join(
-                        self.DATA_DIR, self.PARAMS[param_key]["TAG"])
+                        self.DATA_DIR, self.PARAMS[param_key]["TAG"], self.PARAMS[param_key]["ID"], process_key)
                     # First check, how many root we have already:
                     root_num = self.Check_ROOT_File_Number(
                         param_key, special_param_key, "3l", process_key)
@@ -187,7 +187,8 @@ class Process_Runner(object):
                         param_key, special_param_key, process_key)
                     if cs is None:
                         # We have not calculated the cross section
-                        cs = self.Calculate_CS(process_key, PARAM, SQRTS)
+                        cs = self.Calculate_CS(
+                            process_key, PARAM, DATADIR, SQRTS)
                         self.Update_CS(
                             cs, param_key, special_param_key, process_key)
                     for run_num in range(root_num, ROOT_NEEDED):
