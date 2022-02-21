@@ -148,6 +148,7 @@ class Process_Runner(object):
 
     def Generate_Event_Single(self, process_key, PARAMS, CARDS, SQRTS=14):
         process_name = self.Get_Process_Name(process_key, WithDecay=True)
+
         _, root_file_name = self.MG_HANDLER.Run_MadEvent(
             process_name, self.DATA_DIR, PARAMS, CARDS, SQRTS)
         return root_file_name
@@ -173,8 +174,9 @@ class Process_Runner(object):
                 for special_param_key in special_params.keys():
                     # Update parameter
                     PARAM = {}
-                    PARAM["ID"] = self.PARAMS[param_key]["ID"]
-                    PARAM["CHAN"] = "3l"
+                    # PARAM["TAG"] = self.PARAMS[param_key]["TAG"]
+                    # PARAM["ID"] = self.PARAMS[param_key]["ID"]
+                    # PARAM["CHAN"] = "3l"
                     PARAM["PARAM"] = copy.copy(self.PARAMS[param_key]["PARAM"])
                     PARAM["TAG"] = PARAM["ID"] + \
                         "_" + special_param_key
