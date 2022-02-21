@@ -97,16 +97,14 @@ class MG_RUNNER(object):
         DATADIR: The place to keep the logs and the events.
         PARAMS: a map store the parameters for this run
             - TAG: parameter tag, used to uniquely identify the parameter
-            - CHAN: channel id: 3l or 4l for events generation, or cs for cs calculation
             - PARAM: a map containing other parameters in the model
         CARDS: either None, or a list of the cards. When it is None, it means we only care the cross section, otherwise, we need the events (decayed)
         '''
 
         paramid = PARAMS['TAG']
-        chanid = PARAMS['CHAN']
         # * Prepare the running folder
         PROCDIR_ORI = join(self.WORK_DIR, PROCNAME)
-        PROCDIR = join(self.WORK_DIR, "%s_%s_%s" % (PROCNAME, paramid, chanid))
+        PROCDIR = join(self.WORK_DIR, "%s_%s" % (PROCNAME, paramid))
         subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
         subprocess.call('cp -r %s %s' % (PROCDIR_ORI, PROCDIR), shell=True)
 
@@ -121,16 +119,16 @@ class MG_RUNNER(object):
 
         # * Prepare the Log directory
         timetag = time.strftime("%Y%m%d_%H%M%S", time.localtime(time.time()))
-        PROC_DATA_DIR = join(DATADIR, paramid)
+        PROC_DATA_DIR = DATADIR
         PROC_LOG_DIR = join(PROC_DATA_DIR, 'logs')
         if not os.path.exists(PROC_DATA_DIR):
             os.makedirs(PROC_DATA_DIR)
         if not os.path.exists(PROC_LOG_DIR):
             os.makedirs(PROC_LOG_DIR)
-        CMD_FILE_NAME = '%s_command_%s_%s_%s_%s.txt' % (
-            log_prefix, PROCNAME, paramid, chanid, timetag)
-        LOG_FILE_NAME = '%s_output_%s_%s_%s_%s.txt' % (
-            log_prefix, PROCNAME, paramid, chanid, timetag)
+        CMD_FILE_NAME = '%s_command_%s_%s_%s.txt' % (
+            log_prefix, PROCNAME, paramid, timetag)
+        LOG_FILE_NAME = '%s_output_%s_%s_%s.txt' % (
+            log_prefix, PROCNAME, paramid, timetag)
         CMDFILE = join(PROCDIR, CMD_FILE_NAME)
         LOGFILE = join(PROCDIR, LOG_FILE_NAME)
         CMDFILE_KEEP = join(PROC_LOG_DIR, CMD_FILE_NAME)
@@ -164,14 +162,14 @@ class MG_RUNNER(object):
             copyfile(LOGFILE, LOGFILE_KEEP)
             root_file_name = 'N.A.'
             if CARDS:
-                root_file_name = 'delphes_%s_%s_%s_%s.root' % (
-                    PROCNAME, paramid, chanid, timetag)
+                root_file_name = 'delphes_%s_%s_%s.root' % (
+                    PROCNAME, paramid, timetag)
                 copyfile(join(PROCDIR, 'Events/%s_decayed_1/tag_1_delphes_events.root' %
-                              (PROCNAME)), join(PROC_DATA_DIR, root_file_name))
+                              (run_name)), join(PROC_DATA_DIR, root_file_name))
         else:
             time.sleep(1)
             res = 999
-            root_file_name = 'delphes_%s_%s_%s_%s.root' % (
-                PROCNAME, paramid, chanid, timetag)
+            root_file_name = 'delphes_%s_%s_%s.root' % (
+                PROCNAME, paramid, timetag)
         subprocess.call('rm -rf %s' % (PROCDIR), shell=True)
         return float(res), root_file_name

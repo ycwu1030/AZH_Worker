@@ -1,3 +1,4 @@
+from pytest import param
 from .MG_Runner import MG_RUNNER as MGR
 import json
 import os
@@ -146,11 +147,10 @@ class Process_Runner(object):
             process_name, self.DATA_DIR, PARAMS, SQRTS=SQRTS)
         return cs
 
-    def Generate_Event_Single(self, process_key, PARAMS, CARDS, SQRTS=14):
+    def Generate_Event_Single(self, process_key, PARAMS, CARDS, DATADIR, SQRTS=14):
         process_name = self.Get_Process_Name(process_key, WithDecay=True)
-
         _, root_file_name = self.MG_HANDLER.Run_MadEvent(
-            process_name, self.DATA_DIR, PARAMS, CARDS, SQRTS)
+            process_name, DATADIR, PARAMS, CARDS, SQRTS)
         return root_file_name
 
     def Generate_Event(self, Group_key=None, Signal=True, ROOT_NEEDED=15, SQRTS=14):
@@ -174,29 +174,28 @@ class Process_Runner(object):
                 for special_param_key in special_params.keys():
                     # Update parameter
                     PARAM = {}
-                    # PARAM["TAG"] = self.PARAMS[param_key]["TAG"]
-                    # PARAM["ID"] = self.PARAMS[param_key]["ID"]
-                    # PARAM["CHAN"] = "3l"
                     PARAM["PARAM"] = copy.copy(self.PARAMS[param_key]["PARAM"])
-                    PARAM["TAG"] = PARAM["ID"] + \
-                        "_" + special_param_key
+                    PARAM["TAG"] = self.PARAMS[param_key]["TAG"] + "_" + self.PARAMS[param_key]["ID"] + \
+                        "_" + special_param_key + "_3l"
                     PARAM["PARAM"].update(special_params[special_param_key])
+                    DATADIR = join(
+                        self.DATA_DIR, self.PARAMS[param_key]["TAG"])
                     # First check, how many root we have already:
                     root_num = self.Check_ROOT_File_Number(
-                        PARAM["ID"], special_param_key, "3l", process_key)
+                        param_key, special_param_key, "3l", process_key)
                     # Second check, whether the cs is calculated
                     cs = self.Check_CS(
-                        PARAM["ID"], special_param_key, process_key)
+                        param_key, special_param_key, process_key)
                     if cs is None:
                         # We have not calculated the cross section
                         cs = self.Calculate_CS(process_key, PARAM, SQRTS)
                         self.Update_CS(
-                            cs, PARAM["ID"], special_param_key, process_key)
+                            cs, param_key, special_param_key, process_key)
                     for run_num in range(root_num, ROOT_NEEDED):
                         root_file_name = self.Generate_Event_Single(
-                            process_key, PARAM, CARDS, SQRTS)
+                            process_key, PARAM, CARDS, DATADIR, SQRTS)
                         if self.DEBUG:
                             print('Generated root file with name: %s' %
                                   root_file_name)
                         self.Update_ROOT_File_Name(
-                            root_file_name, PARAM["ID"], special_param_key, "3l", process_key)
+                            root_file_name, param_key, special_param_key, "3l", process_key)
