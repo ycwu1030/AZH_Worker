@@ -154,8 +154,12 @@ class MG_RUNNER(object):
         if not self.DEBUG:
             subprocess.call('python %s/bin/madevent %s > %s' %
                             (PROCDIR, CMDFILE, LOGFILE), shell=True)
-            res = subprocess.check_output(
-                'awk \'$1=="Cross-section" {print $3}\' %s' % (LOGFILE), shell=True)
+            if CARDS:
+                # We don't need to check the cross section if we are generating events
+                res = 0.0
+            else:
+                res = subprocess.check_output(
+                    'awk \'$1=="Cross-section" {print $3}\' %s' % (LOGFILE), shell=True)
 
             # * Moving the events and logs
             copyfile(CMDFILE, CMDFILE_KEEP)
