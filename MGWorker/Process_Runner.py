@@ -174,7 +174,7 @@ class Process_Runner(object):
                     # Update parameter
                     PARAM = {}
                     PARAM["PARAM"] = copy.copy(self.PARAMS[param_key]["PARAM"])
-                    PARAM["TAG"] = self.PARAMS[param_key]["TAG"] + "_" + self.PARAMS[param_key]["ID"] + \
+                    PARAM["TAG"] = self.PARAMS[param_key]["TAG"] + "_" + str(self.PARAMS[param_key]["ID"]) + \
                         "_" + special_param_key + "_3l"
                     PARAM["PARAM"].update(special_params[special_param_key])
                     DATADIR = join(
