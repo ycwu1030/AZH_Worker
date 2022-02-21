@@ -7,11 +7,13 @@ parser = argparse.ArgumentParser(prog='Generate_Process_Directories')
 parser.add_argument('-i', dest='infofile', default='Processes/AZH.json')
 parser.add_argument('-p', dest='paramfile',
                     default='DATADIR/PARAMS/param_signal.json')
+parser.add_argument('-g', dest='group', default='LOOP')
 args = parser.parse_args()
 INFOFILE = args.infofile
 PARAMFILE = args.paramfile
+GROUP = args.group
 
 pr = PR.Process_Runner(INFOFILE, os.path.join(
     CURDIR, 'MG5DIR/MG5_aMC_v3_1_1'), False)
 pr.READ_PARAM_FROM_JSON(PARAMFILE)
-pr.Generate_Event("LOOP", ROOT_NEEDED=1)
+pr.Generate_Event(GROUP, ROOT_NEEDED=5)

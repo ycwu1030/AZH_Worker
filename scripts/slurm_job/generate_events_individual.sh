@@ -7,6 +7,7 @@
 ##SBATCH --mail-type=end
 
 curdir=$(pwd)
-param=$1
+group=$1
+param=$2
 export PYTHONPATH=${curdir}:$PYTHONPATH
-python ./scripts/python/Generate_Events.py -i './Processes/AZH.json' -p ${param}
+python ./scripts/python/Generate_Events.py -i './Processes/AZH.json' -p ${param} -g ${group}
