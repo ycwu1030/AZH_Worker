@@ -1,4 +1,3 @@
-from pytest import param
 from .MG_Runner import MG_RUNNER as MGR
 import json
 import os
