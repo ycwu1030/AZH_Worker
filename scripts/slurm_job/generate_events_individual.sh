@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -p batch
-#SBATCH -t 4:00:00
+#SBATCH -t 120:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 ##SBATCH --mail-user=ywu@okstate.edu
