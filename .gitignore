@@ -11,3 +11,4 @@ py.py
 *.ipynb_checkpoints/
 !DATADIR/*.json
 !DATADIR/*.txt
+.DS_Store
