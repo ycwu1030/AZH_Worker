@@ -16,19 +16,20 @@ def TrimRootFile(dest_dir):
             procs = [d for d in listdir(piddir) if isdir(join(piddir, d))]
             for proc in procs:
                 procdir = join(piddir, proc)
+                destdir = join(curdir, dest_dir, param,
+                               pid, proc)
+                if not exists(destdir):
+                    makedirs(destdir)
                 rootfiles = [d for d in listdir(
                     procdir) if d.endswith(".root")]
                 for rootfile in rootfiles:
                     rootfilepath = join(procdir, rootfile)
-                    tmpdir = join(curdir, dest_dir, param,
-                                  pid, proc)
-                    if not exists(tmpdir):
-                        makedirs(tmpdir)
-                    tmpfilepath = join(procdir, "delphes_tmp.root")
-                    destfilepath = join(tmpdir, rootfile)
-                    print(rootfilepath)
+                    tmpfilepath = join(destdir, "delphes_tmp.root")
+                    destfilepath = join(destdir, rootfile)
+                    print(rootfilepath + ' -> ' +
+                          tmpfilepath + ' -> ' + destfilepath)
                     exitcode = subprocess.call(
                         'root -l -q tools/remove_unused_branches.cpp\\(\\"%s\\",\\"%s\\"\\)' % (rootfilepath, tmpfilepath), shell=True)
                     if exitcode == 0:
                         subprocess.call("cp %s %s; rm %s" %
-                                        (tmpfilepath, destfilepath, tmpfilepath))
+                                        (tmpfilepath, destfilepath, tmpfilepath), shell=True)
