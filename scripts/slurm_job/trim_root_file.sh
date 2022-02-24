@@ -6,4 +6,4 @@
 ##SBATCH --mail-user=ywu@okstate.edu
 ##SBATCH --mail-type=end
 
-python -c "from tools import TrimRootFile as TRF; TRF.TrimRootFile(\"DATADIR_TMP\")"
+python -c "from tools import TrimRootFile as TRF; TRF.TrimRootFileAll(\"DATADIR_TMP\")"
