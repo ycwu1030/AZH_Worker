@@ -164,21 +164,34 @@ class Process_Runner(object):
             self.CARD_DIR, 'madspin_card_semilep_bkg.dat')
         CARDS['DELPHES'] = join(self.CARD_DIR, 'delphes_card_ATLAS.dat')
         CARDS['PYTHIA8'] = join(self.CARD_DIR, 'pythia8_card.dat')
-        for param_key in self.PARAMS.keys():
+        PARAMS = {
+            'BKG_PARAM': {
+                'PARAM': {},
+                'TAG': "BKG_PARAM",
+                'ID': 0
+            }
+        }
+        if Signal:
+            PARAMS = self.PARAMS
+        for param_key in PARAMS.keys():
             for process_key in process_keys:
                 process_data = process_map[process_key]
                 # First get the special parameters
-                special_params = process_data["SPECIAL_PARAM"]
+                special_params = {
+                    'DEFAULT': {}
+                }
+                if process_data['SPECIAL_PARAM']:
+                    special_params = process_data["SPECIAL_PARAM"]
                 # loop over special parameters
                 for special_param_key in special_params.keys():
                     # Update parameter
                     PARAM = {}
-                    PARAM["PARAM"] = copy.copy(self.PARAMS[param_key]["PARAM"])
-                    PARAM["TAG"] = self.PARAMS[param_key]["TAG"] + "_" + str(self.PARAMS[param_key]["ID"]) + \
+                    PARAM["PARAM"] = copy.copy(PARAMS[param_key]["PARAM"])
+                    PARAM["TAG"] = PARAMS[param_key]["TAG"] + "_" + str(PARAMS[param_key]["ID"]) + \
                         "_" + special_param_key + "_3l"
                     PARAM["PARAM"].update(special_params[special_param_key])
                     DATADIR = join(
-                        self.DATA_DIR, self.PARAMS[param_key]["TAG"], str(self.PARAMS[param_key]["ID"]), process_key)
+                        self.DATA_DIR, PARAMS[param_key]["TAG"], str(PARAMS[param_key]["ID"]), process_key)
                     # First check, how many root we have already:
                     root_num = self.Check_ROOT_File_Number(
                         param_key, special_param_key, "3l", process_key)
