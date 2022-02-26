@@ -152,7 +152,7 @@ class Process_Runner(object):
             process_name, DATADIR, PARAMS, CARDS, SQRTS)
         return good, root_file_name
 
-    def Generate_Event(self, Group_key=None, Signal=True, ROOT_NEEDED=15, SQRTS=14):
+    def Generate_Event(self, Group_key=None, Signal=True, ROOT_NEEDED=15, SQRTS=14, BKG_ID=0):
 
         # We are dealing with signal or background
         process_map = self.SIG_COMPONENTS if Signal else self.BKG_PROCS
@@ -168,7 +168,7 @@ class Process_Runner(object):
             'BKG_PARAM': {
                 'PARAM': {},
                 'TAG': "BKG_PARAM",
-                'ID': 0
+                'ID': BKG_ID
             }
         }
         if Signal:
