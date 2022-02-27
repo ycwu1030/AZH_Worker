@@ -34,8 +34,8 @@ def TrimRootFile(param, dest_dir):
                 exitcode = subprocess.call(
                     'root -l -q tools/remove_unused_branches.cpp\\(\\"%s\\",\\"%s\\"\\)' % (rootfilepath, tmpfilepath), shell=True)
                 if exitcode == 0:
-                    subprocess.call("cp %s %s; rm %s" %
-                                    (tmpfilepath, destfilepath, tmpfilepath), shell=True)
+                    subprocess.call("mv %s %s; mv %s %s" %
+                                    (rootfilepath, destfilepath, tmpfilepath, rootfilepath), shell=True)
 
 
 def TrimRootFileAll(dest_dir):
