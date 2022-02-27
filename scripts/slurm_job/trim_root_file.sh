@@ -6,4 +6,5 @@
 ##SBATCH --mail-user=ywu@okstate.edu
 ##SBATCH --mail-type=end
 
+module load anaconda3/2020.07
 python -c "from tools import TrimRootFile as TRF; TRF.TrimRootFileAll(\"DATADIR_TMP\")"
