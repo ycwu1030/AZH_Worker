@@ -10,4 +10,5 @@ curdir=$(pwd)
 group=$1
 param=$2
 export PYTHONPATH=${curdir}:$PYTHONPATH
+echo ${param}
 python ./scripts/python/Generate_Events.py -i './Processes/AZH.json' -p ${param} -g ${group}
