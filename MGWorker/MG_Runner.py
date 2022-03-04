@@ -122,10 +122,13 @@ class MG_RUNNER(object):
         timetag = time.strftime("%Y%m%d_%H%M%S", time.localtime(time.time()))
         PROC_DATA_DIR = DATADIR
         PROC_LOG_DIR = join(PROC_DATA_DIR, 'logs')
+        PROC_FAILED_LOG_DIR = join(PROC_DATA_DIR, 'logs/failed')
         if not os.path.exists(PROC_DATA_DIR):
             os.makedirs(PROC_DATA_DIR)
         if not os.path.exists(PROC_LOG_DIR):
             os.makedirs(PROC_LOG_DIR)
+        if not os.path.exists(PROC_FAILED_LOG_DIR):
+            os.makedirs(PROC_FAILED_LOG_DIR)
         CMD_FILE_NAME = '%s_command_%s_%s_%s.txt' % (
             log_prefix, PROCNAME, paramid, timetag)
         LOG_FILE_NAME = '%s_output_%s_%s_%s.txt' % (
@@ -134,6 +137,8 @@ class MG_RUNNER(object):
         LOGFILE = join(PROCDIR, LOG_FILE_NAME)
         CMDFILE_KEEP = join(PROC_LOG_DIR, CMD_FILE_NAME)
         LOGFILE_KEEP = join(PROC_LOG_DIR, LOG_FILE_NAME)
+        CMDFILE_FAIL = join(PROC_FAILED_LOG_DIR, CMD_FILE_NAME)
+        LOGFILE_FAIL = join(PROC_FAILED_LOG_DIR, LOG_FILE_NAME)
 
         # * Prepare the running command
         EBEAM = SQRTS/2*1000
@@ -163,19 +168,42 @@ class MG_RUNNER(object):
                 if CARDS:
                     # We don't need to check the cross section if we are generating events
                     res = 0.0
+                    ne = subprocess.check_output(
+                        'awk \'$0~/INFO: delphes done/,$0~/INFO: Done/ {print $0}\' %s | awk \'$0~/Nb of events/ {print $5}\'' % (LOGFILE), shell=True)
+                    try:
+                        if int(ne) != 10000:
+                            goodrun = False
+                    except:
+                        goodrun = False
                 else:
                     res = subprocess.check_output(
                         'awk \'$1=="Cross-section" {print $3}\' %s' % (LOGFILE), shell=True)
+                    ne = subprocess.check_output(
+                        'awk \'$0~/Nb of events/ {print $5}\' %s' % (LOGFILE), shell=True)
+                    try:
+                        if int(ne) != 10000:
+                            goodrun = False
+                    except:
+                        goodrun = False
 
-                # * Moving the events and logs
-                copyfile(CMDFILE, CMDFILE_KEEP)
-                copyfile(LOGFILE, LOGFILE_KEEP)
-                root_file_name = 'N.A.'
-                if CARDS:
-                    root_file_name = 'delphes_%s_%s_%s.root' % (
-                        PROCNAME, paramid, timetag)
-                    copyfile(join(PROCDIR, 'Events/%s_decayed_1/tag_1_delphes_events.root' %
-                                  (run_name)), join(PROC_DATA_DIR, root_file_name))
+                if goodrun:
+                    root_file_name = 'N.A.'
+                    if CARDS:
+                        root_file_name = 'delphes_%s_%s_%s.root' % (
+                            PROCNAME, paramid, timetag)
+                        try:
+                            copyfile(join(PROCDIR, 'Events/%s_decayed_1/tag_1_delphes_events.root' %
+                                          (run_name)), join(PROC_DATA_DIR, root_file_name))
+                        except:
+                            goodrun = False
+
+                if goodrun:
+                    # * Moving the events and logs
+                    copyfile(CMDFILE, CMDFILE_KEEP)
+                    copyfile(LOGFILE, LOGFILE_KEEP)
+                else:
+                    copyfile(CMDFILE, CMDFILE_FAIL)
+                    copyfile(LOGFILE, LOGFILE_FAIL)
             else:
                 # madevent finished with some error
                 goodrun = False
