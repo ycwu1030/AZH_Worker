@@ -174,6 +174,7 @@ class MG_RUNNER(object):
                         if int(ne) != 10000:
                             goodrun = False
                     except:
+                        res = 0.0
                         goodrun = False
                 else:
                     res = subprocess.check_output(
@@ -185,7 +186,11 @@ class MG_RUNNER(object):
                             goodrun = False
                     except:
                         goodrun = False
-
+                    try:
+                        test = float(res)
+                    except:
+                        goodrun = False
+                        res = 0.0
                 if goodrun:
                     root_file_name = 'N.A.'
                     if CARDS:
