@@ -1,4 +1,3 @@
-from scripts.python.Generate_Events import PARAMFILE
 from .MG_Runner import MG_RUNNER as MGR
 import json
 import os
