@@ -1,3 +1,4 @@
+from scripts.python.Generate_Events import PARAMFILE
 from .MG_Runner import MG_RUNNER as MGR
 import json
 import os
@@ -164,15 +165,7 @@ class Process_Runner(object):
             self.CARD_DIR, 'madspin_card_semilep_bkg.dat')
         CARDS['DELPHES'] = join(self.CARD_DIR, 'delphes_card_ATLAS.dat')
         CARDS['PYTHIA8'] = join(self.CARD_DIR, 'pythia8_card.dat')
-        PARAMS = {
-            'BKG_PARAM': {
-                'PARAM': {},
-                'TAG': "BKG_PARAM",
-                'ID': BKG_ID
-            }
-        }
-        if Signal:
-            PARAMS = self.PARAMS
+        PARAMS = self.PARAMS
         for param_key in PARAMS.keys():
             for process_key in process_keys:
                 process_data = process_map[process_key]
