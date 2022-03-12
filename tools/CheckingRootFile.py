@@ -30,13 +30,16 @@ def CheckingRootFile(paramfile):
                     if res == 0:
                         try:
                             print("REMOVING %s" % (root_file_with_path))
-                            # subprocess.call('rm %s'%(root_file_with_path),shell=True)
+                            subprocess.call('rm %s' %
+                                            (root_file_with_path), shell=True)
                         except:
                             pass
                         bad_root_file_list.append(root_file)
                 for file in bad_root_file_list:
                     print("REMOVING %s from JSON" % (file))
-                    # root_file_list.remove(file)
+                    root_file_list.remove(file)
+    with open(paramfile, 'w') as f:
+        json.dump(INFO, f, sort_keys=True, indent=4)
 
 
 def CheckingRootFileAll(param_dir):
