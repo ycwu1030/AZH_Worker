@@ -24,9 +24,12 @@ def CheckingRootFile(paramfile):
                 for root_file in root_file_list:
                     root_file_with_path = join(
                         'DATADIR/%s/%d/%s' % (INFO[param]["TAG"], INFO[param]["ID"], proc), root_file)
-                    output = subprocess.check_output(
-                        'root -l -q tools/checking_root_file.cpp\\(\\"%s\\"\\) | awk \'$1=="RES" {print $2}\'' % (root_file_with_path), shell=True)
-                    res = int(output)
+                    if exists(root_file_with_path):
+                        output = subprocess.check_output(
+                            'root -l -q tools/checking_root_file.cpp\\(\\"%s\\"\\) | awk \'$1=="RES" {print $2}\'' % (root_file_with_path), shell=True)
+                        res = int(output)
+                    else:
+                        res = 0
                     if res == 0:
                         try:
                             print("REMOVING %s" % (root_file_with_path))
@@ -44,7 +47,7 @@ def CheckingRootFile(paramfile):
 
 def CheckingRootFileAll(param_dir):
     param_jsons = [d for d in listdir(param_dir) if d.endswith('.json')]
-    print(param_jsons)
+    print(len(param_jsons))
     pool = mp.Pool(NCORES)
     NLIST = 0
     ARGUMENT_LIST = []
