@@ -41,6 +41,7 @@ def CheckingRootFile(paramfile):
 
 def CheckingRootFileAll(param_dir):
     param_jsons = [d for d in listdir(param_dir) if d.endswith('.json')]
+    print(param_jsons)
     pool = mp.Pool(NCORES)
     NLIST = 0
     ARGUMENT_LIST = []
