@@ -13,6 +13,12 @@ def CheckingRootFile(paramfile):
         INFO = json.loads(f.read())
     parameters_key = INFO.keys()
     for param in parameters_key:
+        CURPARAM = INFO[param]
+        if "ROOT" not in CURPARAM.keys():
+            continue
+        FULLROOTLIST = CURPARAM["ROOT"]
+        if "3l" not in FULLROOTLIST.keys():
+            continue
         ROOTFILES = INFO[param]["ROOT"]["3l"]
         procs = ROOTFILES.keys()
         for proc in procs:
@@ -31,13 +37,13 @@ def CheckingRootFile(paramfile):
                     else:
                         res = 0
                     if res == 0:
+                        bad_root_file_list.append(root_file)
                         try:
                             print("REMOVING %s" % (root_file_with_path))
                             subprocess.call('rm %s' %
                                             (root_file_with_path), shell=True)
                         except:
                             pass
-                        bad_root_file_list.append(root_file)
                 for file in bad_root_file_list:
                     print("REMOVING %s from JSON" % (file))
                     root_file_list.remove(file)
