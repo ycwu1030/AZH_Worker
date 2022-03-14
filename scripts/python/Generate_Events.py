@@ -8,7 +8,7 @@ parser.add_argument('-i', dest='infofile', default='Processes/AZH.json')
 parser.add_argument('-p', dest='paramfile',
                     default='DATADIR/PARAMS/param_signal.json')
 parser.add_argument('-g', dest='group', default='LOOP')
-parser.add_argument('-b', dest='FLAG_BKG', action='store_false')
+parser.add_argument('-b', dest='FLAG_BKG', action='store_true')
 args = parser.parse_args()
 INFOFILE = args.infofile
 PARAMFILE = args.paramfile
