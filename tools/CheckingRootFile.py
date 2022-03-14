@@ -28,12 +28,16 @@ def CheckingRootFile(paramfile):
                 root_file_list = proc_root[tb]
                 bad_root_file_list = []
                 for root_file in root_file_list:
+                    res = 0
                     root_file_with_path = join(
                         'DATADIR/%s/%d/%s' % (INFO[param]["TAG"], INFO[param]["ID"], proc), root_file)
                     if exists(root_file_with_path):
-                        output = subprocess.check_output(
-                            'root -l -q tools/checking_root_file.cpp\\(\\"%s\\"\\) | awk \'$1=="RES" {print $2}\'' % (root_file_with_path), shell=True)
-                        res = int(output)
+                        try:
+                            output = subprocess.check_output(
+                                'root -l -q tools/checking_root_file.cpp\\(\\"%s\\"\\) | awk \'$1=="RES" {print $2}\'' % (root_file_with_path), shell=True)
+                            res = int(output)
+                        except:
+                            res = 0
                     else:
                         res = 0
                     if res == 0:
