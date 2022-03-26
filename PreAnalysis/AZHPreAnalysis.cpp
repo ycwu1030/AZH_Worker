@@ -6,35 +6,34 @@
 
 using namespace std;
 
-string proc_names[14] = {"Bkg",  "ggF_TRI", "ggF_BOX", "ggF_Z",  "ggF_TRIxBOX", "ggF_TRIxZ", "ggF_BOXxZ",
-                         "bb_Z", "bb_S",    "bb_T",    "bb_ZxS", "bb_ZxT",      "bb_SxT",    "qq_DY"};
+// string proc_names[14] = {"Bkg",  "ggF_TRI", "ggF_BOX", "ggF_Z",  "ggF_TRIxBOX", "ggF_TRIxZ", "ggF_BOXxZ",
+//                          "bb_Z", "bb_S",    "bb_T",    "bb_ZxS", "bb_ZxT",      "bb_SxT",    "qq_DY"};
 
 int main(int argc, char const *argv[]) {
     // * 0: exe name
     // * 1: process id
-    // * 2: parameter point tag
-    // * 3: cross section without decay
-    // * 4: output file name
-    // * 5-n: input root files for current process with corresponding parameter
-    if (argc < 6) {
+    // * 2: process name
+    // * 3: parameter point tag
+    // * 4: cross section without decay
+    // * 5: output file name
+    // * 6-n: input root files for current process with corresponding parameter
+    if (argc < 7) {
         cout << "Usage: " << argv[0] << " <proc_id> <parameter_tag> <cs> <out_name> <input_root_files...>" << endl;
         return -1;
     }
     int proc_id = atoi(argv[1]);
-    if (proc_id < 0 || proc_id > 13) return -1;
-    string proc_name = proc_names[proc_id];
     char proc_abbr_name[200];
-    sprintf(proc_abbr_name, "%s", proc_name.c_str());
+    sprintf(proc_abbr_name, "%s", argv[2]);
     char proc_param_name[200];
-    sprintf(proc_param_name, "%s", argv[2]);
-    double proc_cs = atof(argv[3]);
+    sprintf(proc_param_name, "%s", argv[3]);
+    double proc_cs = atof(argv[4]);
     char proc_output_name[200];
-    sprintf(proc_output_name, "%s", argv[4]);
+    sprintf(proc_output_name, "%s", argv[5]);
     const double BRZll = 0.067294;
     const double BRt = 2 * 0.2134 * 0.6741;
     double proc_cs_with_decay = proc_cs * BRZll * BRt;
     TChain *ch = new TChain("Delphes");
-    for (int i = 5; i < argc; i++) {
+    for (int i = 6; i < argc; i++) {
         ch->Add(argv[i]);
     }
     Delphes del(ch);
@@ -70,6 +69,7 @@ int main(int argc, char const *argv[]) {
     AZH.Setup_Output_Branches(tout);
 
     double cs_total = 0;
+    int passed_events = 0;
     for (int ne = 0; ne < NEVENTS; ne++) {
         if ((ne + 1) % 1000 == 0) {
             cout << "Events: " << ne + 1 << "\r";
@@ -84,9 +84,13 @@ int main(int argc, char const *argv[]) {
         cs_total += weight;
         bool good = AZH.Setup(&del);
         if (!good) continue;
+        passed_events++;
         tout->Fill();
     }
-    cout << "Input CS: " << proc_cs_with_decay << " Used CS: " << cs_total << endl;
+    cout << "Input-CS " << proc_cs_with_decay << endl;
+    cout << "Used-CS " << cs_total << endl;
+    cout << "Input-Events " << NEVENTS << endl;
+    cout << "Passed-Events " << passed_events << endl;
     fout->cd();
     tout->Write();
     fout->Close();
