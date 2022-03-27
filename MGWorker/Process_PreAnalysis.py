@@ -105,7 +105,7 @@ class Process_PreAnalysis(object):
         ROOT_LIST = self.Get_ROOT_File_List(
             param_key, special_param_key, chan_id, process_key)
         ROOT_LIST_WITH_PATH = [join(ROOT_DIR, d) for d in ROOT_LIST]
-        COMMAND = './PreAnalysis/AZHPreAnalysis.x %d %s %s %f %s %s > %s' % (
+        COMMAND = './PreAnalysis/AZHPreAnalysis.x %d %s %s %e %s %s > %s' % (
             process_id, process_key, param_key, cs, OUTPUT_FILE, ' '.join(ROOT_LIST_WITH_PATH), LOG_FILE)
         exitcode = 1
         if not self.DEBUG:
