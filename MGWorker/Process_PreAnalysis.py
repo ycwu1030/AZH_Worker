@@ -4,8 +4,6 @@ import os
 from os import getcwd
 from os.path import join
 
-from py import process
-
 process_id_map = {
     'bkg_total': 0,
     'ggF_TRI': 1,
