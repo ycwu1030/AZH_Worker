@@ -92,9 +92,12 @@ class Process_PreAnalysis(object):
             param["ID"]))
         if not os.path.exists(OUTPUT_DIR):
             os.makedirs(OUTPUT_DIR)
+        LOG_DIR = join(OUTPUT_DIR, 'logs')
+        if not os.path.exists(LOG_DIR):
+            os.makedirs(LOG_DIR)
         filename = self.Generate_Output_Name(
             param_key, special_param_key, chan_id, process_key)
-        LOG_FILE = join(OUTPUT_DIR, 'logs', '%s.log' % filename)
+        LOG_FILE = join(LOG_DIR, '%s.log' % filename)
         OUTPUT_FILE = join(OUTPUT_DIR, '%s.root' % filename)
         cs = self.Get_CS(param_key, special_param_key, process_key)
         ROOT_DIR = self.Get_ROOT_File_Directory(
