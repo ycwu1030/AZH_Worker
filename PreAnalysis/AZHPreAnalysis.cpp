@@ -87,6 +87,8 @@ int main(int argc, char const *argv[]) {
         passed_events++;
         tout->Fill();
     }
+    cout << endl;
+    cout << proc_abbr_name << "  " << proc_param_name << endl;
     cout << "Input-CS " << proc_cs_with_decay << endl;
     cout << "Used-CS " << cs_total << endl;
     cout << "Input-Events " << NEVENTS << endl;

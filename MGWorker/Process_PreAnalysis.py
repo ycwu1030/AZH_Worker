@@ -83,7 +83,7 @@ class Process_PreAnalysis(object):
         return cs
 
     def Generate_Output_Name(self, param_key, special_param_key, chan_id, process_key):
-        return "AZH_Pre_%s_%s_%s_%s.root" % (process_key, param_key, special_param_key, chan_id)
+        return "AZH_Pre_%s_%s_%s_%s" % (process_key, param_key, special_param_key, chan_id)
 
     def Perform_Single(self, process_key, param_key, special_param_key, chan_id):
         process_id = process_id_map[process_key]
@@ -92,9 +92,10 @@ class Process_PreAnalysis(object):
             param["ID"]))
         if not os.path.exists(OUTPUT_DIR):
             os.makedirs(OUTPUT_DIR)
-        LOG_FILE = join(OUTPUT_DIR, 'PreAnalysis.log')
-        OUTPUT_FILE = self.Generate_Output_Name(
+        filename = self.Generate_Output_Name(
             param_key, special_param_key, chan_id, process_key)
+        LOG_FILE = join(OUTPUT_DIR, 'logs', '%s.log' % filename)
+        OUTPUT_FILE = join(OUTPUT_DIR, '%s.root' % filename)
         cs = self.Get_CS(param_key, special_param_key, process_key)
         ROOT_DIR = self.Get_ROOT_File_Directory(
             param["TAG"], param["ID"], process_key)
@@ -102,7 +103,7 @@ class Process_PreAnalysis(object):
             param_key, special_param_key, chan_id, process_key)
         ROOT_LIST_WITH_PATH = [join(ROOT_DIR, d) for d in ROOT_LIST]
         COMMAND = './PreAnalysis/AZHPreAnalysis.x %d %s %s %f %s %s > %s' % (
-            process_id, process_key, param_key, cs, join(OUTPUT_DIR, OUTPUT_FILE), ' '.join(ROOT_LIST_WITH_PATH), LOG_FILE)
+            process_id, process_key, param_key, cs, OUTPUT_FILE, ' '.join(ROOT_LIST_WITH_PATH), LOG_FILE)
         exitcode = 1
         if not self.DEBUG:
             exitcode = subprocess.call(COMMAND, shell=True)
