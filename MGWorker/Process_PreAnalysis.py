@@ -94,7 +94,7 @@ class Process_PreAnalysis(object):
             os.makedirs(OUTPUT_DIR)
         LOG_FILE = join(OUTPUT_DIR, 'PreAnalysis.log')
         OUTPUT_FILE = self.Generate_Output_Name(
-            param_key, special_param_key, chan_id)
+            param_key, special_param_key, chan_id, process_key)
         cs = self.Get_CS(param_key, special_param_key, process_key)
         ROOT_DIR = self.Get_ROOT_File_Directory(
             param["TAG"], param["ID"], process_key)
