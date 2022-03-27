@@ -11,7 +11,7 @@ process_id_map = {
     'ggF_Z': 3,
     'ggF_TRIxBOX': 4,
     'ggF_TRIxZ': 5,
-    'gg_BOXxZ': 6,
+    'ggF_BOXxZ': 6,
     'bb_Z': 7,
     'bb_S': 8,
     'bb_T': 9,
@@ -83,7 +83,7 @@ class Process_PreAnalysis(object):
         return cs
 
     def Generate_Output_Name(self, param_key, special_param_key, chan_id, process_key):
-        return "AZH_Pre_%s_%s_%s_%s" % (process_key, param_key, special_param_key, chan_id)
+        return "AZH_Pre_%s_%s_%s_%s.root" % (process_key, param_key, special_param_key, chan_id)
 
     def Perform_Single(self, process_key, param_key, special_param_key, chan_id):
         process_id = process_id_map[process_key]
