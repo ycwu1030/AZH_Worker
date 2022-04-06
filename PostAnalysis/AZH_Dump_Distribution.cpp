@@ -16,7 +16,7 @@ int main(int argc, char const *argv[]) {
     // * 7: input root file name
     // * 8: output file name
     if (argc != 9) {
-        cout << "Usage: " << argv[0] << " MHA MHH WHA WHH tb cba cs <root_file_name> <output_file_name>" << endl;
+        cout << "Usage: " << argv[0] << " MHA MHH WHA WHH tb cba <root_file_name> <output_file_name>" << endl;
         return -1;
     }
     double MHA = atof(argv[1]);
