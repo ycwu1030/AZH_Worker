@@ -88,7 +88,7 @@ class Process_Distribution(object):
             param_key, special_param_key, chan_id, process_key)
         ROOT_FILE = join(INPUT_DIR, '%s.root' % infilename)
         LOG_FILE = join(LOG_DIR, '%s.log' % outfilename)
-        OUTPUT_FILE = join(OUTPUT_DIR, '%s.root' % outfilename)
+        OUTPUT_FILE = join(OUTPUT_DIR, '%s.txt' % outfilename)
         MHA, MHH, WHA, WHH, tb, cba = self.Get_Parameters(
             param_key, special_param_key, process_key)
         COMMAND = './PostAnalysis/AZH_Dump_Distribution.x %s %s %s %s %s %s %s %s > %s' % (str(

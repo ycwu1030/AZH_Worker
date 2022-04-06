@@ -13,8 +13,10 @@ public:
     ~Distribution_t(){};
 
     bool cut(AZHPreAnalysis*);
-    std::vector<double> data;
-    double cs;  // * For the distribution
+    std::vector<double> data_cs;
+    std::vector<double> data_mc_count;
+    double cs;    // * For the distribution
+    double n_mc;  // * number of mc events
     int NBINS;
 };
 

@@ -20,7 +20,12 @@ void AZHParameter_t::Dump_Distribution(const char* output_file_name) {
     dist_file << endl;
     dist_file << MHA << "\t" << MHH << "\t" << WHA << "\t" << WHH << "\t" << tb << "\t" << cba << "\t" << dist.cs;
     for (int i = 0; i < dist.NBINS; i++) {
-        dist_file << "\t" << dist.data[i];
+        dist_file << "\t" << dist.data_cs[i];
+    }
+    dist_file << endl;
+    dist_file << MHA << "\t" << MHH << "\t" << WHA << "\t" << WHH << "\t" << tb << "\t" << cba << "\t" << dist.n_mc;
+    for (int i = 0; i < dist.NBINS; i++) {
+        dist_file << "\t" << dist.data_mc_count[i];
     }
     dist_file << endl;
 }
