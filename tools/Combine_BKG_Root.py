@@ -1,6 +1,6 @@
 import json
-from os import getcwd, listdir
-from os.path import join, splitext
+from os import getcwd, listdir, makedirs
+from os.path import join, splitext, exists
 from shutil import copyfile
 
 
@@ -11,6 +11,8 @@ def Combine_Background(INFOFILE, PARAMDIR):
     BKG_PROCS = INFO['BACKGROUND']
     DATA_DIR = join(getcwd(), 'DATADIR')
     OUTPUT_DIR = join(DATA_DIR, 'BKG', 'COMB', 'bkg_total')
+    if not exists(OUTPUT_DIR):
+        makedirs(OUTPUT_DIR)
     OUTPUT_PARAM_FILE = join(PARAMDIR, 'param_bkg_combined.json')
     OUTPUT_PARAM = {
         "BKG_COMB": {
