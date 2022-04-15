@@ -56,16 +56,20 @@ class Process_Distribution(object):
     def Get_Parameters(self, param_key, special_param_key, process_key):
         paramdata = self.PARAMS[param_key]
         procdata = self.INFO["SIGNAL_COMPONENT"]
-        MHA = paramdata['PARAM']['MHA']
-        MHH = paramdata['PARAM']['MHH']
-        WHA = paramdata['PARAM']['WHA']
-        WHH = paramdata['PARAM']['WHH']
+        MHA = 0
+        MHH = 0
+        WHA = 0
+        WHH = 0
         cba = 0
         tb = 1
         if special_param_key != "DEFAULT":
             special_param = procdata[process_key]['SPECIAL_PARAM'][special_param_key]
             tb = special_param['tb']
             cba = special_param['cba']
+            MHA = paramdata['PARAM']['MHA']
+            MHH = paramdata['PARAM']['MHH']
+            WHA = paramdata['PARAM']['WHA']
+            WHH = paramdata['PARAM']['WHH']
         return MHA, MHH, WHA, WHH, tb, cba
 
     def Generate_Output_Name(self, param_key, special_param_key, chan_id, process_key):
