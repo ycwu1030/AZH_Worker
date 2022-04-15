@@ -18,7 +18,9 @@ def Combine_Background(INFOFILE, PARAMDIR):
         "BKG_COMB": {
             "ID": "COMB",
             "PARAM": {},
-            "TAG": "BKG"
+            "TAG": "BKG",
+            "CS": {"bkg_total": {"DEFAULT": 0}},
+            "ROOT": {"3l": {"bkg_total": {"DEFAULT": []}}}
         }
     }
 
