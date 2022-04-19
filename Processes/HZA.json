@@ -5,7 +5,8 @@
     "SQRTS": 14,
     "SIGNAL_GROUPS": {
         "LOOP": ["ggF_TRI", "ggF_BOX", "ggF_TRIxBOX"],
-        "bb": ["bb_S", "bb_T", "bb_SxT"]
+        "bb": ["bb_S", "bb_T", "bb_SxT"],
+        "ALL": ["ggF_TRI", "ggF_BOX", "ggF_TRIxBOX", "bb_S", "bb_T", "bb_SxT"]
     },
     "SIGNAL_COMPONENT": {
         "ggF_TRI": {
