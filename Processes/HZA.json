@@ -50,9 +50,9 @@
         },
         "bb_T": {
             "PRES" : [],
-            "PROC": ["b b~ > z ha > l- l+ tp tp~ ZSS==0 ZZHH==0 TTHA^2==2"],
+            "PROC": ["b b~ > z ha > l- l+ tp tp~ ZSS==0 ZZHH==0 TTHA^2==2 / hl"],
             "NAME": "bb_ztt_%s_t",
-            "PROC_Z": ["b b~ > ha > z tp tp~ ZSS==0 ZZHH==0 TTHA^2==2"],
+            "PROC_Z": ["b b~ > ha > z tp tp~ ZSS==0 ZZHH==0 TTHA^2==2 / hl"],
             "NAME_Z": "bb_ztt_%s_t_z",
             "SPECIAL_PARAM" : {
                 "tb1" : { "cba":0.1, "tb":1}
@@ -60,9 +60,9 @@
         },
         "bb_SxT": {
             "PRES" : [],
-            "PROC": ["b b~ > z ha > l- l+ tp tp~ ZSS^2==1 ZZHH^2==0 TTHA^2==2"],
+            "PROC": ["b b~ > z ha > l- l+ tp tp~ ZSS^2==1 ZZHH^2==0 TTHA^2==2 / hl"],
             "NAME": "bb_ztt_%s_sxt",
-            "PROC_Z": ["b b~ > ha > z tp tp~ ZSS^2==1 ZZHH^2==0 TTHA^2==2"],
+            "PROC_Z": ["b b~ > ha > z tp tp~ ZSS^2==1 ZZHH^2==0 TTHA^2==2 / hl"],
             "NAME_Z": "bb_ztt_%s_sxt_z",
             "SPECIAL_PARAM" : {
                 "tb1" : { "cba":0.1, "tb":1}
