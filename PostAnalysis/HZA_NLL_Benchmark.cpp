@@ -27,6 +27,7 @@ int main(int argc, char const *argv[]) {
                          << p_sig.within_region() << endl;
                     if (p_sig.within_region()) {
                         Distribution_t &dist_sig = p_sig.get_distribution();
+                        cout << "Distribution obtained" << endl;
                         AZHNLL nll_calc(&dist_sig, &dist_bkg);
                         double nll = nll_calc.get_nll();
                         double mu95 = nll_calc.get_mu_at_95CL();
