@@ -56,6 +56,20 @@ Distribution_t::Distribution_t(const char *root_file) {
     delete del;
 }
 
+void Distribution_t::set_histogram(char *hist_name, TH2F *h2) {
+    int NBINX = 20;  // * for mtt;
+    int NBINY = 20;  // * for mztt;
+    double X_LOW = 350;
+    double X_HIGH = 1000;
+    double Y_LOW = 400;
+    double Y_HIGH = 1000;
+    h2 = new TH2F(hist_name, "", NBINX, X_LOW, X_HIGH, NBINY, Y_LOW, Y_HIGH);
+    for (int i = 0; i < NBINS; i++) {
+        cout << "data @" << i << " = " << data_cs[i] << endl;
+        h2->SetBinContent(i + 1, data_cs[i]);
+    }
+}
+
 Distribution_t::Distribution_t(const char *distribution_file, int null_data) {
     ifstream infile(distribution_file);
     string line;

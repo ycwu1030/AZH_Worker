@@ -9,7 +9,7 @@
 class AZHSystem {
 public:
     AZHSystem(double PTLEP = 20, double PTJET = 30) {
-        PTJETMIN = PTLEP;
+        PTLEPMIN = PTLEP;
         PTJETMIN = PTJET;
     };
     ~AZHSystem(){};

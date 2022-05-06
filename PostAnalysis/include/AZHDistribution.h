@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "AZHPreAnalysis.h"
+#include "TH2F.h"
 
 class Distribution_t {
 public:
@@ -24,6 +25,8 @@ public:
     Distribution_t operator+(const Distribution_t&);
     Distribution_t operator*(const double scale);
     Distribution_t& operator+=(const Distribution_t&);
+
+    void set_histogram(char* hist_name, TH2F* h2);
 };
 
 #endif  // AZH_DISTRIBUTION_H_
