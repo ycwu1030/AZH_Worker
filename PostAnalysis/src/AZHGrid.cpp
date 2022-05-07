@@ -96,14 +96,14 @@ AZHPoint::AZHPoint(double MHA_, double MHH_, double WHA_, double WHH_, double tb
     mass_triangle = grid.get_mass_triangle(MHA, MHH);
     width_triangle = grid.get_width_ratio_triangle(WRA, WRH);
     if (WRA > 0.2501 || WRH > 0.2501) {
-        cout << "WIDTH TOO LARGE" << endl;
+        // cout << "WIDTH TOO LARGE" << endl;
         within_region_ = false;
     }
     for (int i = 0; i < 3; i++) {
         mass_param_ids[i] = grid.get_mass_parameter_id(mass_triangle.P(i).x, mass_triangle.P(i).y);
         if (mass_param_ids[i] < 0) {
             within_region_ = false;
-            cout << "MASS NOT MATCH" << endl;
+            // cout << "MASS NOT MATCH" << endl;
         }
         width_strings[i] =
             "HA" + grid.get_width_string(width_triangle.P(i).x) + "_HH" + grid.get_width_string(width_triangle.P(i).y);
@@ -340,28 +340,28 @@ HZAPoint::HZAPoint(double MHA_, double MHH_, double WHA_, double WHH_, double tb
     WRH = WHH / MHH;
     mass_triangle = grid.get_mass_triangle(MHH, MHA);
     width_triangle = grid.get_width_ratio_triangle(WRH, WRA);
-    cout << "Triangle Obtained" << endl;
+    // cout << "Triangle Obtained" << endl;
     if (WRA > 0.2501 || WRH > 0.2501) {
-        cout << "WIDTH TOO LARGE" << endl;
+        // cout << "WIDTH TOO LARGE" << endl;
         within_region_ = false;
     }
     for (int i = 0; i < 3; i++) {
         mass_param_ids[i] = grid.get_mass_parameter_id(mass_triangle.P(i).x, mass_triangle.P(i).y);
         if (mass_param_ids[i] < 0) {
             within_region_ = false;
-            cout << "MASS NOT MATCH" << endl;
+            // cout << "MASS NOT MATCH" << endl;
         }
         width_strings[i] =
             "HH" + grid.get_width_string(width_triangle.P(i).x) + "_HA" + grid.get_width_string(width_triangle.P(i).y);
     }
     mass_triangle.Get_Barycentric_Coordinate({MHH, MHA}, mass_lams);
     width_triangle.Get_Barycentric_Coordinate({WRH, WRA}, width_lams);
-    cout << "Barycentric coordinate obtained" << endl;
-    cout << "mass lam: (" << mass_lams[0] << "," << mass_lams[1] << "," << mass_lams[2] << ")" << endl;
-    cout << "width lam: (" << width_lams[0] << "," << width_lams[1] << "," << width_lams[2] << ")" << endl;
+    // cout << "Barycentric coordinate obtained" << endl;
+    // cout << "mass lam: (" << mass_lams[0] << "," << mass_lams[1] << "," << mass_lams[2] << ")" << endl;
+    // cout << "width lam: (" << width_lams[0] << "," << width_lams[1] << "," << width_lams[2] << ")" << endl;
     if (within_region_) {
         build_up_signal_distribution();
-        cout << "distribution built" << endl;
+        // cout << "distribution built" << endl;
     }
 }
 
@@ -369,35 +369,35 @@ void HZAPoint::build_up_signal_distribution() {
     for (int i_mass = 0; i_mass < 3; i_mass++) {
         Distribution_t dist_mass(400);
         for (int i_width = 0; i_width < 3; i_width++) {
-            cout << "For im=" << i_mass << " iw=" << i_width << endl;
-            cout << " mass id=" << mass_param_ids[i_mass] << " width string=" << width_strings[i_width] << endl;
+            // cout << "For im=" << i_mass << " iw=" << i_width << endl;
+            // cout << " mass id=" << mass_param_ids[i_mass] << " width string=" << width_strings[i_width] << endl;
             Distribution_t dist_width =
                 get_signal_distribution_at_grid_point_typeI(mass_param_ids[i_mass], width_strings[i_width], tb, cba);
-            cout << "  Distribution for the point obtained" << endl;
-            cout << "  dist_width.NBINS = " << dist_width.NBINS << endl;
+            // cout << "  Distribution for the point obtained" << endl;
+            // cout << "  dist_width.NBINS = " << dist_width.NBINS << endl;
             dist_mass += dist_width * width_lams[i_width];
-            cout << "  Added to mass dist" << endl;
+            // cout << "  Added to mass dist" << endl;
         }
         dist += dist_mass * mass_lams[i_mass];
-        cout << "  Added to total dist" << endl;
+        // cout << "  Added to total dist" << endl;
     }
 }
 
 Distribution_t HZAPoint::get_signal_distribution_at_grid_point_typeI(int param_id, string width_string, double tb,
                                                                      double cba) {
     Distribution_t dist_ggF_TRI = get_signal_distribution_at_grid_point_typeI_ggF_TRI(param_id, width_string, tb, cba);
-    cout << "TRI obtained, NBINS=" << dist_ggF_TRI.NBINS << endl;
+    // cout << "TRI obtained, NBINS=" << dist_ggF_TRI.NBINS << endl;
     Distribution_t dist_ggF_BOX = get_signal_distribution_at_grid_point_typeI_ggF_BOX(param_id, width_string, tb, cba);
-    cout << "BOX obtained" << endl;
+    // cout << "BOX obtained" << endl;
     Distribution_t dist_ggF_TRIxBOX =
         get_signal_distribution_at_grid_point_typeI_ggF_TRIxBOX(param_id, width_string, tb, cba);
-    cout << "TRIxBOX obtained" << endl;
+    // cout << "TRIxBOX obtained" << endl;
     Distribution_t dist_bb_S = get_signal_distribution_at_grid_point_typeI_bb_S(param_id, width_string, tb, cba);
-    cout << "S obtained" << endl;
+    // cout << "S obtained" << endl;
     Distribution_t dist_bb_T = get_signal_distribution_at_grid_point_typeI_bb_T(param_id, width_string, tb, cba);
-    cout << "T obtained" << endl;
+    // cout << "T obtained" << endl;
     Distribution_t dist_bb_SxT = get_signal_distribution_at_grid_point_typeI_bb_SxT(param_id, width_string, tb, cba);
-    cout << "SxT obtained" << endl;
+    // cout << "SxT obtained" << endl;
 
     return dist_ggF_TRI + dist_ggF_BOX + dist_ggF_TRIxBOX + dist_bb_S + dist_bb_T + dist_bb_SxT;
 }
