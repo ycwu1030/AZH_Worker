@@ -46,7 +46,7 @@ void SetPlotStyle(double rightmargin = 0.2) {
     gStyle->SetTitleSize(0.055, "Z");
     gStyle->SetTitleOffset(1.2, "X");
     gStyle->SetTitleOffset(1.2, "Y");
-    gStyle->SetTitleOffset(1.2, "Z");
+    gStyle->SetTitleOffset(1.4, "Z");
     // Axis Lable
     gStyle->SetLabelFont(42, "XYZ");
     gStyle->SetLabelSize(0.045, "X");

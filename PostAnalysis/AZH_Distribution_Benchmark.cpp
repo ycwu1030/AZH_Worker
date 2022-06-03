@@ -13,9 +13,7 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-    // Distribution_t dist_bkg("../DATADIR/Distribution/BKG/COMB/AZH_Distribution_bkg_total_BKG_COMB_DEFAULT_3l.txt",
-    // 0);
-    SetPlotStyle(0.2);
+    SetPlotStyle(0.22);
     double MHA = 750;
     double MHH = 600;
     double width_benchmark[2] = {0.01, 0.1};
@@ -62,6 +60,33 @@ int main(int argc, char const *argv[]) {
         c1->SaveAs(tmp);
         delete c1;
     }
-
+    Distribution_t dist_bkg("../DATADIR/Distribution/BKG/COMB/AZH_Distribution_bkg_total_BKG_COMB_DEFAULT_3l.txt", 0);
+    cout << "Background distribution obtained" << endl;
+    TH2F *hbkg = new TH2F("hist_bkg", "", 20, 350, 1000, 20, 400, 1000);
+    int ib = 0;
+    double max = 0;
+    for (int ix = 0; ix < 20; ix++) {
+        for (int iy = 0; iy < 20; iy++) {
+            int nbinall = hbkg->GetBin(ix + 1, iy + 1);
+            hbkg->SetBinContent(nbinall, dist_bkg.data_cs[ib]);
+            if (dist_bkg.data_cs[ib] > max) max = dist_bkg.data_cs[ib];
+            ib++;
+        }
+    }
+    cout << "Background Histogram obtained" << endl;
+    TCanvas *c1 = new TCanvas("c_bkg", "", 800, 600);
+    cout << "Setup canvas" << endl;
+    c1->cd();
+    hbkg->SetXTitle("m_{tt} [GeV]");
+    hbkg->SetYTitle("m_{Ztt} [GeV]");
+    hbkg->SetZTitle("#sigma/bin [fb]");
+    hbkg->GetZaxis()->SetRangeUser(0, 1.2 * max);
+    hbkg->Draw("COLZ");
+    cout << "Histogram draw" << endl;
+    TLatex t1(700, 450, "Ztt Background");
+    t1.Draw();
+    // sprintf(tmp, "distribution2D_%s.pdf", width_strings[iw].c_str());
+    c1->SaveAs("distribution2D_bkg.pdf");
+    delete c1;
     return 0;
 }
