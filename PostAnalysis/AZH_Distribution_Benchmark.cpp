@@ -83,7 +83,7 @@ int main(int argc, char const *argv[]) {
     hbkg->GetZaxis()->SetRangeUser(0, 1.2 * max);
     hbkg->Draw("COLZ");
     cout << "Histogram draw" << endl;
-    TLatex t1(700, 450, "Ztt Background");
+    TLatex t1(700, 450, "t#bar{t}Z Background");
     t1.Draw();
     // sprintf(tmp, "distribution2D_%s.pdf", width_strings[iw].c_str());
     c1->SaveAs("distribution2D_bkg.pdf");
