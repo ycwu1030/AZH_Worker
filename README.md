@@ -25,4 +25,4 @@ The full results are located in the `RESULTS` folder. Some basic information is 
 
 ## References
 
-If you use any result in this repository, please cite [arXiv: 2110.xxxxx](https://arxiv.org/abs/2110.xxxxx).
+If you use any result in this repository, please cite [arXiv: 2206.08381](https://arxiv.org/abs/2206.08381).
